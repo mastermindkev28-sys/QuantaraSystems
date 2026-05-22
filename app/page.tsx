@@ -169,7 +169,7 @@ function TickerTape({ data }: { data: GoldData | null }) {
     { label: 'CHANGE', val: data ? `${pos ? '+' : ''}${fmt(data.change)}` : '---', gold: true },
     { label: '24H RANGE', val: data ? `${fmt(data.low)} – ${fmt(data.high)}` : '---' },
     { label: 'PREV CLOSE', val: data ? `$${fmt(data.prev)}` : '---' },
-    { label: 'AEGISAI ENGINE', val: 'ACTIVE' },
+    { label: 'QS1 ENGINE', val: 'ACTIVE' },
     { label: 'PROGRAM', val: 'QS1 · GOLD FUTURES' },
     { label: 'EXECUTION', val: '100% AUTOMATED' },
     { label: 'PAYOUT MODEL', val: '80 / 20 SPLIT' },
@@ -1126,7 +1126,7 @@ export default function QuantaraPage() {
         {/* ── ACCOUNT DASHBOARD ── */}
         <AccountDashboard />
 
-        {/* ── WHY AEGISAI ── */}
+        {/* ── WHY QS1 ── */}
         <WhyQS1 />
 
         {/* ── APPROACH ── */}
