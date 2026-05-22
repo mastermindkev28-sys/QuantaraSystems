@@ -785,52 +785,12 @@ function WhyQS1() {
   );
 }
 
-// ─── Modal ────────────────────────────────────────────────────────────────────
-function Modal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  if (!open) return null;
-  return (
-    <div
-      style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
-      onClick={e => e.target === e.currentTarget && onClose()}
-    >
-      <div style={{
-        background: 'linear-gradient(#0E0E10, #0E0E10) padding-box, linear-gradient(135deg, rgba(245,158,11,0.2), rgba(163,217,255,0.06), rgba(245,158,11,0.1)) border-box',
-        border: '1px solid transparent', borderRadius: 20, overflow: 'hidden',
-        width: '100%', maxWidth: 780, position: 'relative',
-        boxShadow: '0 40px 120px rgba(0,0,0,0.8), 0 0 60px rgba(245,158,11,0.06)',
-      }}>
-        {/* Header */}
-        <div style={{ padding: '24px 32px', borderBottom: '1px solid rgba(245,158,11,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <QMark size={28} glow />
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 300, color: '#C8C8C8', letterSpacing: '0.04em' }}>Schedule a Call</div>
-              <div style={{ fontSize: 10, color: '#3A3A3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 2 }}>Quantara Systems · QS1 Program</div>
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: '#555', cursor: 'pointer', fontSize: 18, width: 34, height: 34, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'inherit', flexShrink: 0 }}
-          >×</button>
-        </div>
+const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/30min';
 
-        {/* Calendly embed */}
-        <iframe
-          src="https://calendly.com/quantarasystems-sales/30min?background_color=0e0e10&text_color=e8e8e8&primary_color=f59e0b&hide_gdpr_banner=1"
-          width="100%"
-          height="660"
-          frameBorder="0"
-          title="Schedule a call with Quantara Systems"
-          style={{ display: 'block' }}
-        />
-      </div>
-    </div>
-  );
-}
+declare global { interface Window { Calendly?: { initPopupWidget: (o: { url: string }) => void } } }
 
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 export default function QuantaraPage() {
-  const [modal, setModal] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [goldData, setGoldData] = useState<GoldData | null>(null);
   const [goldLoading, setGoldLoading] = useState(true);
@@ -845,12 +805,29 @@ export default function QuantaraPage() {
   }, []);
 
   useEffect(() => {
+    // Fonts
     const link = document.createElement('link');
     link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap';
     link.rel = 'stylesheet'; document.head.appendChild(link);
+
+    // Calendly CSS
+    const cal = document.createElement('link');
+    cal.href = 'https://assets.calendly.com/assets/external/widget.css';
+    cal.rel = 'stylesheet'; document.head.appendChild(cal);
+
+    // Calendly JS
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true; document.head.appendChild(script);
+
     const onScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => { window.removeEventListener('scroll', onScroll); document.head.removeChild(link); };
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      document.head.removeChild(link);
+      if (document.head.contains(cal)) document.head.removeChild(cal);
+      if (document.head.contains(script)) document.head.removeChild(script);
+    };
   }, []);
 
   useEffect(() => {
@@ -860,7 +837,7 @@ export default function QuantaraPage() {
   }, [fetchGold]);
 
   const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  const openModal = () => setModal(true);
+  const openModal = () => window.Calendly?.initPopupWidget({ url: CALENDLY_URL });
 
   const navLinks: [string, string][] = [
     ['Markets', 'qs-markets'], ['Performance', 'qs-performance'],
@@ -1340,7 +1317,6 @@ export default function QuantaraPage() {
 
       </div>
 
-      <Modal open={modal} onClose={() => setModal(false)} />
     </>
   );
 }
