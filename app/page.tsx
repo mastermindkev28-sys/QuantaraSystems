@@ -172,7 +172,7 @@ function TickerTape({ data }: { data: GoldData | null }) {
     { label: 'QS1 ENGINE', val: 'ACTIVE' },
     { label: 'PROGRAM', val: 'QS1 · GOLD FUTURES' },
     { label: 'EXECUTION', val: '100% AUTOMATED' },
-    { label: 'PAYOUT MODEL', val: '80 / 20 SPLIT' },
+    { label: 'PAYOUT MODEL', val: '70 / 30 SPLIT' },
     { label: 'ACCOUNTS', val: '$50K · $100K · $150K' },
   ];
   const all = [...items, ...items];
@@ -324,21 +324,21 @@ const ACCOUNTS = [
     payoutRange: '$1,250–$1,500',
     early: 1640, mature: 2050,
     monthly: 9225, sixMonth: 55350,
-    clientNet: 44280, aegisRev: 11070,
+    clientNet: 38745, aegisRev: 16605,
   },
   {
     size: '$100,000', key: '100k',
     payoutRange: '$2,500–$3,000',
     early: 2050, mature: 2460,
     monthly: 11070, sixMonth: 66420,
-    clientNet: 53136, aegisRev: 13284,
+    clientNet: 46494, aegisRev: 19926,
   },
   {
     size: '$150,000', key: '150k',
     payoutRange: '$3,000–$3,500',
     early: 2460, mature: 2870,
     monthly: 12915, sixMonth: 77490,
-    clientNet: 61992, aegisRev: 15498,
+    clientNet: 54243, aegisRev: 23247,
   },
 ] as const;
 
@@ -446,16 +446,16 @@ function PerformanceSection() {
             <div style={{ fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#3A3A3A', marginBottom: 24 }}>6-Month Revenue Split</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
               <div style={{ padding: '20px', background: 'rgba(245,158,11,0.04)', border: '1px solid rgba(245,158,11,0.1)', borderRadius: 10 }}>
-                <div style={{ fontSize: 9, color: '#4A3A00', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>Client Net (80%)</div>
+                <div style={{ fontSize: 9, color: '#4A3A00', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>Client Net (70%)</div>
                 <div style={{ fontSize: 28, fontWeight: 200, color: '#F59E0B', letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>{fmt(acct.clientNet)}</div>
               </div>
               <div style={{ padding: '20px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 10 }}>
-                <div style={{ fontSize: 9, color: '#3A3A3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>QS1 Fee (20%)</div>
+                <div style={{ fontSize: 9, color: '#3A3A3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>QS1 Fee (30%)</div>
                 <div style={{ fontSize: 28, fontWeight: 200, color: '#5A5A5A', letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>{fmt(acct.aegisRev)}</div>
               </div>
             </div>
             <div style={{ height: 8, background: 'rgba(255,255,255,0.03)', borderRadius: 4, overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: '80%', background: 'linear-gradient(90deg, #F59E0B66, #F59E0B33)', borderRadius: 4, position: 'relative' }}>
+              <div style={{ height: '100%', width: '70%', background: 'linear-gradient(90deg, #F59E0B66, #F59E0B33)', borderRadius: 4, position: 'relative' }}>
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, transparent 60%, #F59E0B22)', borderRadius: 4 }} />
               </div>
             </div>
@@ -598,7 +598,7 @@ function AccountDashboard() {
               {[
                 { label: 'Monthly Gross', val: `$${acct.monthly.toLocaleString()}`, sub: 'est. per month' },
                 { label: '6-Month Gross', val: `$${acct.sixMonth.toLocaleString()}`, sub: 'cumulative est.' },
-                { label: 'Client Net 6M', val: `$${acct.clientNet.toLocaleString()}`, sub: 'after 20% fee' },
+                { label: 'Client Net 6M', val: `$${acct.clientNet.toLocaleString()}`, sub: 'after 30% fee' },
               ].map(m => (
                 <div key={m.label} style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '20px', background: '#0D0D0D' }}>
                   <div style={{ fontSize: 9, color: '#2A2A2A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>{m.label}</div>
@@ -1012,7 +1012,7 @@ export default function QuantaraPage() {
               {[
                 { val: goldData && !goldData.error ? `$${goldData.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '---', label: 'GC Futures Live' },
                 { val: '$77,490', label: '6-Month Gross Peak' },
-                { val: '80%', label: 'Client Payout Share' },
+                { val: '70%', label: 'Client Payout Share' },
                 { val: '100%', label: 'Automated Execution' },
               ].map((s, i) => (
                 <div key={i} style={{ padding: '18px 16px', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(245,158,11,0.06)' : 'none' }}>
@@ -1037,8 +1037,8 @@ export default function QuantaraPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div className="qs-stat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
               <StatCard prefix="$" value={77490} label="Peak 6-Month Gross" delay={0} />
-              <StatCard prefix="$" value={61992} label="Max Client Net 6M" delay={0.1} />
-              <StatCard value={80} suffix="%" label="Client Payout Share" delay={0.2} />
+              <StatCard prefix="$" value={54243} label="Max Client Net 6M" delay={0.1} />
+              <StatCard value={70} suffix="%" label="Client Payout Share" delay={0.2} />
               <StatCard value={100} suffix="%" label="Automated Execution" delay={0.3} />
             </div>
           </div>
@@ -1209,7 +1209,7 @@ export default function QuantaraPage() {
                   ['Focus', 'Gold futures — GC/MGC'],
                   ['AI Engine', 'QS1 v3.2 (Quantitative ML)'],
                   ['Integration', 'Lucid Trading + Tradovate'],
-                  ['Fee Model', '20% on successful payouts only'],
+                  ['Fee Model', '30% on successful payouts only'],
                   ['Access', 'Qualified participants only'],
                   ['Operation', 'Fully automated — zero manual input'],
                 ].map(([k, v]) => (
@@ -1231,7 +1231,7 @@ export default function QuantaraPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {[['$50,000', '$1,250–$1,500', '80% / 20%'], ['$100,000', '$2,500–$3,000', '80% / 20%'], ['$150,000', '$3,000–$3,500', '80% / 20%']].map(([sz, mp, sp]) => (
+                      {[['$50,000', '$1,250–$1,500', '70% / 30%'], ['$100,000', '$2,500–$3,000', '70% / 30%'], ['$150,000', '$3,000–$3,500', '70% / 30%']].map(([sz, mp, sp]) => (
                         <tr key={sz} style={{ borderBottom: '1px solid rgba(245,158,11,0.04)' }}>
                           <td style={{ padding: '14px 18px', color: '#B0B0B0' }}>{sz}</td>
                           <td style={{ padding: '14px 18px', color: '#6A6A6A', fontVariantNumeric: 'tabular-nums' }}>{mp}</td>
