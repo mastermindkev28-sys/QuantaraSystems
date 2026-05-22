@@ -357,7 +357,7 @@ function PerformanceSection() {
 
       <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative' }}>
         <div style={{ marginBottom: 60 }}>
-          <Badge>AegisAI Performance</Badge>
+          <Badge>QS1 Performance</Badge>
           <h2 style={{
             fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em',
             background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 50%, #F59E0B 100%)',
@@ -367,7 +367,7 @@ function PerformanceSection() {
             Projected Account Performance
           </h2>
           <p style={{ color: '#484848', fontSize: 15, lineHeight: 1.9, maxWidth: 580, fontWeight: 300 }}>
-            Illustrative projections based on AegisAI&apos;s systematic execution framework and Lucid Trading payout parameters.
+            Illustrative projections based on QS1&apos;s systematic execution framework and Lucid Trading payout parameters.
           </p>
         </div>
 
@@ -450,7 +450,7 @@ function PerformanceSection() {
                 <div style={{ fontSize: 28, fontWeight: 200, color: '#F59E0B', letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>{fmt(acct.clientNet)}</div>
               </div>
               <div style={{ padding: '20px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 10 }}>
-                <div style={{ fontSize: 9, color: '#3A3A3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>AegisAI Fee (20%)</div>
+                <div style={{ fontSize: 9, color: '#3A3A3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>QS1 Fee (20%)</div>
                 <div style={{ fontSize: 28, fontWeight: 200, color: '#5A5A5A', letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>{fmt(acct.aegisRev)}</div>
               </div>
             </div>
@@ -513,7 +513,7 @@ function AccountDashboard() {
   ];
 
   const systemStatus = [
-    { label: 'AegisAI Engine', val: 'v3.2 · Active', ok: true },
+    { label: 'QS1 Engine', val: 'v3.2 · Active', ok: true },
     { label: 'Risk System', val: 'Engaged', ok: true },
     { label: 'Tradovate Feed', val: 'Connected', ok: true },
     { label: 'Lucid Platform', val: 'Linked', ok: true },
@@ -535,7 +535,7 @@ function AccountDashboard() {
             Account Progress Tracker
           </h2>
           <p style={{ color: '#3A3A3A', fontSize: 13, maxWidth: 480, lineHeight: 1.8 }}>
-            Illustrative dashboard representing projected AegisAI-managed account behavior on the Lucid Trading platform.
+            Illustrative dashboard representing projected QS1-managed account behavior on the Lucid Trading platform.
           </p>
         </div>
 
@@ -655,9 +655,9 @@ function HowItWorks({ onOpen }: { onOpen: () => void }) {
     { n: '01', title: 'Initial Enrollment', body: 'Select your account size ($50K, $100K, or $150K) and submit the one-time program fee to initiate onboarding.' },
     { n: '02', title: 'Create Lucid Account', body: 'Register with Lucid Trading — the proprietary capital program platform used to house the funded account and manage payouts.' },
     { n: '03', title: 'Obtain Tradovate Credentials', body: 'Receive your Tradovate execution credentials through Lucid. These are the trading credentials only — separate from your Lucid dashboard login.' },
-    { n: '04', title: 'Secure Integration', body: 'Provide credentials to the AegisAI team via encrypted intake. Infrastructure is configured and connected to your account.' },
-    { n: '05', title: 'Algorithm Deployment', body: 'AegisAI v3.2 deploys directly onto your account. Risk systems activate. Trade detection, management, and execution become fully autonomous.' },
-    { n: '06', title: 'Automated Trading Begins', body: 'AegisAI scans continuously for optimal Gold setups. Trades only when conditions are favorable. No manual experience required.' },
+    { n: '04', title: 'Secure Integration', body: 'Provide credentials to the QS1 team via encrypted intake. Infrastructure is configured and connected to your account.' },
+    { n: '05', title: 'Algorithm Deployment', body: 'QS1 v3.2 deploys directly onto your account. Risk systems activate. Trade detection, management, and execution become fully autonomous.' },
+    { n: '06', title: 'Automated Trading Begins', body: 'QS1 scans continuously for optimal Gold setups. Trades only when conditions are favorable. No manual experience required.' },
   ];
 
   return (
@@ -732,10 +732,10 @@ function HowItWorks({ onOpen }: { onOpen: () => void }) {
   );
 }
 
-// ─── Why AegisAI ──────────────────────────────────────────────────────────────
-function WhyAegisAI() {
+// ─── Why QS1 ──────────────────────────────────────────────────────────────
+function WhyQS1() {
   const reasons = [
-    { icon: '◷', title: 'Time Efficiency', body: 'No charts, no technical analysis, no market psychology. AegisAI handles all execution autonomously while you focus elsewhere.' },
+    { icon: '◷', title: 'Time Efficiency', body: 'No charts, no technical analysis, no market psychology. QS1 handles all execution autonomously while you focus elsewhere.' },
     { icon: '◈', title: 'Institutional Infrastructure', body: 'Built around quantitative execution engines, multi-layer risk controls, and institutional-grade automated safety systems.' },
     { icon: '⊞', title: 'Scalability', body: 'Multiple funded accounts can be operated simultaneously, compounding systematic exposure across all three account tiers.' },
     { icon: '◎', title: 'Passive Exposure', body: 'Fully hands-free automated execution. Your account operates every session the markets are open — without you watching.' },
@@ -755,7 +755,7 @@ function WhyAegisAI() {
             background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 50%, #F59E0B 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
           }}>
-            Why High-Net-Worth Clients Choose AegisAI
+            Why High-Net-Worth Clients Choose QS1
           </h2>
         </div>
 
@@ -772,7 +772,7 @@ function WhyAegisAI() {
 
         <div style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.04) 0%, rgba(163,217,255,0.02) 50%, rgba(245,158,11,0.02) 100%)', border: '1px solid rgba(245,158,11,0.1)', borderRadius: 18, padding: '48px', textAlign: 'center', boxShadow: '0 0 60px rgba(245,158,11,0.04)' }}>
           <p style={{ color: '#4A4A4A', fontSize: 16, lineHeight: 2, maxWidth: 800, margin: '0 auto', fontWeight: 300 }}>
-            AegisAI was engineered for individuals seeking sophisticated algorithmic market exposure without becoming full-time traders. Combining <span style={{ color: '#6A6A6A' }}>artificial intelligence</span>, <span style={{ color: '#6A6A6A' }}>quantitative research</span>, <span style={{ color: '#6A6A6A' }}>tick-data analysis</span>, <span style={{ color: '#6A6A6A' }}>institutional risk frameworks</span>, and <span style={{ color: '#6A6A6A' }}>automated execution systems</span> — delivering a structured, scalable, hands-free approach to modern futures trading.
+            QS1 was engineered for individuals seeking sophisticated algorithmic market exposure without becoming full-time traders. Combining <span style={{ color: '#6A6A6A' }}>artificial intelligence</span>, <span style={{ color: '#6A6A6A' }}>quantitative research</span>, <span style={{ color: '#6A6A6A' }}>tick-data analysis</span>, <span style={{ color: '#6A6A6A' }}>institutional risk frameworks</span>, and <span style={{ color: '#6A6A6A' }}>automated execution systems</span> — delivering a structured, scalable, hands-free approach to modern futures trading.
           </p>
           <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' }}>
             {['Private', 'Capacity-Limited', 'Selectively Offered'].map(t => (
@@ -809,7 +809,7 @@ function Modal({ open, onClose }: { open: boolean; onClose: () => void }) {
           <>
             <Badge>Private Program</Badge>
             <h3 style={{ color: '#E8E8E8', fontSize: 24, fontWeight: 200, letterSpacing: '-0.02em', marginTop: 18, marginBottom: 6 }}>Request Consideration</h3>
-            <p style={{ color: '#333', fontSize: 13, marginBottom: 32, lineHeight: 1.7 }}>Quantara System One — AegisAI Institutional Gold Algorithmic Program</p>
+            <p style={{ color: '#333', fontSize: 13, marginBottom: 32, lineHeight: 1.7 }}>Quantara System One — QS1 Institutional Gold Algorithmic Program</p>
             <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
               <div><label style={lbl}>Full Name *</label><input required value={f.name} onChange={e => setF(p => ({ ...p, name: e.target.value }))} style={inp} placeholder="Your full name" /></div>
               <div><label style={lbl}>Email Address *</label><input required type="email" value={f.email} onChange={e => setF(p => ({ ...p, email: e.target.value }))} style={inp} placeholder="your@email.com" /></div>
@@ -1014,7 +1014,7 @@ export default function QuantaraPage() {
             </div>
 
             <div className="qs-a1" style={{ display: 'flex', justifyContent: 'center', marginBottom: 28 }}>
-              <Badge>Quantitative Market Systems · Powered by AegisAI</Badge>
+              <Badge>Quantitative Market Systems · Powered by QS1</Badge>
             </div>
 
             <h1 className="qs-a2 qs-hero-h1" style={{
@@ -1030,7 +1030,7 @@ export default function QuantaraPage() {
             </div>
 
             <p className="qs-a3" style={{ color: '#444', fontSize: 16, lineHeight: 1.9, maxWidth: 660, margin: '0 auto 48px', fontWeight: 300 }}>
-              A proprietary quantitative framework powered by AegisAI — algorithmic execution in Gold futures markets. Machine learning models, statistical frameworks, and institutional risk architecture.
+              A proprietary quantitative framework powered by QS1 — algorithmic execution in Gold futures markets. Machine learning models, statistical frameworks, and institutional risk architecture.
             </p>
 
             <div className="qs-a4" style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 64 }}>
@@ -1088,7 +1088,7 @@ export default function QuantaraPage() {
                 Structured Quantitative Execution
               </h2>
               <p style={{ color: '#3A3A3A', fontSize: 16, lineHeight: 1.92, maxWidth: 640, fontWeight: 300 }}>
-                QS1 is an institutional-grade algorithmic infrastructure powered by AegisAI, focused on Gold futures (GC/MGC). Multi-year quantitative research, machine learning models, and non-discretionary execution.
+                QS1 is an institutional-grade algorithmic infrastructure powered by QS1, focused on Gold futures (GC/MGC). Multi-year quantitative research, machine learning models, and non-discretionary execution.
               </p>
             </div>
 
@@ -1127,7 +1127,7 @@ export default function QuantaraPage() {
         <AccountDashboard />
 
         {/* ── WHY AEGISAI ── */}
-        <WhyAegisAI />
+        <WhyQS1 />
 
         {/* ── APPROACH ── */}
         <section id="qs-approach" style={{ padding: '130px 48px', background: 'linear-gradient(180deg, #070708 0%, #0A0C10 60%, #070708 100%)' }}>
@@ -1196,10 +1196,10 @@ export default function QuantaraPage() {
             </div>
             <div className="qs-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 56 }}>
               {[
-                { q: 'The systematic nature of QS1 removed the emotional variables I struggled with in discretionary trading. AegisAI simply executes.', name: 'M.R.', role: 'Family Office Allocator' },
+                { q: 'The systematic nature of QS1 removed the emotional variables I struggled with in discretionary trading. QS1 simply executes.', name: 'M.R.', role: 'Family Office Allocator' },
                 { q: 'Having a research-grade AI framework manage execution allows me to allocate attention elsewhere while maintaining alignment with prop firm requirements.', name: 'D.K.', role: 'Accredited Participant' },
-                { q: "AegisAI's focus on structure and consistency has been evident in the account behavior from the first month of operation.", name: 'S.L.', role: 'QS1 Participant since 2024' },
-                { q: 'I was looking for a systematic approach that did not require constant monitoring. AegisAI operates within clearly defined parameters without intervention.', name: 'T.M.', role: 'Independent Allocator' },
+                { q: "QS1's focus on structure and consistency has been evident in the account behavior from the first month of operation.", name: 'S.L.', role: 'QS1 Participant since 2024' },
+                { q: 'I was looking for a systematic approach that did not require constant monitoring. QS1 operates within clearly defined parameters without intervention.', name: 'T.M.', role: 'Independent Allocator' },
               ].map((t, i) => (
                 <div key={i} style={{ border: '1px solid rgba(255,255,255,0.05)', borderRadius: 14, padding: '36px', background: 'linear-gradient(135deg, #0D0D0D, #0F0F12)', transition: 'border-color 0.25s' }} className="qs-card-gold">
                   <div style={{
@@ -1238,7 +1238,7 @@ export default function QuantaraPage() {
                 {[
                   ['Structure', 'Private, invite-only initiative'],
                   ['Focus', 'Gold futures — GC/MGC'],
-                  ['AI Engine', 'AegisAI v3.2 (Quantitative ML)'],
+                  ['AI Engine', 'QS1 v3.2 (Quantitative ML)'],
                   ['Integration', 'Lucid Trading + Tradovate'],
                   ['Fee Model', '20% on successful payouts only'],
                   ['Access', 'Qualified participants only'],
@@ -1256,7 +1256,7 @@ export default function QuantaraPage() {
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                     <thead>
                       <tr style={{ borderBottom: '1px solid rgba(245,158,11,0.07)' }}>
-                        {['Account Size', 'Max / Cycle', 'Client / AegisAI'].map(h => (
+                        {['Account Size', 'Max / Cycle', 'Client / QS1'].map(h => (
                           <th key={h} style={{ padding: '13px 18px', textAlign: 'left', color: '#2A2A2A', fontWeight: 500, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{h}</th>
                         ))}
                       </tr>
@@ -1294,7 +1294,7 @@ export default function QuantaraPage() {
               Request Consideration
             </h2>
             <p style={{ color: '#3A3A3A', fontSize: 16, lineHeight: 1.9, marginBottom: 48, fontWeight: 300 }}>
-              Quantara System One operates as a private, invite-only initiative. AegisAI-managed accounts are capacity-limited and offered selectively. All information submitted is treated with strict confidentiality.
+              Quantara System One operates as a private, invite-only initiative. QS1-managed accounts are capacity-limited and offered selectively. All information submitted is treated with strict confidentiality.
             </p>
             <button className="qs-btn-gold" onClick={openModal} style={{ padding: '18px 56px', fontSize: 12, borderRadius: 12 }}>
               Begin Your Application
@@ -1312,11 +1312,11 @@ export default function QuantaraPage() {
                   <QMark size={28} glow />
                   <div>
                     <div style={{ fontSize: 12, fontWeight: 300, letterSpacing: '0.24em', textTransform: 'uppercase', color: '#4A4A4A' }}>Quantara Systems</div>
-                    <div style={{ fontSize: 9, color: '#1E1E1E', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Powered by AegisAI</div>
+                    <div style={{ fontSize: 9, color: '#1E1E1E', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Powered by QS1</div>
                   </div>
                 </div>
                 <p style={{ color: '#222', fontSize: 12, lineHeight: 1.9, maxWidth: 360 }}>
-                  Quantitative market systems powered by AegisAI. Structured algorithmic approaches to Gold futures for qualified participants seeking systematic, hands-free market exposure.
+                  Quantitative market systems powered by QS1. Structured algorithmic approaches to Gold futures for qualified participants seeking systematic, hands-free market exposure.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -1329,7 +1329,7 @@ export default function QuantaraPage() {
             </div>
             <div style={{ borderTop: '1px solid rgba(245,158,11,0.04)', paddingTop: 28 }}>
               <p style={{ color: '#1A1A1A', fontSize: 11, lineHeight: 1.95, marginBottom: 16 }}>
-                <strong style={{ color: '#222' }}>RISK DISCLOSURE:</strong> Trading futures contracts involves substantial risk of loss and is not appropriate for all investors. Past performance is not indicative of future results. Quantara Systems and AegisAI do not guarantee profits or freedom from loss. The content on this site is for informational purposes only and does not constitute financial advice, a solicitation, or an offer to buy or sell any financial instrument. Participation is restricted to qualified, accredited individuals only. All performance data reflects illustrative projections only — not a guarantee. This is a private, confidential program. Unauthorized distribution is prohibited.
+                <strong style={{ color: '#222' }}>RISK DISCLOSURE:</strong> Trading futures contracts involves substantial risk of loss and is not appropriate for all investors. Past performance is not indicative of future results. Quantara Systems and QS1 do not guarantee profits or freedom from loss. The content on this site is for informational purposes only and does not constitute financial advice, a solicitation, or an offer to buy or sell any financial instrument. Participation is restricted to qualified, accredited individuals only. All performance data reflects illustrative projections only — not a guarantee. This is a private, confidential program. Unauthorized distribution is prohibited.
               </p>
               <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
                 <span style={{ color: '#181818', fontSize: 11 }}>© 2026 Quantara Systems. All rights reserved. Confidential.</span>
