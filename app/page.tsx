@@ -367,7 +367,7 @@ function PerformanceSection() {
             Projected Account Performance
           </h2>
           <p style={{ color: '#484848', fontSize: 15, lineHeight: 1.9, maxWidth: 580, fontWeight: 300 }}>
-            Illustrative projections based on QS1&apos;s systematic execution framework and Lucid Trading payout parameters.
+            Illustrative projections based on QS1&apos;s systematic execution framework and prop firm payout parameters.
           </p>
         </div>
 
@@ -516,7 +516,7 @@ function AccountDashboard() {
     { label: 'QS1 Engine', val: 'v3.2 · Active', ok: true },
     { label: 'Risk System', val: 'Engaged', ok: true },
     { label: 'Tradovate Feed', val: 'Connected', ok: true },
-    { label: 'Lucid Platform', val: 'Linked', ok: true },
+    { label: 'Prop Firm Platform', val: 'Linked', ok: true },
   ];
 
   return (
@@ -535,7 +535,7 @@ function AccountDashboard() {
             Account Progress Tracker
           </h2>
           <p style={{ color: '#3A3A3A', fontSize: 13, maxWidth: 480, lineHeight: 1.8 }}>
-            Illustrative dashboard representing projected QS1-managed account behavior on the Lucid Trading platform.
+            Illustrative dashboard representing projected QS1-managed account behavior on the prop firm platform.
           </p>
         </div>
 
@@ -611,7 +611,7 @@ function AccountDashboard() {
             <div style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: 14, overflow: 'hidden', background: '#0D0D0D', flex: 1 }}>
               <div style={{ padding: '18px 24px', borderBottom: '1px solid rgba(255,255,255,0.04)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 11, color: '#444', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Payout History</span>
-                <span style={{ fontSize: 9, color: '#1E1E1E', letterSpacing: '0.12em', textTransform: 'uppercase' }}>via Lucid Dashboard</span>
+                <span style={{ fontSize: 9, color: '#1E1E1E', letterSpacing: '0.12em', textTransform: 'uppercase' }}>via Prop Firm Dashboard</span>
               </div>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                 <thead>
@@ -653,8 +653,8 @@ function AccountDashboard() {
 function HowItWorks({ onOpen }: { onOpen: () => void }) {
   const steps = [
     { n: '01', title: 'Initial Enrollment', body: 'Select your account size ($50K, $100K, or $150K) and submit the one-time program fee to initiate onboarding.' },
-    { n: '02', title: 'Create Lucid Account', body: 'Register with Lucid Trading — the proprietary capital program platform used to house the funded account and manage payouts.' },
-    { n: '03', title: 'Obtain Tradovate Credentials', body: 'Receive your Tradovate execution credentials through Lucid. These are the trading credentials only — separate from your Lucid dashboard login.' },
+    { n: '02', title: 'Create Prop Firm Account', body: 'Register with the prop firm — the platform used to house your funded account and manage payouts.' },
+    { n: '03', title: 'Obtain Tradovate Credentials', body: 'Receive your Tradovate execution credentials through the prop firm. These are trading credentials only — separate from your prop firm dashboard login.' },
     { n: '04', title: 'Secure Integration', body: 'Provide credentials to the QS1 team via encrypted intake. Infrastructure is configured and connected to your account.' },
     { n: '05', title: 'Algorithm Deployment', body: 'QS1 v3.2 deploys directly onto your account. Risk systems activate. Trade detection, management, and execution become fully autonomous.' },
     { n: '06', title: 'Automated Trading Begins', body: 'QS1 scans continuously for optimal Gold setups. Trades only when conditions are favorable. No manual experience required.' },
@@ -708,10 +708,10 @@ function HowItWorks({ onOpen }: { onOpen: () => void }) {
           <h3 style={{ fontSize: 26, fontWeight: 200, color: '#C8C8C8', marginTop: 18, marginBottom: 32, letterSpacing: '-0.02em' }}>Requesting Your Payout</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
             {[
-              { n: '1', title: 'Log In', body: 'Access your Lucid Trading dashboard using your registered credentials.' },
-              { n: '2', title: 'Complete KYC', body: 'Complete the identity verification (Know Your Customer) process required by Lucid.' },
+              { n: '1', title: 'Log In', body: 'Access your prop firm dashboard using your registered credentials.' },
+              { n: '2', title: 'Complete KYC', body: 'Complete the identity verification (Know Your Customer) process required by the prop firm.' },
               { n: '3', title: 'Add Banking', body: 'Input your banking details for direct deposit payout processing.' },
-              { n: '4', title: 'Request Payout', body: 'Submit directly through Lucid. Payouts are often processed extremely quickly per Lucid documentation.' },
+              { n: '4', title: 'Request Payout', body: 'Submit directly through the prop firm dashboard. Payouts are often processed extremely quickly.' },
             ].map(step => (
               <div key={step.n} style={{ padding: '22px', background: 'rgba(255,255,255,0.02)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.04)' }}>
                 <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
@@ -1068,7 +1068,7 @@ export default function QuantaraPage() {
                 { n: '03', title: 'Volatility Regime Filtering', body: 'Multi-regime detection that adapts execution parameters based on prevailing volatility and correlation states.' },
                 { n: '04', title: 'Dynamic Risk Architecture', body: 'Proprietary risk allocation with adaptive position sizing, drawdown controls, and funded account rule compliance.' },
                 { n: '05', title: 'Automated Execution Engine', body: 'Fully automated trade identification, entry, and management. Zero manual intervention required at any stage.' },
-                { n: '06', title: 'Platform Integration', body: 'Native connectivity to Tradovate, TradingView, and Lucid Trading proprietary capital program infrastructure.' },
+                { n: '06', title: 'Platform Integration', body: 'Native connectivity to Tradovate, TradingView, and prop firm capital program infrastructure.' },
               ].map(item => (
                 <div key={item.n} className="qs-step-card" style={{ padding: '36px 32px', background: '#0A0A0B', borderRight: '1px solid rgba(245,158,11,0.04)', borderBottom: '1px solid rgba(245,158,11,0.04)', transition: 'background 0.2s' }}>
                   <div style={{ fontSize: 10, color: '#1E1E1E', letterSpacing: '0.1em', marginBottom: 18 }}>{item.n}</div>
@@ -1131,7 +1131,7 @@ export default function QuantaraPage() {
                   { phase: 'Phase I', title: 'Historical Analysis', body: 'Extensive tick-level historical analysis of Gold futures spanning multiple market cycles and volatility regimes.' },
                   { phase: 'Phase II', title: 'Model Development', body: 'Neural pattern recognition and reinforcement learning optimization across defined objective functions.' },
                   { phase: 'Phase III', title: 'Forward Testing', body: 'Multi-year forward testing in live market conditions with structured performance monitoring and parameter refinement.' },
-                  { phase: 'Phase IV', title: 'Infrastructure Integration', body: 'Integration with Lucid Trading proprietary capital frameworks and establishment of execution monitoring protocols.' },
+                  { phase: 'Phase IV', title: 'Infrastructure Integration', body: 'Integration with prop firm capital frameworks and establishment of execution monitoring protocols.' },
                 ].map((item, i, arr) => (
                   <div key={i} style={{ display: 'flex', gap: 24, paddingBottom: i < arr.length - 1 ? 36 : 0 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -1208,7 +1208,7 @@ export default function QuantaraPage() {
                   ['Structure', 'Private, invite-only initiative'],
                   ['Focus', 'Gold futures — GC/MGC'],
                   ['AI Engine', 'QS1 v3.2 (Quantitative ML)'],
-                  ['Integration', 'Lucid Trading + Tradovate'],
+                  ['Integration', 'Prop Firm + Tradovate'],
                   ['Fee Model', '30% on successful payouts only'],
                   ['Access', 'Qualified participants only'],
                   ['Operation', 'Fully automated — zero manual input'],
