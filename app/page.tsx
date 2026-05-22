@@ -787,50 +787,42 @@ function WhyQS1() {
 
 // ─── Modal ────────────────────────────────────────────────────────────────────
 function Modal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [done, setDone] = useState(false);
-  const [f, setF] = useState({ name: '', email: '', phone: '', size: '', note: '', ack: false });
   if (!open) return null;
-  const submit = (e: React.FormEvent) => { e.preventDefault(); setDone(true); };
-  const inp: React.CSSProperties = { width: '100%', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, color: '#E0E0E0', fontSize: 14, padding: '12px 16px', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit', transition: 'border-color 0.2s' };
-  const lbl: React.CSSProperties = { display: 'block', color: '#444', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 7 };
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }} onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{ background: 'linear-gradient(#0E0E10, #0E0E10) padding-box, linear-gradient(135deg, rgba(245,158,11,0.2), rgba(163,217,255,0.06), rgba(245,158,11,0.1)) border-box', border: '1px solid transparent', borderRadius: 20, padding: '48px', maxWidth: 500, width: '100%', position: 'relative', maxHeight: '92vh', overflowY: 'auto', boxShadow: '0 40px 120px rgba(0,0,0,0.8), 0 0 60px rgba(245,158,11,0.06)' }}>
-        <button onClick={onClose} style={{ position: 'absolute', top: 20, right: 20, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: '#555', cursor: 'pointer', fontSize: 18, width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'inherit', transition: 'all 0.15s' }}>×</button>
-        {done ? (
-          <div style={{ textAlign: 'center', padding: '40px 0' }}>
-            <div style={{ width: 60, height: 60, borderRadius: '50%', background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-              <span style={{ color: '#F59E0B', fontSize: 22 }}>✓</span>
+    <div
+      style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
+      onClick={e => e.target === e.currentTarget && onClose()}
+    >
+      <div style={{
+        background: 'linear-gradient(#0E0E10, #0E0E10) padding-box, linear-gradient(135deg, rgba(245,158,11,0.2), rgba(163,217,255,0.06), rgba(245,158,11,0.1)) border-box',
+        border: '1px solid transparent', borderRadius: 20, overflow: 'hidden',
+        width: '100%', maxWidth: 780, position: 'relative',
+        boxShadow: '0 40px 120px rgba(0,0,0,0.8), 0 0 60px rgba(245,158,11,0.06)',
+      }}>
+        {/* Header */}
+        <div style={{ padding: '24px 32px', borderBottom: '1px solid rgba(245,158,11,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <QMark size={28} glow />
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 300, color: '#C8C8C8', letterSpacing: '0.04em' }}>Schedule a Call</div>
+              <div style={{ fontSize: 10, color: '#3A3A3A', letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 2 }}>Quantara Systems · QS1 Program</div>
             </div>
-            <h3 style={{ color: '#E8E8E8', fontSize: 22, fontWeight: 200, letterSpacing: '-0.02em', marginBottom: 14 }}>Request Received</h3>
-            <p style={{ color: '#444', fontSize: 13, lineHeight: 1.9 }}>Qualified inquiries are reviewed in the order received. We will be in touch if your profile aligns with current program parameters.</p>
           </div>
-        ) : (
-          <>
-            <Badge>Private Program</Badge>
-            <h3 style={{ color: '#E8E8E8', fontSize: 24, fontWeight: 200, letterSpacing: '-0.02em', marginTop: 18, marginBottom: 6 }}>Request Consideration</h3>
-            <p style={{ color: '#333', fontSize: 13, marginBottom: 32, lineHeight: 1.7 }}>Quantara System One — QS1 Institutional Gold Algorithmic Program</p>
-            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div><label style={lbl}>Full Name *</label><input required value={f.name} onChange={e => setF(p => ({ ...p, name: e.target.value }))} style={inp} placeholder="Your full name" /></div>
-              <div><label style={lbl}>Email Address *</label><input required type="email" value={f.email} onChange={e => setF(p => ({ ...p, email: e.target.value }))} style={inp} placeholder="your@email.com" /></div>
-              <div><label style={lbl}>Phone <span style={{ color: '#2A2A2A' }}>Optional</span></label><input value={f.phone} onChange={e => setF(p => ({ ...p, phone: e.target.value }))} style={inp} placeholder="+1 (000) 000-0000" /></div>
-              <div>
-                <label style={lbl}>Account Size Interest *</label>
-                <select required value={f.size} onChange={e => setF(p => ({ ...p, size: e.target.value }))} style={{ ...inp, appearance: 'none' as const, WebkitAppearance: 'none' as const }}>
-                  <option value="">Select account size...</option>
-                  <option value="50k">$50,000</option><option value="100k">$100,000</option>
-                  <option value="150k">$150,000</option><option value="other">Other</option>
-                </select>
-              </div>
-              <div><label style={lbl}>Why are you exploring systematic approaches?</label><textarea value={f.note} onChange={e => setF(p => ({ ...p, note: e.target.value }))} style={{ ...inp, height: 88, resize: 'none' as const }} placeholder="Brief note..." /></div>
-              <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                <input required type="checkbox" id="qs-ack" checked={f.ack} onChange={e => setF(p => ({ ...p, ack: e.target.checked }))} style={{ marginTop: 3, flexShrink: 0, accentColor: '#F59E0B', cursor: 'pointer' }} />
-                <label htmlFor="qs-ack" style={{ color: '#3A3A3A', fontSize: 12, lineHeight: 1.75, cursor: 'pointer' }}>I acknowledge this is a private program for qualified participants only and understand all trading involves substantial risk of loss.</label>
-              </div>
-              <button type="submit" className="qs-btn-gold" style={{ width: '100%', marginTop: 4, justifyContent: 'center' }}>Submit Request</button>
-            </form>
-          </>
-        )}
+          <button
+            onClick={onClose}
+            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: '#555', cursor: 'pointer', fontSize: 18, width: 34, height: 34, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'inherit', flexShrink: 0 }}
+          >×</button>
+        </div>
+
+        {/* Calendly embed */}
+        <iframe
+          src="https://calendly.com/quantarasystems-sales/30min?background_color=0e0e10&text_color=e8e8e8&primary_color=f59e0b&hide_gdpr_banner=1"
+          width="100%"
+          height="660"
+          frameBorder="0"
+          title="Schedule a call with Quantara Systems"
+          style={{ display: 'block' }}
+        />
       </div>
     </div>
   );
