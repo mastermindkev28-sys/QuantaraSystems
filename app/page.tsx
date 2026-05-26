@@ -785,7 +785,7 @@ function WhyQS1() {
   );
 }
 
-const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/30min';
+const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/45min';
 
 declare global { interface Window { Calendly?: { initPopupWidget: (o: { url: string }) => void } } }
 
