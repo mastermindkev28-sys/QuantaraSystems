@@ -289,7 +289,7 @@ function GoldTickerBar({ data, loading }: { data: GoldData | null; loading: bool
             )}
           </div>
         ) : (
-          <div style={{ color: '#333', fontSize: 13, padding: '24px 0' }}>Market data temporarily unavailable — retrying in 30 seconds.</div>
+          <div style={{ color: '#333', fontSize: 13, padding: '24px 0' }}>Market data temporarily unavailable. Retrying in 30 seconds.</div>
         )}
       </div>
     </section>
@@ -390,7 +390,7 @@ function PerformanceSection() {
         {/* Bento grid */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto auto', gap: 16 }}>
 
-          {/* Max payout — spans 1 col */}
+          {/* Max payout - spans 1 col */}
           <div style={{ padding: '36px', background: 'linear-gradient(135deg, #0D0D0D 0%, #0F1018 100%)', border: '1px solid rgba(245,158,11,0.12)', borderRadius: 16, boxShadow: '0 0 40px rgba(245,158,11,0.04)' }}>
             <div style={{ fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#3A3A3A', marginBottom: 20 }}>Max Per Cycle</div>
             <div style={{
@@ -441,7 +441,7 @@ function PerformanceSection() {
             </div>
           </div>
 
-          {/* Revenue split — spans 2 cols */}
+          {/* Revenue split - spans 2 cols */}
           <div style={{ gridColumn: 'span 2', padding: '36px', background: 'linear-gradient(135deg, #0D0D0D 0%, #0F1018 100%)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16 }}>
             <div style={{ fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#3A3A3A', marginBottom: 24 }}>6-Month Revenue Split</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
@@ -653,8 +653,8 @@ function AccountDashboard() {
 function HowItWorks({ onOpen }: { onOpen: () => void }) {
   const steps = [
     { n: '01', title: 'Initial Enrollment', body: 'Select your account size ($50K, $100K, or $150K) and submit the one-time program fee to initiate onboarding.' },
-    { n: '02', title: 'Create Prop Firm Account', body: 'Register with the prop firm — the platform used to house your funded account and manage payouts.' },
-    { n: '03', title: 'Obtain Tradovate Credentials', body: 'Receive your Tradovate execution credentials through the prop firm. These are trading credentials only — separate from your prop firm dashboard login.' },
+    { n: '02', title: 'Create Prop Firm Account', body: 'Register with the prop firm, the platform used to house your funded account and manage payouts.' },
+    { n: '03', title: 'Obtain Tradovate Credentials', body: 'Receive your Tradovate execution credentials through the prop firm. These are trading credentials only, separate from your prop firm dashboard login.' },
     { n: '04', title: 'Secure Integration', body: 'Provide credentials to the QS1 team via encrypted intake. Infrastructure is configured and connected to your account.' },
     { n: '05', title: 'Algorithm Deployment', body: 'QS1 v3.2 deploys directly onto your account. Risk systems activate. Trade detection, management, and execution become fully autonomous.' },
     { n: '06', title: 'Automated Trading Begins', body: 'QS1 scans continuously for optimal Gold setups. Trades only when conditions are favorable. No manual experience required.' },
@@ -695,7 +695,7 @@ function HowItWorks({ onOpen }: { onOpen: () => void }) {
                 <span style={{ color: '#F59E0B', fontSize: 14, fontWeight: 300 }}>{i + 1}</span>
               </div>
               <h3 style={{ fontSize: 14, fontWeight: 400, color: '#C0C0C0', marginBottom: 12, lineHeight: 1.4 }}>
-                Step {i + 1} — {step.title}
+                Step {i + 1}: {step.title}
               </h3>
               <p style={{ color: '#3A3A3A', fontSize: 13, lineHeight: 1.85 }}>{step.body}</p>
             </div>
@@ -738,7 +738,7 @@ function WhyQS1() {
     { icon: '◷', title: 'Time Efficiency', body: 'No charts, no technical analysis, no market psychology. QS1 handles all execution autonomously while you focus elsewhere.' },
     { icon: '◈', title: 'Institutional Infrastructure', body: 'Built around quantitative execution engines, multi-layer risk controls, and institutional-grade automated safety systems.' },
     { icon: '⊞', title: 'Scalability', body: 'Multiple funded accounts can be operated simultaneously, compounding systematic exposure across all three account tiers.' },
-    { icon: '◎', title: 'Passive Exposure', body: 'Fully hands-free automated execution. Your account operates every session the markets are open — without you watching.' },
+    { icon: '◎', title: 'Passive Exposure', body: 'Fully hands-free automated execution. Your account operates every session the markets are open, without you watching.' },
     { icon: '∿', title: 'Consistency Focused', body: 'Prioritizes sustainable, repeatable payouts over aggressive strategies that risk violating funded account rules.' },
     { icon: '⬡', title: 'Professional Management', body: 'Managed directly by quantitative developers and systematic trading operators with years of institutional-grade experience.' },
   ];
@@ -772,7 +772,7 @@ function WhyQS1() {
 
         <div style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.04) 0%, rgba(163,217,255,0.02) 50%, rgba(245,158,11,0.02) 100%)', border: '1px solid rgba(245,158,11,0.1)', borderRadius: 18, padding: '48px', textAlign: 'center', boxShadow: '0 0 60px rgba(245,158,11,0.04)' }}>
           <p style={{ color: '#4A4A4A', fontSize: 16, lineHeight: 2, maxWidth: 800, margin: '0 auto', fontWeight: 300 }}>
-            QS1 was engineered for individuals seeking sophisticated algorithmic market exposure without becoming full-time traders. Combining <span style={{ color: '#6A6A6A' }}>artificial intelligence</span>, <span style={{ color: '#6A6A6A' }}>quantitative research</span>, <span style={{ color: '#6A6A6A' }}>tick-data analysis</span>, <span style={{ color: '#6A6A6A' }}>institutional risk frameworks</span>, and <span style={{ color: '#6A6A6A' }}>automated execution systems</span> — delivering a structured, scalable, hands-free approach to modern futures trading.
+            QS1 was engineered for individuals seeking sophisticated algorithmic market exposure without becoming full-time traders. Combining <span style={{ color: '#6A6A6A' }}>artificial intelligence</span>, <span style={{ color: '#6A6A6A' }}>quantitative research</span>, <span style={{ color: '#6A6A6A' }}>tick-data analysis</span>, <span style={{ color: '#6A6A6A' }}>institutional risk frameworks</span>, and <span style={{ color: '#6A6A6A' }}>automated execution systems</span>, delivering a structured, scalable, hands-free approach to modern futures trading.
           </p>
           <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' }}>
             {['Private', 'Capacity-Limited', 'Selectively Offered'].map(t => (
@@ -999,7 +999,7 @@ export default function QuantaraPage() {
             </div>
 
             <p className="qs-a3" style={{ color: '#444', fontSize: 16, lineHeight: 1.9, maxWidth: 660, margin: '0 auto 48px', fontWeight: 300 }}>
-              A proprietary quantitative framework powered by QS1 — algorithmic execution in Gold futures markets. Machine learning models, statistical frameworks, and institutional risk architecture.
+              A proprietary quantitative framework powered by QS1. Algorithmic execution in Gold futures markets. Machine learning models, statistical frameworks, and institutional risk architecture.
             </p>
 
             <div className="qs-a4" style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 64 }}>
@@ -1080,7 +1080,7 @@ export default function QuantaraPage() {
 
             <div style={{ border: '1px solid rgba(245,158,11,0.05)', borderRadius: 10, padding: '18px 24px', background: 'rgba(245,158,11,0.015)' }}>
               <p style={{ color: '#2E2E2E', fontSize: 12, lineHeight: 1.85 }}>
-                <span style={{ color: '#3A3A3A', fontWeight: 500 }}>Risk Disclosure —</span> All trading involves substantial risk of loss. Past performance does not indicate future results. QS1 does not predict markets or guarantee specific outcomes. Participation is restricted to qualified individuals only.
+                <span style={{ color: '#3A3A3A', fontWeight: 500 }}>Risk Disclosure:</span> All trading involves substantial risk of loss. Past performance does not indicate future results. QS1 does not predict markets or guarantee specific outcomes. Participation is restricted to qualified individuals only.
               </p>
             </div>
           </div>
@@ -1165,7 +1165,7 @@ export default function QuantaraPage() {
             </div>
             <div className="qs-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 56 }}>
               {[
-                { q: "Been allocating capital professionally for a long time. What stood out about QS1 wasn't the projections deck — it was that the account actually behaved the way they said it would. No drama, no scrambling. First payout came through and I didn't even have to ask about it.", name: 'M.R.', role: 'Family Office Allocator' },
+                { q: "Been allocating capital professionally for a long time. What stood out about QS1 wasn't the projections deck. It was that the account actually behaved the way they said it would. No drama, no scrambling. First payout came through and I didn't even have to ask about it.", name: 'M.R.', role: 'Family Office Allocator' },
                 { q: "I set it up, went about my week, and came back to a position that had been managed the whole time without me touching anything. Requested my first payout two months in and it cleared the same week. That told me everything I needed to know about how this thing was built.", name: 'D.K.', role: 'Accredited Participant' },
                 { q: "Honestly I was waiting for something to go sideways in the first 30 days. It didn't. The account ran clean through some rough sessions and the risk controls did exactly what they were supposed to. That kind of consistency is rare regardless of the strategy.", name: 'S.L.', role: 'QS1 Participant since 2024' },
                 { q: "I've done managed accounts before. Always ends up being a relationship you have to babysit on top of everything else. QS1 doesn't need managing. You hand over the credentials, it handles the rest. Made two payout requests and haven't had to pick up the phone once.", name: 'T.M.', role: 'Independent Allocator' },
@@ -1206,12 +1206,12 @@ export default function QuantaraPage() {
                 <div style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#2A2A2A', marginBottom: 24 }}>Program Structure</div>
                 {[
                   ['Structure', 'Private, invite-only initiative'],
-                  ['Focus', 'Gold futures — GC/MGC'],
+                  ['Focus', 'Gold futures (GC/MGC)'],
                   ['AI Engine', 'QS1 v3.2 (Quantitative ML)'],
                   ['Integration', 'Prop Firm + Tradovate'],
                   ['Fee Model', '30% on successful payouts only'],
                   ['Access', 'Qualified participants only'],
-                  ['Operation', 'Fully automated — zero manual input'],
+                  ['Operation', 'Fully automated, zero manual input'],
                 ].map(([k, v]) => (
                   <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '13px 0', borderBottom: '1px solid rgba(245,158,11,0.04)', gap: 16 }}>
                     <span style={{ color: '#2E2E2E', fontSize: 13 }}>{k}</span>
@@ -1298,7 +1298,7 @@ export default function QuantaraPage() {
             </div>
             <div style={{ borderTop: '1px solid rgba(245,158,11,0.04)', paddingTop: 28 }}>
               <p style={{ color: '#1A1A1A', fontSize: 11, lineHeight: 1.95, marginBottom: 16 }}>
-                <strong style={{ color: '#222' }}>RISK DISCLOSURE:</strong> Trading futures contracts involves substantial risk of loss and is not appropriate for all investors. Past performance is not indicative of future results. Quantara Systems and QS1 do not guarantee profits or freedom from loss. The content on this site is for informational purposes only and does not constitute financial advice, a solicitation, or an offer to buy or sell any financial instrument. Participation is restricted to qualified, accredited individuals only. All performance data reflects illustrative projections only — not a guarantee. This is a private, confidential program. Unauthorized distribution is prohibited.
+                <strong style={{ color: '#222' }}>RISK DISCLOSURE:</strong> Trading futures contracts involves substantial risk of loss and is not appropriate for all investors. Past performance is not indicative of future results. Quantara Systems and QS1 do not guarantee profits or freedom from loss. The content on this site is for informational purposes only and does not constitute financial advice, a solicitation, or an offer to buy or sell any financial instrument. Participation is restricted to qualified, accredited individuals only. All performance data reflects illustrative projections only, not a guarantee. This is a private, confidential program. Unauthorized distribution is prohibited.
               </p>
               <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
                 <span style={{ color: '#181818', fontSize: 11 }}>© 2026 Quantara Systems. All rights reserved. Confidential.</span>
