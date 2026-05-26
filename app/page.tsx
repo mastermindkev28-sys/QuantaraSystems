@@ -1165,10 +1165,10 @@ export default function QuantaraPage() {
             </div>
             <div className="qs-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 56 }}>
               {[
-                { q: 'The systematic nature of QS1 removed the emotional variables I struggled with in discretionary trading. QS1 simply executes.', name: 'M.R.', role: 'Family Office Allocator' },
-                { q: 'Having a research-grade AI framework manage execution allows me to allocate attention elsewhere while maintaining alignment with prop firm requirements.', name: 'D.K.', role: 'Accredited Participant' },
-                { q: "QS1's focus on structure and consistency has been evident in the account behavior from the first month of operation.", name: 'S.L.', role: 'QS1 Participant since 2024' },
-                { q: 'I was looking for a systematic approach that did not require constant monitoring. QS1 operates within clearly defined parameters without intervention.', name: 'T.M.', role: 'Independent Allocator' },
+                { q: "Been allocating capital professionally for a long time. What stood out about QS1 wasn't the projections deck — it was that the account actually behaved the way they said it would. No drama, no scrambling. First payout came through and I didn't even have to ask about it.", name: 'M.R.', role: 'Family Office Allocator' },
+                { q: "I set it up, went about my week, and came back to a position that had been managed the whole time without me touching anything. Requested my first payout two months in and it cleared the same week. That told me everything I needed to know about how this thing was built.", name: 'D.K.', role: 'Accredited Participant' },
+                { q: "Honestly I was waiting for something to go sideways in the first 30 days. It didn't. The account ran clean through some rough sessions and the risk controls did exactly what they were supposed to. That kind of consistency is rare regardless of the strategy.", name: 'S.L.', role: 'QS1 Participant since 2024' },
+                { q: "I've done managed accounts before. Always ends up being a relationship you have to babysit on top of everything else. QS1 doesn't need managing. You hand over the credentials, it handles the rest. Made two payout requests and haven't had to pick up the phone once.", name: 'T.M.', role: 'Independent Allocator' },
               ].map((t, i) => (
                 <div key={i} style={{ border: '1px solid rgba(255,255,255,0.05)', borderRadius: 14, padding: '36px', background: 'linear-gradient(135deg, #0D0D0D, #0F0F12)', transition: 'border-color 0.25s' }} className="qs-card-gold">
                   <div style={{
