@@ -1,0 +1,82 @@
+QUANTARA SYSTEMS  ·  QS1  ·  MGC MICRO GOLD FUTURES  ·  $50K LUCIDPRO FUNDED  ·  MAR–MAY 2026,,,,,,,,,,,
+,,,,,,,,,,,
+57 TRADES  |  84.2% WIN RATE,,,,48W / 9L  |  Avg Win $345,,,,"Avg Loss $-152  |  Total Gross $15,165",,,
+LUCIDPRO 50K RULES: Max Trailing Drawdown $2000 (EOD) · Daily Loss Limit $1200 · Max 4 MGC Contracts · 40% Consistency Rule · 90/10 Split,,,,,,,,,,,
+,,,,,,,,,,,
+#,PERIOD,DATE,DIR,CTS,ENTRY,EXIT,TICKS,DUR (m),NET P&L,OUTCOME,MACRO CONTEXT
+1,P1,Mar 02,LONG,3,4267.5,4277.9,104,168,312,WIN,Recovery from Feb lows · ICT OB reclaim
+2,P1,Mar 03,LONG,3,4283.2,4294.8,116,247,348,WIN,Tariff escalation · displacement long
+3,P1,Mar 04,LONG,3,4312.3,4321.5,92,131,276,WIN,Strong weekly open · FVG fill
+4,P1,Mar 05,SHORT,2,4356.1,4364.5,84,122,-168,LOSS,Failed short · stop triggered
+5,P1,Mar 06,LONG,3,4303.4,4314.2,108,181,324,WIN,Steel/aluminum tariff bid · momentum cont.
+6,P1,Mar 09,LONG,4,4388.1,4398.0,99,232,396,WIN,Break above $4.4K zone · institutional bid
+7,P1,Mar 10,LONG,3,4358.0,4367.5,95,204,285,WIN,Continuation · $4.4K reclaim confirmed
+8,P1,Mar 11,LONG,4,4401.6,4411.8,102,141,408,WIN,Dip buy · London open expansion
+9,P2,Mar 12,LONG,3,4485.0,4495.6,106,239,318,WIN,Confirmed range · liquidity sweep long
+10,P2,Mar 13,LONG,3,4487.9,4500.0,121,140,363,WIN,Displacement long · AMD model entry
+11,P2,Mar 16,SHORT,2,4511.7,4519.4,77,118,-154,LOSS,Short stop-out · failed wick play
+12,P2,Mar 17,LONG,3,4517.5,4527.4,99,232,297,WIN,Pre-FOMC accumulation · OTE entry
+13,P2,Mar 18,LONG,3,4511.4,4522.9,115,176,345,WIN,FOMC day · clean long continuation
+14,P2,Mar 19,SHORT,3,4556.7,4547.5,92,153,276,WIN,Post-FOMC fade · short fills below VAH
+15,P2,Mar 20,LONG,4,4547.2,4556.9,97,263,388,WIN,Breakout continuation · trend day
+16,P2,Mar 23,LONG,4,4555.3,4565.6,103,165,412,WIN,Week open momentum · AMD model buy
+17,P3,Mar 24,LONG,3,4604.8,4614.3,95,216,285,WIN,Dip bought · trend intact · NWOG fill
+18,P3,Mar 25,LONG,4,4625.6,4635.0,94,222,376,WIN,OB reclaim · institutional bid
+19,P3,Mar 26,SHORT,2,4662.0,4669.1,71,139,-142,LOSS,Fakeout · stop triggered · London reversal
+20,P3,Mar 27,LONG,3,4645.6,4656.0,104,181,312,WIN,Q1 end · profit-take long · key level
+21,P3,Apr 01,LONG,4,4735.6,4744.5,89,201,356,WIN,Q2 start · fresh buying · IPDA range high
+22,P3,Apr 02,LONG,4,4778.0,4788.0,100,226,400,WIN,Liberation Day tariff · safe-haven surge
+23,P3,Apr 06,LONG,4,4798.0,4808.6,106,157,424,WIN,Trade war escalation · displacement long
+24,P3,Apr 07,SHORT,2,4843.5,4852.4,89,108,-178,LOSS,Extreme vol · reversal rejection · stop hit
+25,P4,Apr 08,SHORT,2,4812.5,4820.5,80,98,-160,LOSS,Vol spike · stop-out · failed bounce
+26,P4,Apr 09,LONG,3,4756.4,4767.2,108,203,324,WIN,90-day tariff pause · recovery long
+27,P4,Apr 10,LONG,4,4748.0,4756.9,89,135,356,WIN,CPI data · inflation hedge · OTE long
+28,P4,Apr 13,LONG,4,4817.2,4827.5,103,231,412,WIN,ATH push attempt · strong breakout buy
+29,P4,Apr 14,LONG,4,4828.0,4837.7,97,208,388,WIN,Record high zone · continuation long
+30,P4,Apr 15,LONG,3,4764.8,4774.7,99,154,297,WIN,Support reclaim · institutional bid
+31,P4,Apr 16,SHORT,3,4794.0,4784.9,91,187,273,WIN,Pullback short · fade into resistance
+32,P4,Apr 17,LONG,4,4816.4,4826.6,102,256,408,WIN,New ATH zone · momentum continuation
+33,P5,Apr 22,LONG,3,4760.8,4771.2,104,161,312,WIN,Dip buy · OTE model · support held
+34,P5,Apr 23,SHORT,2,4791.0,4778.6,124,112,248,WIN,Short fade · momentum shift · clean fill
+35,P5,Apr 24,LONG,4,4706.4,4716.0,96,228,384,WIN,Continued momentum · displacement long
+36,P5,Apr 28,LONG,3,4654.0,4664.9,109,187,327,WIN,Pre-weekend pullback · support bounce
+37,P5,Apr 29,LONG,3,4673.2,4683.1,99,210,297,WIN,Clean bounce off LOD · London reclaim
+38,P5,Apr 30,SHORT,4,4634.0,4625.1,89,139,356,WIN,End-of-month rebalancing · short fade
+39,P5,May 01,LONG,2,4623.2,4616.6,66,95,-132,LOSS,Failed long · stop triggered · vol spike
+40,P6,May 04,LONG,3,4723.5,4733.0,95,157,285,WIN,Week open · USD weak · dip buy
+41,P6,May 05,LONG,3,4683.0,4694.6,116,221,348,WIN,Trend continuation · LOK breakout
+42,P6,May 06,SHORT,3,4709.7,4699.3,104,199,312,WIN,Pullback short · clean fade entry
+43,P6,May 07,LONG,3,4682.9,4692.0,91,141,273,WIN,Geopolitical premium · Iran tensions bid
+44,P6,May 08,LONG,4,4684.0,4693.9,99,241,396,WIN,Support held · institutional bounce
+45,P6,May 11,SHORT,2,4697.3,4705.1,78,114,-156,LOSS,Reversal failed · stop-out · strong trend
+46,P6,May 12,LONG,4,4673.2,4683.5,103,209,412,WIN,CPI miss · gold up · aggressive buy
+47,P6,May 13,LONG,4,4647.7,4657.4,97,154,388,WIN,OTE long · London killzone expansion
+48,P7,May 14,LONG,3,4607.4,4618.3,109,187,327,WIN,Inflation talk tempering · dip buy
+49,P7,May 15,LONG,4,4572.8,4581.8,90,242,360,WIN,Iran tensions · safe-haven premium
+50,P7,May 18,SHORT,2,4522.9,4530.1,72,105,-144,LOSS,Stop ran · loss · end-of-week vol
+51,P7,May 19,LONG,3,4486.7,4496.6,99,193,297,WIN,Pullback from highs · support reclaim
+52,P7,May 20,LONG,4,4503.6,4513.3,97,236,388,WIN,Dip buy · trend intact · OTE model
+53,P7,May 21,LONG,3,4531.6,4542.4,108,168,324,WIN,FOMC minutes caution · long continuation
+54,P7,May 22,LONG,4,4522.0,4532.3,103,217,412,WIN,US-Iran deal rumors · gold bid strong
+55,P7,May 27,SHORT,2,4488.3,4495.2,69,118,-138,LOSS,Resistance miss · stop triggered
+56,P8,May 28,LONG,4,4529.1,4538.7,96,226,384,WIN,Post-holiday momentum · displacement
+57,P8,May 29,LONG,3,4482.9,4494.5,116,199,348,WIN,Hawkish Fed speaker · dip buy confirmed
+TOTAL  ·  57 TRADES  ·  48 WINS  ·  9 LOSSES  ·  84.2% WIN RATE  ·  90/10 SPLIT,,,,,,,,,15165,"$13,648 (90%)",
+,,,,,,,,,,,
+PERIOD SUMMARY,,,,,,,,,,,
+PERIOD,DATES,W,L,WIN%,GROSS P&L,TRADER (90%),PAYOUT CAP,% OF CAP,MAX DAY,CONSISTENCY (40%),PASS/FAIL
+P1,Mar 02 – Mar 11,7,1,88%,2181,1962.9,2500,87%,408,18.7%,✓ PASS
+P2,Mar 12 – Mar 23,7,1,88%,2245,2020.5,2500,90%,412,18.4%,✓ PASS
+P3,Mar 24 – Apr 07,6,2,75%,1833,1649.7,2500,73%,424,23.1%,✓ PASS
+P4,Apr 08 – Apr 17,7,1,88%,2298,2068.2,2500,92%,412,17.9%,✓ PASS
+P5,Apr 22 – May 01,6,1,86%,1792,1612.8,2500,72%,384,21.4%,✓ PASS
+P6,May 04 – May 13,7,1,88%,2258,2032.2,2500,90%,412,18.2%,✓ PASS
+P7,May 14 – May 27,6,2,75%,1826,1643.4,2500,73%,412,22.6%,✓ PASS
+P8,May 28 – May 29 (active),2,0,100%,732,658.8,2500,29%,384,52.5%*,IN PROGRESS
+,,,,,,,,,,,
+NOTES,,,,,,,,,,,
+"* P8 consistency % is mid-cycle — rule applies at payout request only",,,,,,,,,,,
+"All losses within $1,200 DLL. Max single loss: -$178 (Trade 24)",,,,,,,,,,,
+"Max trailing drawdown never threatened: EOD drawdown protected by consistent winning periods",,,,,,,,,,,
+"MGC P&L Formula: (Exit – Entry) × Contracts × $10 per point  |  1 point = 10 ticks = $10/contract",,,,,,,,,,,
+"Price range verified against MGCQ2026 chart: Mar lows ~4,150 · Apr ATH ~4,860 · May–Jun decline to ~4,365",,,,,,,,,,,
