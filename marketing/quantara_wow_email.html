@@ -28,7 +28,7 @@
       </tr>
     </table>
 
-    <!-- The centerpiece SVG — a single sweeping gold arc, like a brushstroke -->
+    <!-- Centerpiece SVG: sweeping gold arc -->
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       <tr><td align="center" style="padding-bottom:40px;">
         <svg width="520" height="180" viewBox="0 0 520 180" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -50,8 +50,6 @@
               <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-
-          <!-- Grid lines — faint background structure -->
           <line x1="0" y1="180" x2="520" y2="180" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
           <line x1="0" y1="135" x2="520" y2="135" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
           <line x1="0" y1="90" x2="520" y2="90" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
@@ -59,20 +57,12 @@
           <line x1="130" y1="0" x2="130" y2="180" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
           <line x1="260" y1="0" x2="260" y2="180" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
           <line x1="390" y1="0" x2="390" y2="180" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
-
-          <!-- Fill under the arc -->
           <path d="M0,175 C40,172 80,165 120,155 C160,145 190,138 230,120 C265,104 295,85 330,62 C360,42 390,22 430,10 C455,3 480,1 520,0 L520,180 L0,180 Z"
                 fill="url(#glow-grad)"/>
-
-          <!-- The arc — main stroke -->
           <path d="M0,175 C40,172 80,165 120,155 C160,145 190,138 230,120 C265,104 295,85 330,62 C360,42 390,22 430,10 C455,3 480,1 520,0"
                 stroke="url(#arc-grad)" stroke-width="2.5" fill="none" filter="url(#glow)" stroke-linecap="round"/>
-
-          <!-- Endpoint dot -->
           <circle cx="520" cy="0" r="4" fill="#FDEFC3" opacity="0.9"/>
           <circle cx="520" cy="0" r="9" fill="#F59E0B" opacity="0.15"/>
-
-          <!-- Subtle tick marks on x-axis -->
           <line x1="130" y1="176" x2="130" y2="180" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
           <line x1="260" y1="176" x2="260" y2="180" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
           <line x1="390" y1="176" x2="390" y2="180" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
@@ -85,7 +75,7 @@
       Some people see volatility.<br>
       <span style="color:#F59E0B;">Others see structure.</span>
     </h1>
-    <p style="margin:0 0 0 0; font-size:16px; line-height:1.1; color:#5C5C5C; letter-spacing:0.5px; font-weight:400;">
+    <p style="margin:0; font-size:16px; line-height:1.1; color:#5C5C5C; letter-spacing:0.5px; font-weight:400;">
       You already know which one you are.
     </p>
 
@@ -94,33 +84,31 @@
   <!-- BODY BLOCK -->
   <tr><td style="background:#0F0F0F; padding:36px 40px 0 40px;">
     <p style="margin:0 0 20px 0; font-size:16px; line-height:1.75; color:#C4C4C4;">
-      The market is not random. It only appears that way to people who haven't built the right lens to look through it.
-      At Quantara, we build that lens — systematic, quantitative, and precise enough that what looked like noise
+      The market is not random. It only appears that way to people without the right framework to read it.
+      At Quantara, we build that framework: systematic, quantitative, precise enough that what looked like noise
       starts to look like signal.
     </p>
     <p style="margin:0; font-size:16px; line-height:1.75; color:#C4C4C4;">
-      We don't run strategy sessions to sell you something. We run them because the people who belong in this
-      conversation always leave it thinking differently than when they walked in — about risk, about structure,
-      about what systematic exposure actually looks like when it's done properly.
+      We run strategy sessions for one reason. The people who belong in this conversation leave thinking differently
+      about risk, about structure, and about what systematic exposure actually looks like when it is built properly.
     </p>
   </td></tr>
 
-  <!-- DIVIDER WITH QUOTE -->
+  <!-- QUOTE BLOCK -->
   <tr><td style="background:#0F0F0F; padding:36px 40px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
-           style="border-left:2px solid #F59E0B; padding-left:20px;">
-      <tr><td style="padding-left:20px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr><td style="border-left:2px solid #F59E0B; padding-left:20px;">
         <p style="margin:0; font-size:19px; line-height:1.6; color:#E4E4E4; font-style:italic; font-weight:300;">
-          "The edge isn't in predicting the market.<br>It's in being the only one in the room<br>with a system when everyone else is guessing."
+          "The edge is not in predicting the market.<br>It is in being the only one in the room<br>with a system when everyone else is guessing."
         </p>
         <p style="margin:12px 0 0 0; font-size:12px; letter-spacing:2px; color:#5C5C5C; text-transform:uppercase;">
-          — Quantara Strategy Desk
+          Quantara Strategy Desk
         </p>
       </td></tr>
     </table>
   </td></tr>
 
-  <!-- WHAT HAPPENS ON THE CALL — 3 column icons -->
+  <!-- 3 COLUMNS -->
   <tr><td style="background:#0A0A0A; border-top:1px solid rgba(255,255,255,0.05); border-bottom:1px solid rgba(255,255,255,0.05); padding:28px 40px;">
     <p style="margin:0 0 20px 0; font-size:11px; letter-spacing:3px; color:#5C5C5C; text-transform:uppercase; font-weight:600;">
       What the 20 minutes looks like
@@ -130,17 +118,17 @@
         <td valign="top" width="33%" style="padding-right:16px;">
           <p style="margin:0 0 6px 0; font-size:22px;">◎</p>
           <p style="margin:0 0 4px 0; font-size:13px; color:#F4F4F4; font-weight:700;">The Model</p>
-          <p style="margin:0; font-size:12px; line-height:1.6; color:#7A7A7A;">Live walkthrough of the system — how it's built, sized, and hedged.</p>
+          <p style="margin:0; font-size:12px; line-height:1.6; color:#7A7A7A;">A live walkthrough of the system: how it is built, sized, and hedged.</p>
         </td>
         <td valign="top" width="33%" style="padding-right:16px;">
           <p style="margin:0 0 6px 0; font-size:22px;">◈</p>
           <p style="margin:0 0 4px 0; font-size:13px; color:#F4F4F4; font-weight:700;">The Fit</p>
-          <p style="margin:0; font-size:12px; line-height:1.6; color:#7A7A7A;">An honest conversation about whether systematic exposure makes sense for your situation.</p>
+          <p style="margin:0; font-size:12px; line-height:1.6; color:#7A7A7A;">A direct conversation about whether systematic exposure fits your situation.</p>
         </td>
         <td valign="top" width="34%">
           <p style="margin:0 0 6px 0; font-size:22px;">◇</p>
           <p style="margin:0 0 4px 0; font-size:13px; color:#F4F4F4; font-weight:700;">The Next Step</p>
-          <p style="margin:0; font-size:12px; line-height:1.6; color:#7A7A7A;">If it's right, you'll know. If it isn't, you'll still leave with a clearer picture of what is.</p>
+          <p style="margin:0; font-size:12px; line-height:1.6; color:#7A7A7A;">If it is right, you will know. If it is not, you leave with a clearer picture of what is.</p>
         </td>
       </tr>
     </table>
@@ -149,9 +137,11 @@
   <!-- CTA BLOCK -->
   <tr><td style="background:#0F0F0F; padding:40px 40px 36px 40px;" align="center">
     <p style="margin:0 0 24px 0; font-size:18px; line-height:1.6; color:#E4E4E4; text-align:center; font-weight:300;">
-      The session is 20 minutes.<br>The clarity it gives you lasts considerably longer.
+      The session is 20 minutes.<br>The clarity stays with you.
     </p>
-    <table role="presentation" cellpadding="0" cellspacing="0">
+
+    <!-- Primary CTA: Schedule -->
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
       <tr><td align="center" style="border-radius:8px; background:linear-gradient(135deg,#F59E0B 0%,#D97706 100%);">
         <a href="https://calendly.com/quantarasystems-sales?utm_source=email&utm_campaign=wow_email"
            style="display:inline-block; padding:18px 44px; font-size:14px; letter-spacing:2px; color:#0A0A0A; font-weight:800; text-decoration:none; text-transform:uppercase;">
@@ -159,6 +149,17 @@
         </a>
       </td></tr>
     </table>
+
+    <!-- Secondary CTA: Telegram -->
+    <table role="presentation" cellpadding="0" cellspacing="0">
+      <tr><td align="center" style="border-radius:8px; border:1px solid rgba(245,158,11,0.35);">
+        <a href="https://t.me/quantarasystems"
+           style="display:inline-block; padding:14px 44px; font-size:13px; letter-spacing:2px; color:#F59E0B; font-weight:700; text-decoration:none; text-transform:uppercase;">
+          Join on Telegram
+        </a>
+      </td></tr>
+    </table>
+
     <p style="margin:16px 0 0 0; font-size:12px; color:#4A4A4A; text-align:center; letter-spacing:0.5px;">
       No obligation. No pitch deck. Just a direct conversation.
     </p>
