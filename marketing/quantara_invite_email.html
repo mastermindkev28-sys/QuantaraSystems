@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantara Systems — Your Position Is Open</title>
+</head>
+<body style="margin:0; padding:0; background:#0A0A0A; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+<!-- Preheader (hidden) -->
+<div style="display:none; max-height:0; overflow:hidden; opacity:0;">
+  We opened a position in your name 11 minutes ago. It's already moving. You have 48 hours to claim it.
+</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;">
+<tr><td align="center" style="padding: 32px 16px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background:#0F0F0F; border:1px solid rgba(245,158,11,0.18); border-radius:14px; overflow:hidden;">
+
+  <!-- Logo bar -->
+  <tr><td style="padding:28px 32px 0 32px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="font-size:13px; letter-spacing:3px; color:#9A9A9A; text-transform:uppercase; font-weight:600;">
+          ◆ Quantara Systems
+        </td>
+        <td align="right" style="font-size:11px; letter-spacing:2px; color:#5C5C5C; text-transform:uppercase;">
+          Account-holder briefing
+        </td>
+      </tr>
+    </table>
+  </td></tr>
+
+  <!-- Headline -->
+  <tr><td style="padding:28px 32px 4px 32px;">
+    <p style="margin:0; font-size:13px; letter-spacing:2px; color:#F59E0B; text-transform:uppercase; font-weight:700;">
+      ⚠ A position has been opened in your name
+    </p>
+    <h1 style="margin:10px 0 0 0; font-size:28px; line-height:1.25; color:#F4F4F4; font-weight:700;">
+      {{first_name}}, we didn't send you an email.<br>We sent you a live trade.
+    </h1>
+    <p style="margin:14px 0 0 0; font-size:15px; line-height:1.65; color:#B8B8B8;">
+      11 minutes before this message reached your inbox, our systems provisioned a simulated allocation
+      in your name — sized, hedged, and tracked exactly the way it would run inside Quantara. It is moving
+      right now, in real time, against live gold market data. You are watching it happen whether you act or not.
+    </p>
+  </td></tr>
+
+  <!-- LIVE TICKET VISUAL -->
+  <tr><td style="padding:26px 32px 8px 32px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+           style="background:#0A0A0A; border:1px solid rgba(245,158,11,0.28); border-radius:12px;">
+      <tr>
+        <td style="padding:20px 22px 14px 22px; border-bottom:1px solid rgba(255,255,255,0.06);">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="font-size:11px; letter-spacing:2px; color:#5C5C5C; text-transform:uppercase;">Ticket #QS-{{ticket_id}}</td>
+              <td align="right">
+                <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#34D399; margin-right:6px; vertical-align:middle;"></span>
+                <span style="font-size:11px; letter-spacing:2px; color:#34D399; text-transform:uppercase; vertical-align:middle;">Live · Open</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:20px 22px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td>
+                <p style="margin:0; font-size:11px; letter-spacing:2px; color:#5C5C5C; text-transform:uppercase;">Instrument</p>
+                <p style="margin:4px 0 0 0; font-size:18px; color:#F4F4F4; font-weight:700;">XAU / Gold Futures</p>
+              </td>
+              <td align="right">
+                <p style="margin:0; font-size:11px; letter-spacing:2px; color:#5C5C5C; text-transform:uppercase;">Held in the name of</p>
+                <p style="margin:4px 0 0 0; font-size:18px; color:#F59E0B; font-weight:700;">{{first_name}} {{last_name}}</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Sparkline image (hosted asset, animated GIF showing live-style movement) -->
+      <tr>
+        <td style="padding:0 22px 18px 22px;">
+          <img src="https://assets.quantarasystems.io/email/live-position-spark.gif"
+               width="556" height="120" alt="Live simulated position chart trending upward in gold against a dark terminal background"
+               style="display:block; width:100%; height:auto; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:0 22px 22px 22px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="33%">
+                <p style="margin:0; font-size:11px; letter-spacing:2px; color:#5C5C5C; text-transform:uppercase;">Opened</p>
+                <p style="margin:4px 0 0 0; font-size:15px; color:#E4E4E4; font-weight:600;">{{open_time}} PT</p>
+              </td>
+              <td width="33%">
+                <p style="margin:0; font-size:11px; letter-spacing:2px; color:#5C5C5C; text-transform:uppercase;">Unrealized</p>
+                <p style="margin:4px 0 0 0; font-size:15px; color:#34D399; font-weight:700;">+{{pnl_pct}}%</p>
+              </td>
+              <td width="34%">
+                <p style="margin:0; font-size:11px; letter-spacing:2px; color:#5C5C5C; text-transform:uppercase;">Closes automatically</p>
+                <p style="margin:4px 0 0 0; font-size:15px; color:#F87171; font-weight:700;">in 47:58:12</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </td></tr>
+
+  <!-- The twist / explanation -->
+  <tr><td style="padding:24px 32px 0 32px;">
+    <p style="margin:0; font-size:15px; line-height:1.7; color:#D4D4D4;">
+      <strong style="color:#F4F4F4;">Here's what's actually happening.</strong> That ticket is real — built from the same
+      systematic models our desk runs every session — but it is <em>simulated</em>, and it is on a 48‑hour clock.
+      When it closes, the chart freezes, the number stops moving, and the seat tied to your name in our next
+      strategy session is released to the next person on the list.
+    </p>
+    <p style="margin:16px 0 0 0; font-size:15px; line-height:1.7; color:#D4D4D4;">
+      We built it this way on purpose. Most firms ask you to imagine what systematic exposure feels like.
+      We'd rather you watch it tick.
+    </p>
+  </td></tr>
+
+  <!-- Why this matters / credibility -->
+  <tr><td style="padding:22px 32px 0 32px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+           style="background:rgba(245,158,11,0.05); border:1px solid rgba(245,158,11,0.15); border-radius:10px;">
+      <tr><td style="padding:18px 20px;">
+        <p style="margin:0 0 10px 0; font-size:11px; letter-spacing:2px; color:#F59E0B; text-transform:uppercase; font-weight:700;">
+          What you're actually being invited to
+        </p>
+        <p style="margin:0; font-size:14px; line-height:1.7; color:#B8B8B8;">
+          A 20‑minute walkthrough of the live model behind the ticket above — how it's sized, how it's hedged,
+          and how qualified participants get structured access to it. No pitch deck. No "limited spots" theater.
+          Just the desk, the data, and a screen share of the system running in real time.
+        </p>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <!-- CTA -->
+  <tr><td align="center" style="padding:30px 32px 8px 32px;">
+    <table role="presentation" cellpadding="0" cellspacing="0">
+      <tr><td align="center" style="border-radius:8px; background:linear-gradient(135deg,#F59E0B,#D97706);">
+        <a href="https://calendly.com/quantarasystems-sales/strategy-session?utm_source=email&utm_campaign=live_ticket"
+           style="display:inline-block; padding:16px 38px; font-size:15px; letter-spacing:1px; color:#0A0A0A; font-weight:800; text-decoration:none; text-transform:uppercase;">
+          Claim the seat tied to my ticket →
+        </a>
+      </td></tr>
+    </table>
+    <p style="margin:14px 0 0 0; font-size:12px; color:#5C5C5C;">
+      Takes under 60 seconds. The clock above does not pause while you decide.
+    </p>
+  </td></tr>
+
+  <!-- Secondary reassurance -->
+  <tr><td style="padding:18px 32px 30px 32px;">
+    <p style="margin:0; font-size:13px; line-height:1.6; color:#7A7A7A; text-align:center;">
+      Nothing is charged, opened, or committed by booking this call. You're scheduling 20 minutes with our team —
+      that's the entire ask.
+    </p>
+  </td></tr>
+
+  <!-- Footer -->
+  <tr><td style="padding:22px 32px; border-top:1px solid rgba(255,255,255,0.06);">
+    <p style="margin:0 0 8px 0; font-size:11px; line-height:1.7; color:#5C5C5C;">
+      <strong style="color:#7A7A7A;">Important:</strong> The position displayed above is a simulated illustration generated
+      from live market data for demonstration purposes only. It does not represent funds, an account, or a trading
+      relationship, and past or simulated performance is not indicative of future results. Quantara Systems provides
+      structured access to quantitative market strategies for qualified participants only; suitability is determined
+      during the strategy session, not before it.
+    </p>
+    <p style="margin:0; font-size:11px; color:#5C5C5C;">
+      Quantara Systems · sales@quantarasystems.io ·
+      <a href="{{unsubscribe_url}}" style="color:#7A7A7A; text-decoration:underline;">Unsubscribe</a>
+      · <a href="{{preferences_url}}" style="color:#7A7A7A; text-decoration:underline;">Manage preferences</a>
+    </p>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>
