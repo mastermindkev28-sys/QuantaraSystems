@@ -16,18 +16,112 @@
 </noscript>
 <![endif]-->
 <style type="text/css">
-  /* Minimal style block — media queries only, for mobile reflow */
-  @media only screen and (max-width: 599px) {
-    .wrapper-table { width: 100% !important; }
-    .hero-title-font { font-size: 30px !important; line-height: 1.1 !important; }
-    .pull-quote-font { font-size: 22px !important; }
-    .closing-title-font { font-size: 26px !important; }
-    .compare-col-mobile { display: block !important; width: 100% !important; }
-    .hide-mobile { display: none !important; }
-    .full-width-mobile { width: 100% !important; }
-    .pad-mobile { padding-left: 20px !important; padding-right: 20px !important; }
-    .stack-mobile { display: block !important; width: 100% !important; }
-    .stat-font { font-size: 18px !important; }
+
+  /* ── ANIMATIONS (active in Apple Mail, iOS Mail, Samsung Mail, Brevo preview) ── */
+  /* Degrade gracefully to static in Gmail/Outlook */
+
+  @keyframes shimmer-cyan {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 0.5; transform: scale(0.9); }
+    50%       { opacity: 1;   transform: scale(1.15); }
+  }
+  @keyframes border-breathe {
+    0%, 100% { border-color: rgba(163,217,255,0.15); }
+    50%       { border-color: rgba(163,217,255,0.5); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-left {
+    from { opacity: 0; transform: translateX(-16px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes float-gentle {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-8px); }
+  }
+  @keyframes second-sweep {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes minute-crawl {
+    from { transform: rotate(180deg); }
+    to   { transform: rotate(540deg); }
+  }
+  @keyframes glow-cyan {
+    0%, 100% { box-shadow: 0 0 10px rgba(163,217,255,0.25), 0 0 30px rgba(163,217,255,0.1); }
+    50%       { box-shadow: 0 0 28px rgba(163,217,255,0.6), 0 0 60px rgba(163,217,255,0.25); }
+  }
+  @keyframes scan-line {
+    0%   { top: 0%;   opacity: 0.7; }
+    100% { top: 100%; opacity: 0; }
+  }
+  @keyframes redact-flicker {
+    0%, 60% { opacity: 1; }
+    65%      { opacity: 0.25; }
+    70%      { opacity: 1; }
+    88%      { opacity: 1; }
+    92%      { opacity: 0.25; }
+    100%     { opacity: 1; }
+  }
+
+  /* Animation utility classes */
+  .anim-fade-up   { animation: fade-up   0.8s ease both; }
+  .anim-fade-left { animation: fade-left 0.8s ease both; }
+  .anim-float     { animation: float-gentle 6s ease-in-out infinite; }
+  .anim-glow-cyan { animation: glow-cyan 4s ease-in-out infinite; }
+  .anim-breathe   { animation: border-breathe 4s ease-in-out infinite; }
+  .anim-flicker   { animation: redact-flicker 6s ease-in-out infinite; }
+  .anim-shimmer   {
+    background: linear-gradient(90deg, #A3D9FF 0%, #c8eaff 50%, #A3D9FF 100%);
+    background-size: 400px 100%;
+    animation: shimmer-cyan 2.4s linear infinite;
+  }
+  .anim-shimmer-gold {
+    background: linear-gradient(135deg, #F59E0B 0%, #FCD34D 50%, #D97706 100%);
+    background-size: 400px 100%;
+    animation: shimmer-cyan 2.6s linear infinite;
+  }
+
+  /* Clock hands */
+  .clock-second {
+    transform-origin: bottom center;
+    animation: second-sweep 6s linear infinite;
+  }
+  .clock-minute {
+    transform-origin: bottom center;
+    animation: minute-crawl 60s linear infinite;
+  }
+
+  /* Pulse dot */
+  .pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
+
+  /* Scan line on hero */
+  .scan-line {
+    position: absolute; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(163,217,255,0.5), transparent);
+    animation: scan-line 3.5s linear infinite;
+    pointer-events: none;
+  }
+
+  /* ── MOBILE REFLOW ── */
+  @media only screen and (max-width: 679px) {
+    .wrapper-table        { width: 100% !important; }
+    .hero-title-font      { font-size: 30px !important; line-height: 1.1 !important; }
+    .pull-quote-font      { font-size: 22px !important; }
+    .closing-title-font   { font-size: 26px !important; }
+    .compare-col-mobile   { display: block !important; width: 100% !important; }
+    .hide-mobile          { display: none !important; }
+    .full-width-mobile    { width: 100% !important; }
+    .pad-mobile           { padding-left: 20px !important; padding-right: 20px !important; }
+    .stack-mobile         { display: block !important; width: 100% !important; }
+    .stat-font            { font-size: 18px !important; }
+    .hero-clock-mobile    { display: none !important; }
+    .cta-mobile           { padding: 16px 28px !important; font-size: 10px !important; }
   }
 </style>
 </head>
@@ -43,8 +137,8 @@
 <tr>
 <td align="center" style="padding:0;">
 
-<!-- Main 600px wrapper -->
-<table class="wrapper-table" width="600" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#050506" style="background-color:#050506; max-width:600px;">
+<!-- Main 680px wrapper -->
+<table class="wrapper-table" width="680" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#050506" style="background-color:#050506; max-width:680px;">
 
 <!-- =============================================
      HEADER STRIP
@@ -101,7 +195,7 @@
       </table>
 
       <!-- Hero title -->
-      <h1 class="hero-title-font" style="font-family:Arial,sans-serif; font-size:42px; font-weight:200; line-height:1.08; letter-spacing:-1px; color:#F0F0F0; margin:0 0 12px 0; padding:0;">
+      <h1 class="hero-title-font anim-fade-left" style="font-family:Arial,sans-serif; font-size:42px; font-weight:200; line-height:1.08; letter-spacing:-1px; color:#F0F0F0; margin:0 0 12px 0; padding:0;">
         You Don&rsquo;t<br/>
         Have a<br/>
         <span style="color:#A3D9FF;">Money Problem.</span>
@@ -136,7 +230,7 @@
           </v:roundrect>
           <![endif]-->
           <!--[if !mso]><!-->
-          <a href="https://calendly.com/quantarasystems-sales/45min" style="display:inline-block; background-color:#A3D9FF; color:#050506; font-family:Arial,sans-serif; font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; text-decoration:none; padding:15px 30px; border-radius:8px;">RECLAIM YOUR TIME</a>
+          <a href="https://calendly.com/quantarasystems-sales/45min" class="anim-shimmer cta-mobile" style="display:inline-block; background-color:#A3D9FF; color:#050506; font-family:Arial,sans-serif; font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; text-decoration:none; padding:15px 30px; border-radius:8px; box-shadow:0 4px 28px rgba(163,217,255,0.35);">RECLAIM YOUR TIME</a>
           <!--<![endif]-->
         </td>
         <td style="font-family:Arial,sans-serif; font-size:9px; font-weight:300; letter-spacing:2px; text-transform:uppercase; color:#3A3A3A; vertical-align:middle; white-space:nowrap;">
@@ -159,7 +253,7 @@
           </v:oval>
           <![endif]-->
           <!--[if !mso]><!-->
-          <div style="width:150px; height:150px; border-radius:50%; border:2px solid rgba(163,217,255,0.5); background-color:#0A0C12; position:relative; display:inline-block; text-align:center; vertical-align:middle;">
+          <div class="anim-float anim-glow-cyan" style="width:150px; height:150px; border-radius:50%; border:2px solid rgba(163,217,255,0.5); background-color:#0A0C12; position:relative; display:inline-block; text-align:center; vertical-align:middle;">
             <!-- Clock face content as centered table -->
             <table border="0" cellpadding="0" cellspacing="0" width="150" height="150" style="position:absolute; top:0; left:0;">
             <tr>
@@ -218,19 +312,19 @@
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="middle" bgcolor="#060609" style="background-color:#060609; padding:20px 0; border-right:1px solid #0D0D0D; width:25%;">
-      <div class="stat-font" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; color:#A3D9FF; display:block; margin-bottom:4px; letter-spacing:-1px;">0</div>
+      <div class="stat-font anim-fade-up" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; color:#A3D9FF; display:block; margin-bottom:4px; letter-spacing:-1px;">0</div>
       <div style="font-family:Arial,sans-serif; font-size:7px; font-weight:400; letter-spacing:2px; text-transform:uppercase; color:#3A3A3A;">Hours You Need Daily</div>
     </td>
     <td align="center" valign="middle" bgcolor="#060609" style="background-color:#060609; padding:20px 0; border-right:1px solid #0D0D0D; width:25%;">
-      <div class="stat-font" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; color:#A3D9FF; display:block; margin-bottom:4px; letter-spacing:-1px;">$54,243</div>
+      <div class="stat-font anim-fade-up" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; color:#A3D9FF; display:block; margin-bottom:4px; letter-spacing:-1px;">$54,243</div>
       <div style="font-family:Arial,sans-serif; font-size:7px; font-weight:400; letter-spacing:2px; text-transform:uppercase; color:#3A3A3A;">Max 6-Month Net</div>
     </td>
     <td align="center" valign="middle" bgcolor="#060609" style="background-color:#060609; padding:20px 0; border-right:1px solid #0D0D0D; width:25%;">
-      <div class="stat-font" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; color:#A3D9FF; display:block; margin-bottom:4px; letter-spacing:-1px;">70%</div>
+      <div class="stat-font anim-fade-up" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; color:#A3D9FF; display:block; margin-bottom:4px; letter-spacing:-1px;">70%</div>
       <div style="font-family:Arial,sans-serif; font-size:7px; font-weight:400; letter-spacing:2px; text-transform:uppercase; color:#3A3A3A;">Your Payout Share</div>
     </td>
     <td align="center" valign="middle" bgcolor="#060609" style="background-color:#060609; padding:20px 0; width:25%;">
-      <div class="stat-font" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; color:#A3D9FF; display:block; margin-bottom:4px; letter-spacing:-1px;">24/7</div>
+      <div class="stat-font anim-fade-up" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; color:#A3D9FF; display:block; margin-bottom:4px; letter-spacing:-1px;">24/7</div>
       <div style="font-family:Arial,sans-serif; font-size:7px; font-weight:400; letter-spacing:2px; text-transform:uppercase; color:#3A3A3A;">Algorithm Active</div>
     </td>
   </tr>
@@ -254,7 +348,7 @@
   </table>
 
   <!-- Pull quote -->
-  <h2 class="pull-quote-font" style="font-family:Arial,sans-serif; font-size:28px; font-weight:200; line-height:1.2; letter-spacing:-0.5px; color:#F0F0F0; margin:0 0 20px 0; padding:0;">
+  <h2 class="pull-quote-font anim-fade-up" style="font-family:Arial,sans-serif; font-size:28px; font-weight:200; line-height:1.2; letter-spacing:-0.5px; color:#F0F0F0; margin:0 0 20px 0; padding:0;">
     The average active trader loses<br/>
     <span style="color:#A3D9FF;">312 hours per year</span> to the market.<br/>
     <span style="color:#F59E0B;">What did it cost them?</span>
@@ -535,7 +629,7 @@
   </table>
 
   <!-- Pull quote -->
-  <h2 class="pull-quote-font" style="font-family:Arial,sans-serif; font-size:24px; font-weight:200; line-height:1.25; letter-spacing:-0.5px; color:#F0F0F0; margin:0 0 20px 0; padding:0;">
+  <h2 class="pull-quote-font anim-fade-up" style="font-family:Arial,sans-serif; font-size:24px; font-weight:200; line-height:1.25; letter-spacing:-0.5px; color:#F0F0F0; margin:0 0 20px 0; padding:0;">
     Most algorithmic trading products<br/>
     are designed to <span style="color:#A3D9FF;">sell you hope.</span><br/>
     QS1 was designed to <span style="color:#F59E0B;">return your time.</span>
@@ -636,7 +730,7 @@
   </table>
 
   <!-- Pull quote -->
-  <h2 class="pull-quote-font" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; line-height:1.25; letter-spacing:-0.5px; color:#F0F0F0; margin:0 0 14px 0; padding:0;">
+  <h2 class="pull-quote-font anim-fade-up" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; line-height:1.25; letter-spacing:-0.5px; color:#F0F0F0; margin:0 0 14px 0; padding:0;">
     Three account tiers. One algorithm.<br/>
     <span style="color:#F59E0B;">Zero manual input.</span>
   </h2>
@@ -780,7 +874,7 @@
   </table>
 
   <!-- Pull quote -->
-  <h2 class="pull-quote-font" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; line-height:1.25; letter-spacing:-0.5px; color:#F0F0F0; margin:0 0 32px 0; padding:0;">
+  <h2 class="pull-quote-font anim-fade-up" style="font-family:Arial,sans-serif; font-size:22px; font-weight:200; line-height:1.25; letter-spacing:-0.5px; color:#F0F0F0; margin:0 0 32px 0; padding:0;">
     They stopped trading.<br/>
     <span style="color:#A3D9FF;">The returns didn&rsquo;t.</span>
   </h2>
@@ -894,7 +988,7 @@
   </p>
 
   <!-- Time box -->
-  <table border="0" cellpadding="0" cellspacing="0" bgcolor="#08100C" style="background-color:#08100C; border:1px solid rgba(163,217,255,0.15); border-radius:10px; margin-bottom:32px; max-width:420px;">
+  <table border="0" cellpadding="0" cellspacing="0" bgcolor="#08100C" class="anim-breathe" style="background-color:#08100C; border:1px solid rgba(163,217,255,0.15); border-radius:10px; margin-bottom:32px; max-width:420px;">
   <tr>
     <td style="padding:18px 24px; vertical-align:middle;">
       <table border="0" cellpadding="0" cellspacing="0">
@@ -936,7 +1030,7 @@
       </v:roundrect>
       <![endif]-->
       <!--[if !mso]><!-->
-      <a href="https://calendly.com/quantarasystems-sales/45min" style="display:inline-block; background-color:#A3D9FF; color:#050506; font-family:Arial,sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; text-decoration:none; padding:20px 48px; border-radius:10px;">SCHEDULE YOUR CONSULTATION</a>
+      <a href="https://calendly.com/quantarasystems-sales/45min" class="anim-shimmer" style="display:inline-block; background-color:#A3D9FF; color:#050506; font-family:Arial,sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; text-decoration:none; padding:20px 48px; border-radius:10px; box-shadow:0 8px 48px rgba(163,217,255,0.4);">SCHEDULE YOUR CONSULTATION</a>
       <!--<![endif]-->
     </td>
   </tr>
@@ -953,7 +1047,7 @@
       </v:roundrect>
       <![endif]-->
       <!--[if !mso]><!-->
-      <a href="https://t.me/QuantaraSystems" style="display:inline-block; background-color:rgba(163,217,255,0.06); border:1px solid rgba(163,217,255,0.2); color:#A3D9FF; font-family:Arial,sans-serif; font-size:10px; font-weight:500; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:13px 26px; border-radius:8px;">&#9992; &nbsp;MESSAGE US ON TELEGRAM</a>
+      <a href="https://t.me/QuantaraSystems" class="anim-breathe" style="display:inline-block; background-color:rgba(163,217,255,0.06); border:1px solid rgba(163,217,255,0.2); color:#A3D9FF; font-family:Arial,sans-serif; font-size:10px; font-weight:500; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:13px 26px; border-radius:8px;">&#9992; &nbsp;MESSAGE US ON TELEGRAM</a>
       <!--<![endif]-->
     </td>
   </tr>
