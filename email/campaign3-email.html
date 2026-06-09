@@ -1,0 +1,662 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no"/>
+<title>QS1 · Boring Is The Point</title>
+<!--[if mso]>
+<xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+<![endif]-->
+<style type="text/css">
+/* ── RESETS ── */
+body,table,td,a{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
+table,td{mso-table-lspace:0pt;mso-table-rspace:0pt;}
+img{-ms-interpolation-mode:bicubic;border:0;outline:none;text-decoration:none;}
+body{margin:0!important;padding:0!important;background-color:#040405;}
+a{color:inherit;text-decoration:none;}
+
+/* ── ANIMATIONS (Apple Mail, iOS, Samsung — degrade gracefully in Gmail/Outlook) ── */
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes gold-shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+@keyframes breathe{0%,100%{border-color:rgba(245,158,11,0.12)}50%{border-color:rgba(245,158,11,0.4)}}
+@keyframes number-glow{0%,100%{text-shadow:none}50%{text-shadow:0 0 40px rgba(245,158,11,0.3)}}
+@keyframes hero-rule{from{width:0}to{width:100%}}
+
+.anim-fade-in{animation:fade-in 0.7s ease both;}
+.anim-rise{animation:rise 0.8s ease both;}
+.anim-glow{animation:number-glow 4s ease-in-out infinite;}
+.anim-breathe{animation:breathe 4s ease-in-out infinite;}
+.anim-shimmer::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);
+  background-size:400px 100%;
+  animation:gold-shimmer 2.4s linear infinite;
+}
+.anim-shimmer{position:relative;overflow:hidden;}
+
+/* ── MOBILE ── */
+@media only screen and (max-width:679px){
+  .wrapper{width:100%!important;max-width:100%!important;}
+  .hero-text{font-size:38px!important;line-height:1.0!important;}
+  .big-num-val{font-size:40px!important;}
+  .math-val-text{font-size:26px!important;}
+  .closing-head{font-size:32px!important;}
+  .pad-mobile{padding-left:24px!important;padding-right:24px!important;}
+  .col-half{display:block!important;width:100%!important;}
+  .col-half-r{padding-left:0!important;border-left:none!important;border-top:1px solid rgba(255,255,255,0.04)!important;padding-top:32px!important;margin-top:32px!important;}
+  .hide-mobile{display:none!important;}
+  .compare-col{display:block!important;width:100%!important;}
+  .compare-bad-col{display:none!important;}
+  .cta-btn{width:100%!important;display:block!important;}
+  .footer-links-wrap{display:block!important;}
+  .footer-link-item{display:block!important;margin-bottom:8px!important;}
+}
+</style>
+</head>
+<body style="margin:0;padding:0;background-color:#040405;font-family:Arial,sans-serif;">
+
+<!-- ── PREVIEW TEXT ── -->
+<div style="display:none;max-height:0;overflow:hidden;font-size:1px;color:#040405;line-height:1px;max-width:0;opacity:0;">
+  The traders with the best stories have the worst accounts. QS1 participants don't have stories. They have payouts.
+</div>
+
+<!-- ── OUTER WRAPPER ── -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#040405">
+<tr><td align="center" style="padding:0;">
+
+<!-- ── MAIN CONTAINER ── -->
+<table class="wrapper" role="presentation" width="680" cellpadding="0" cellspacing="0" border="0" bgcolor="#040405" style="max-width:680px;">
+
+  <!-- ════════════════════════════════════════
+       TOP BAR
+  ════════════════════════════════════════ -->
+  <tr>
+    <td style="padding:16px 48px;border-bottom:1px solid rgba(255,255,255,0.04);">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td style="font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:5px;text-transform:uppercase;color:#2A2A2A;">
+            QUANTARA SYSTEMS &middot; PRIVATE PROGRAM
+          </td>
+          <td align="right" style="font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:4px;text-transform:uppercase;color:rgba(245,158,11,0.5);">
+            QS1 &middot; GOLD FUTURES
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- ════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════ -->
+  <tr>
+    <td class="pad-mobile anim-fade-in" style="padding:80px 48px 64px;border-bottom:1px solid rgba(255,255,255,0.04);">
+
+      <!-- overline -->
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
+        <tr>
+          <td width="24" style="vertical-align:middle;padding-right:12px;">
+            <div style="width:24px;height:1px;background:rgba(245,158,11,0.5);font-size:0;line-height:0;">&nbsp;</div>
+          </td>
+          <td style="font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:5px;text-transform:uppercase;color:rgba(245,158,11,0.5);">
+            QS1 &middot; INSTITUTIONAL PROGRAM
+          </td>
+        </tr>
+      </table>
+
+      <!-- hero statement -->
+      <div class="hero-text anim-glow" style="font-family:Arial,sans-serif;font-size:58px;font-weight:900;line-height:0.96;letter-spacing:-2px;text-transform:uppercase;margin-bottom:0;">
+        <span style="color:#1E1E1E;">Exciting</span><br/>
+        <span style="color:#1E1E1E;">trading is</span><br/>
+        <span style="color:#555555;">for people</span><br/>
+        <span style="color:#F59E0B;">losing.</span>
+      </div>
+
+      <!-- rule -->
+      <div style="height:1px;margin:36px 0;background:linear-gradient(90deg,rgba(245,158,11,0.5),rgba(245,158,11,0.1),transparent);font-size:0;line-height:0;">&nbsp;</div>
+
+      <!-- subhead -->
+      <p style="font-family:Arial,sans-serif;font-size:14px;font-weight:300;line-height:1.8;color:#5A5A5A;margin:0;max-width:480px;">
+        The traders with the best stories are usually the ones
+        with the worst accounts. QS1 participants don't have stories.
+        They have <span style="color:#C8C8C8;font-weight:400;">payouts.</span> Consistent, systematic,
+        and completely unremarkable ones. That's not a bug.
+        <span style="color:#C8C8C8;font-weight:400;">That's the entire product.</span>
+      </p>
+    </td>
+  </tr>
+
+  <!-- ════════════════════════════════════════
+       BIG NUMBERS
+  ════════════════════════════════════════ -->
+  <tr>
+    <td class="pad-mobile" style="padding:0 48px;border-bottom:1px solid rgba(255,255,255,0.04);">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <!-- left col -->
+          <td class="col-half" width="50%" style="padding:48px 40px 48px 0;border-right:1px solid rgba(255,255,255,0.04);vertical-align:top;">
+            <div class="big-num-val anim-glow" style="font-family:Arial,sans-serif;font-size:52px;font-weight:900;letter-spacing:-2px;line-height:1;color:#F59E0B;display:block;margin-bottom:10px;">$54,243</div>
+            <div style="font-family:Arial,sans-serif;font-size:9px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:#3A3A3A;margin-bottom:14px;">MAX CLIENT NET &middot; 6 MONTHS</div>
+            <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:300;line-height:1.7;color:#484848;">
+              No charts watched. No entries called.<br/>
+              No positions managed. 70% of gross<br/>
+              paid directly to the participant.
+            </div>
+          </td>
+          <!-- right col -->
+          <td class="col-half col-half-r" width="50%" style="padding:48px 0 48px 40px;vertical-align:top;">
+            <div class="big-num-val anim-glow" style="font-family:Arial,sans-serif;font-size:52px;font-weight:900;letter-spacing:-2px;line-height:1;color:#F59E0B;display:block;margin-bottom:10px;">0</div>
+            <div style="font-family:Arial,sans-serif;font-size:9px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:#3A3A3A;margin-bottom:14px;">HOURS REQUIRED PER WEEK</div>
+            <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:300;line-height:1.7;color:#484848;">
+              QS1 runs every session the Gold<br/>
+              futures market is open. You are<br/>
+              not involved. That is by design.
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- ════════════════════════════════════════
+       MANIFESTO
+  ════════════════════════════════════════ -->
+  <tr>
+    <td class="pad-mobile" style="padding:72px 48px;border-bottom:1px solid rgba(255,255,255,0.04);background:#050506;">
+
+      <!-- tag -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:48px;">
+        <tr>
+          <td style="font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:5px;text-transform:uppercase;color:#2A2A2A;white-space:nowrap;padding-right:16px;">THE BORING TRUTH</td>
+          <td width="100%" style="border-top:1px solid rgba(255,255,255,0.04);font-size:0;">&nbsp;</td>
+        </tr>
+      </table>
+
+      <!-- item 01 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.03);">
+        <tr>
+          <td width="36" style="vertical-align:top;padding-top:4px;padding-right:20px;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:rgba(245,158,11,0.25);letter-spacing:1px;">01</span>
+          </td>
+          <td>
+            <p class="anim-rise" style="font-family:Arial,sans-serif;font-size:20px;font-weight:200;line-height:1.45;color:#D0D0D0;margin:0;">
+              The financial media needs you to believe markets are
+              exciting. <span style="color:#F59E0B;font-weight:300;">Excitement keeps you watching.</span>
+              Watching keeps you trading. Trading keeps you losing.
+              The house always wins on volume.
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      <!-- item 02 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.03);">
+        <tr>
+          <td width="36" style="vertical-align:top;padding-top:4px;padding-right:20px;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:rgba(245,158,11,0.25);letter-spacing:1px;">02</span>
+          </td>
+          <td>
+            <p class="anim-rise" style="font-family:Arial,sans-serif;font-size:20px;font-weight:200;line-height:1.45;color:#D0D0D0;margin:0;animation-delay:0.1s;">
+              The wealthiest allocators in the world are
+              <span style="color:#F59E0B;font-weight:300;">catastrophically boring.</span> They don't call
+              tops. They don't post trade recaps. They deploy
+              systematic capital into structured frameworks
+              and they <span style="color:#2A2A2A;text-decoration:line-through;">check their phones every five minutes</span>
+              do something else entirely.
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      <!-- item 03 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.03);">
+        <tr>
+          <td width="36" style="vertical-align:top;padding-top:4px;padding-right:20px;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:rgba(245,158,11,0.25);letter-spacing:1px;">03</span>
+          </td>
+          <td>
+            <p class="anim-rise" style="font-family:Arial,sans-serif;font-size:20px;font-weight:200;line-height:1.45;color:#D0D0D0;margin:0;animation-delay:0.2s;">
+              QS1 was not built to be interesting.
+              It was built to be <span style="color:#F59E0B;font-weight:300;">repeatable.</span>
+              Tick-level data. Machine learning execution.
+              Multi-layer risk architecture. The goal is
+              consistency so unremarkable you forget
+              it's running.
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      <!-- item 04 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="36" style="vertical-align:top;padding-top:4px;padding-right:20px;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:rgba(245,158,11,0.25);letter-spacing:1px;">04</span>
+          </td>
+          <td>
+            <p class="anim-rise" style="font-family:Arial,sans-serif;font-size:20px;font-weight:200;line-height:1.45;color:#D0D0D0;margin:0;animation-delay:0.3s;">
+              The 45-minute consultation is not exciting either.
+              We confirm eligibility, walk through deployment,
+              answer every question with precision. You leave
+              with <span style="color:#F59E0B;font-weight:300;">clarity or a polite no.</span>
+              Neither outcome wastes your time.
+            </p>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+
+  <!-- ════════════════════════════════════════
+       COMPARISON TABLE HEADER ROW
+  ════════════════════════════════════════ -->
+  <tr>
+    <td class="pad-mobile" style="padding:72px 48px 0;">
+      <!-- section label -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:36px;">
+        <tr>
+          <td style="font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:5px;text-transform:uppercase;color:#2A2A2A;white-space:nowrap;padding-right:16px;">THE DIFFERENCE</td>
+          <td width="100%" style="border-top:1px solid rgba(255,255,255,0.04);font-size:0;">&nbsp;</td>
+        </tr>
+      </table>
+      <!-- col headers -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:2px;">
+        <tr>
+          <td class="compare-bad-col" width="50%" style="padding:14px 20px;background:#0A0A0C;font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:4px;text-transform:uppercase;color:rgba(248,113,113,0.6);">
+            ACTIVE TRADING
+          </td>
+          <td width="2" style="font-size:0;">&nbsp;</td>
+          <td class="compare-col" width="50%" style="padding:14px 20px;background:#0A0A0C;font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:4px;text-transform:uppercase;color:rgba(245,158,11,0.6);">
+            QS1 PROGRAM
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- compare rows -->
+  <tr><td class="pad-mobile" style="padding:0 48px 2px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="compare-bad-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(248,113,113,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#5A5A5A;line-height:1.5;">Sunday night chart prep</td>
+        <td width="2" style="font-size:0;">&nbsp;</td>
+        <td class="compare-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#7A7A7A;line-height:1.5;">Nothing required, ever</td>
+      </tr>
+    </table>
+  </td></tr>
+  <tr><td class="pad-mobile" style="padding:0 48px 2px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="compare-bad-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(248,113,113,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#5A5A5A;line-height:1.5;">Emotional entries and exits</td>
+        <td width="2" style="font-size:0;">&nbsp;</td>
+        <td class="compare-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#7A7A7A;line-height:1.5;">Non-discretionary execution only</td>
+      </tr>
+    </table>
+  </td></tr>
+  <tr><td class="pad-mobile" style="padding:0 48px 2px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="compare-bad-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(248,113,113,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#5A5A5A;line-height:1.5;">Inconsistent, narrative-driven results</td>
+        <td width="2" style="font-size:0;">&nbsp;</td>
+        <td class="compare-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#7A7A7A;line-height:1.5;">Systematic, repeatable payout cycles</td>
+      </tr>
+    </table>
+  </td></tr>
+  <tr><td class="pad-mobile" style="padding:0 48px 2px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="compare-bad-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(248,113,113,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#5A5A5A;line-height:1.5;">You absorb 100% of the downside</td>
+        <td width="2" style="font-size:0;">&nbsp;</td>
+        <td class="compare-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#7A7A7A;line-height:1.5;">Multi-layer drawdown controls active</td>
+      </tr>
+    </table>
+  </td></tr>
+  <tr><td class="pad-mobile" style="padding:0 48px 2px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="compare-bad-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(248,113,113,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#5A5A5A;line-height:1.5;">Performance tied to your attention</td>
+        <td width="2" style="font-size:0;">&nbsp;</td>
+        <td class="compare-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#7A7A7A;line-height:1.5;">Performance independent of you entirely</td>
+      </tr>
+    </table>
+  </td></tr>
+  <tr><td class="pad-mobile" style="padding:0 48px 72px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="compare-bad-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(248,113,113,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#5A5A5A;line-height:1.5;">312+ hours per year consumed</td>
+        <td width="2" style="font-size:0;">&nbsp;</td>
+        <td class="compare-col" width="50%" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.2);font-family:Arial,sans-serif;font-size:12px;font-weight:300;color:#7A7A7A;line-height:1.5;">Zero hours. Not a typo.</td>
+      </tr>
+    </table>
+  </td></tr>
+
+  <!-- ════════════════════════════════════════
+       THE MATH
+  ════════════════════════════════════════ -->
+  <tr>
+    <td class="pad-mobile" style="padding:72px 48px;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);">
+
+      <!-- tag -->
+      <div style="font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:5px;text-transform:uppercase;color:rgba(245,158,11,0.4);margin-bottom:36px;">THE MATH &middot; $150K ACCOUNT TIER</div>
+
+      <!-- equation -->
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:48px;">
+        <tr>
+          <td style="vertical-align:bottom;padding-right:16px;">
+            <div class="math-val-text" style="font-family:Arial,sans-serif;font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;color:#F59E0B;">$77,490</div>
+            <div style="font-family:Arial,sans-serif;font-size:8px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#2E2E2E;margin-top:4px;">EST. 6-MONTH GROSS</div>
+          </td>
+          <td style="vertical-align:bottom;padding-right:16px;padding-bottom:20px;">
+            <span style="font-family:Arial,sans-serif;font-size:28px;font-weight:200;color:#2A2A2A;">&times;</span>
+          </td>
+          <td style="vertical-align:bottom;padding-right:16px;">
+            <div class="math-val-text" style="font-family:Arial,sans-serif;font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;color:#A3D9FF;">70%</div>
+            <div style="font-family:Arial,sans-serif;font-size:8px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#2E2E2E;margin-top:4px;">YOUR PAYOUT SHARE</div>
+          </td>
+          <td style="vertical-align:bottom;padding-right:16px;padding-bottom:20px;">
+            <span style="font-family:Arial,sans-serif;font-size:28px;font-weight:200;color:#2A2A2A;">=</span>
+          </td>
+          <td style="vertical-align:bottom;">
+            <div class="math-val-text" style="font-family:Arial,sans-serif;font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;color:#F59E0B;">$54,243</div>
+            <div style="font-family:Arial,sans-serif;font-size:8px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#2E2E2E;margin-top:4px;">CLIENT NET</div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- math rows -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr><td style="padding-bottom:2px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td class="anim-breathe" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.15);">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                  <td style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;color:#484848;letter-spacing:1px;">Monthly Gross Estimate</td>
+                  <td align="right" style="font-family:Arial,sans-serif;font-size:14px;font-weight:300;color:#C8C8C8;letter-spacing:-0px;">$12,915</td>
+                </tr></table>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding-bottom:2px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td class="anim-breathe" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.15);">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                  <td style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;color:#484848;letter-spacing:1px;">Payout Cycles (6 months)</td>
+                  <td align="right" style="font-family:Arial,sans-serif;font-size:14px;font-weight:300;color:#C8C8C8;">5 cycles</td>
+                </tr></table>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding-bottom:2px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td class="anim-breathe" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.15);">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                  <td style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;color:#484848;letter-spacing:1px;">Your Share Per Cycle (avg)</td>
+                  <td align="right" style="font-family:Arial,sans-serif;font-size:14px;font-weight:300;color:#C8C8C8;">$2,460 &mdash; $2,870</td>
+                </tr></table>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding-bottom:2px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td class="anim-breathe" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.15);">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                  <td style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;color:#484848;letter-spacing:1px;">QS1 Fee</td>
+                  <td align="right" style="font-family:Arial,sans-serif;font-size:14px;font-weight:300;color:#C8C8C8;">30% on payouts only</td>
+                </tr></table>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+        <tr><td>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td class="anim-breathe" style="padding:16px 20px;background:#080808;border-left:2px solid rgba(245,158,11,0.15);">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+                  <td style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;color:#484848;letter-spacing:1px;">Hours You Spend On This</td>
+                  <td align="right" style="font-family:Arial,sans-serif;font-size:14px;font-weight:400;color:#F59E0B;">0</td>
+                </tr></table>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+      </table>
+
+    </td>
+  </tr>
+
+  <!-- ════════════════════════════════════════
+       PROCESS
+  ════════════════════════════════════════ -->
+  <tr>
+    <td class="pad-mobile" style="padding:72px 48px;border-bottom:1px solid rgba(255,255,255,0.04);">
+
+      <!-- tag -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:36px;">
+        <tr>
+          <td style="font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:5px;text-transform:uppercase;color:#2A2A2A;white-space:nowrap;padding-right:16px;">SIX STEPS</td>
+          <td width="100%" style="border-top:1px solid rgba(255,255,255,0.04);font-size:0;">&nbsp;</td>
+        </tr>
+      </table>
+
+      <!-- step 01 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid rgba(255,255,255,0.03);padding-bottom:0;margin-bottom:0;">
+        <tr>
+          <td width="36" style="vertical-align:top;padding:20px 24px 20px 0;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:900;color:rgba(245,158,11,0.2);letter-spacing:1px;">01</span>
+          </td>
+          <td style="padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:500;color:#C8C8C8;letter-spacing:1px;margin-bottom:4px;">Select Account Tier</div>
+            <div style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;line-height:1.65;color:#484848;">Choose $50K, $100K, or $150K. Submit the one-time program fee. <span style="color:#7A7A7A;">That's the last decision you make.</span></div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- step 02 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="36" style="vertical-align:top;padding:20px 24px 20px 0;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:900;color:rgba(245,158,11,0.2);letter-spacing:1px;">02</span>
+          </td>
+          <td style="padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:500;color:#C8C8C8;letter-spacing:1px;margin-bottom:4px;">Register With Prop Firm</div>
+            <div style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;line-height:1.65;color:#484848;">Create your funded account on the prop firm platform. <span style="color:#7A7A7A;">Straightforward onboarding, guided by our team.</span></div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- step 03 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="36" style="vertical-align:top;padding:20px 24px 20px 0;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:900;color:rgba(245,158,11,0.2);letter-spacing:1px;">03</span>
+          </td>
+          <td style="padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:500;color:#C8C8C8;letter-spacing:1px;margin-bottom:4px;">Receive Tradovate Credentials</div>
+            <div style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;line-height:1.65;color:#484848;">Execution credentials issued through the prop firm. <span style="color:#7A7A7A;">These connect QS1 to your account. Nothing else required from you.</span></div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- step 04 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="36" style="vertical-align:top;padding:20px 24px 20px 0;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:900;color:rgba(245,158,11,0.2);letter-spacing:1px;">04</span>
+          </td>
+          <td style="padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:500;color:#C8C8C8;letter-spacing:1px;margin-bottom:4px;">Secure Integration</div>
+            <div style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;line-height:1.65;color:#484848;">Credentials passed to QS1 team via encrypted intake. Infrastructure configured. <span style="color:#7A7A7A;">You don't touch this part.</span></div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- step 05 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="36" style="vertical-align:top;padding:20px 24px 20px 0;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:900;color:rgba(245,158,11,0.2);letter-spacing:1px;">05</span>
+          </td>
+          <td style="padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:500;color:#C8C8C8;letter-spacing:1px;margin-bottom:4px;">Algorithm Deploys</div>
+            <div style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;line-height:1.65;color:#484848;">QS1 v3.2 goes live on your account. Risk systems activate. <span style="color:#7A7A7A;">From here, zero manual input required at any stage.</span></div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- step 06 -->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="36" style="vertical-align:top;padding:20px 24px 20px 0;">
+            <span style="font-family:Arial,sans-serif;font-size:11px;font-weight:900;color:rgba(245,158,11,0.2);letter-spacing:1px;">06</span>
+          </td>
+          <td style="padding:20px 0;">
+            <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:500;color:#C8C8C8;letter-spacing:1px;margin-bottom:4px;">Nothing. That's It.</div>
+            <div style="font-family:Arial,sans-serif;font-size:11px;font-weight:300;line-height:1.65;color:#484848;">QS1 scans Gold futures every session. Executes only when conditions qualify. Payouts process through the prop firm dashboard. <span style="color:#7A7A7A;">You check in when you feel like it.</span></div>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+
+  <!-- ════════════════════════════════════════
+       CLOSING
+  ════════════════════════════════════════ -->
+  <tr>
+    <td class="pad-mobile" style="padding:88px 48px 80px;">
+
+      <!-- rule -->
+      <div style="height:1px;margin-bottom:64px;background:linear-gradient(90deg,rgba(245,158,11,0.5),rgba(245,158,11,0.1),transparent);font-size:0;line-height:0;">&nbsp;</div>
+
+      <!-- overline -->
+      <div style="font-family:Arial,sans-serif;font-size:8px;font-weight:bold;letter-spacing:5px;text-transform:uppercase;color:rgba(245,158,11,0.4);margin-bottom:24px;">THE ONLY MOVE LEFT</div>
+
+      <!-- closing headline -->
+      <div class="closing-head" style="font-family:Arial,sans-serif;font-size:44px;font-weight:900;line-height:0.98;letter-spacing:-2px;text-transform:uppercase;color:#F0F0F0;margin-bottom:32px;">
+        Book the<br/>
+        <span style="color:#1E1E1E;">call.</span><br/>
+        That's<br/>
+        <span style="color:#1E1E1E;">literally it.</span>
+      </div>
+
+      <!-- body -->
+      <p style="font-family:Arial,sans-serif;font-size:13px;font-weight:300;line-height:1.85;color:#5A5A5A;margin:0 0 48px;max-width:460px;">
+        45 minutes. We confirm you qualify, walk through
+        deployment, and answer every question without a script.
+        <span style="color:#C8C8C8;font-weight:400;">If QS1 isn't right for you, we'll say so.</span>
+        If it is, the next unremarkable thing that happens
+        is your first payout.
+      </p>
+
+      <!-- CTA: Calendly -->
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
+        href="https://calendly.com/quantarasystems-sales/45min"
+        style="height:60px;v-text-anchor:middle;width:340px;" arcsize="6%"
+        fillcolor="#F59E0B" strokecolor="#D97706">
+        <w:anchorlock/>
+        <center style="font-family:Arial,sans-serif;font-size:11px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:#000000;">
+          SCHEDULE CONSULTATION
+        </center>
+      </v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:14px;">
+        <tr>
+          <td align="center" bgcolor="#F59E0B" style="border-radius:10px;background:linear-gradient(135deg,#F59E0B,#D97706);box-shadow:0 6px 48px rgba(245,158,11,0.45);">
+            <a href="https://calendly.com/quantarasystems-sales/45min" class="cta-btn anim-shimmer"
+               style="display:inline-block;padding:20px 48px;font-family:Arial,sans-serif;font-size:11px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:#000000;text-decoration:none;border-radius:10px;min-width:260px;text-align:center;">
+              SCHEDULE CONSULTATION
+            </a>
+          </td>
+        </tr>
+      </table>
+      <!--<![endif]-->
+
+      <!-- CTA: Telegram -->
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
+        href="https://t.me/QuantaraSystems"
+        style="height:54px;v-text-anchor:middle;width:340px;margin-top:14px;" arcsize="6%"
+        fillcolor="#040405" strokecolor="rgba(245,158,11,0.3)">
+        <w:anchorlock/>
+        <center style="font-family:Arial,sans-serif;font-size:10px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:rgba(245,158,11,0.7);">
+          MESSAGE US ON TELEGRAM
+        </center>
+      </v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-->
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+        <tr>
+          <td align="center" style="border-radius:10px;border:1px solid rgba(245,158,11,0.18);">
+            <a href="https://t.me/QuantaraSystems" class="cta-btn anim-breathe"
+               style="display:inline-block;padding:15px 48px;font-family:Arial,sans-serif;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:rgba(245,158,11,0.7);text-decoration:none;border-radius:10px;min-width:260px;text-align:center;">
+              &#9992; MESSAGE US ON TELEGRAM
+            </a>
+          </td>
+        </tr>
+      </table>
+      <!--<![endif]-->
+
+      <!-- note -->
+      <div style="font-family:Arial,sans-serif;font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#222222;">
+        calendly.com/quantarasystems-sales &middot; 45 MIN &middot; CONFIDENTIAL &middot; QUALIFIED PARTICIPANTS ONLY
+      </div>
+
+    </td>
+  </tr>
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <tr>
+    <td class="pad-mobile" style="padding:36px 48px 44px;border-top:1px solid rgba(255,255,255,0.04);">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+        <tr>
+          <td style="font-family:Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#222222;">
+            QUANTARA SYSTEMS &middot; POWERED BY QS1
+          </td>
+          <td align="right" class="footer-links-wrap">
+            <span class="footer-link-item" style="display:inline;margin-left:24px;">
+              <a href="https://quantarasystems.io" style="font-family:Arial,sans-serif;font-size:8px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#222222;text-decoration:none;">Website</a>
+            </span>
+            <span class="footer-link-item" style="display:inline;margin-left:24px;">
+              <a href="https://calendly.com/quantarasystems-sales/45min" style="font-family:Arial,sans-serif;font-size:8px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#222222;text-decoration:none;">Schedule</a>
+            </span>
+            <span class="footer-link-item" style="display:inline;margin-left:24px;">
+              <a href="https://t.me/QuantaraSystems" style="font-family:Arial,sans-serif;font-size:8px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#222222;text-decoration:none;">Telegram</a>
+            </span>
+            <span class="footer-link-item" style="display:inline;margin-left:24px;">
+              <a href="mailto:sales@quantarasystems.io" style="font-family:Arial,sans-serif;font-size:8px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#222222;text-decoration:none;">Contact</a>
+            </span>
+          </td>
+        </tr>
+      </table>
+      <p style="font-family:Arial,sans-serif;font-size:8px;font-weight:300;line-height:1.75;color:#1A1A1A;margin:0;">
+        All trading involves substantial risk of loss and is not appropriate for all investors.
+        Past performance is not indicative of future results. Futures trading involves leverage
+        and can result in losses exceeding initial capital. Quantara Systems is a private,
+        invite-only initiative. All projected figures are modeled estimates, not guarantees.
+        This communication is strictly confidential and intended solely for the named recipient.
+      </p>
+    </td>
+  </tr>
+
+</table>
+<!-- end main container -->
+
+</td></tr>
+</table>
+<!-- end outer wrapper -->
+
+</body>
+</html>
