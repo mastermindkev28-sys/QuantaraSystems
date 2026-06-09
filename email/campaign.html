@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>QS1 — Institutional Gold Algorithmic Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #040405;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #F0F0F0;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.88); opacity: 0.7; }
+    60% { transform: scale(1.08); opacity: 0.18; }
+    100% { transform: scale(0.88); opacity: 0.7; }
+  }
+  @keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+  @keyframes float-a {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    33% { transform: translateY(-18px) translateX(10px); }
+    66% { transform: translateY(8px) translateX(-8px); }
+  }
+  @keyframes float-b {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    40% { transform: translateY(14px) translateX(-12px); }
+    80% { transform: translateY(-10px) translateX(8px); }
+  }
+  @keyframes draw-line {
+    from { stroke-dashoffset: 500; }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(245,158,11,0.5)); }
+    50% { filter: drop-shadow(0 0 28px rgba(245,158,11,0.9)) drop-shadow(0 0 60px rgba(245,158,11,0.4)); }
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes count-rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scan-line {
+    0% { top: 0%; opacity: 0.6; }
+    100% { top: 100%; opacity: 0; }
+  }
+  @keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes border-glow {
+    0%, 100% { border-color: rgba(245,158,11,0.2); }
+    50% { border-color: rgba(245,158,11,0.7); }
+  }
+
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    background: #040405;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    background: radial-gradient(ellipse 100% 80% at 50% -10%, rgba(245,158,11,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(163,217,255,0.05) 0%, transparent 60%),
+                #040405;
+  }
+
+  .hero-scan {
+    position: absolute;
+    left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(245,158,11,0.6), transparent);
+    animation: scan-line 4s linear infinite;
+    z-index: 2;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(245,158,11,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,158,11,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-orb-a {
+    position: absolute; width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,0.14) 0%, transparent 70%);
+    top: -80px; left: -60px;
+    animation: float-a 10s ease-in-out infinite;
+  }
+  .hero-orb-b {
+    position: absolute; width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(163,217,255,0.08) 0%, transparent 70%);
+    bottom: -60px; right: -40px;
+    animation: float-b 14s ease-in-out infinite;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 3;
+    padding: 72px 48px 56px;
+    text-align: center;
+  }
+
+  .badge-top {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,158,11,0.06);
+    border: 1px solid rgba(245,158,11,0.22);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: rgba(245,158,11,0.85);
+    margin-bottom: 36px;
+    animation: fade-up 0.8s ease both;
+  }
+  .badge-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #F59E0B;
+    animation: pulse-ring 2.8s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  .hero-mark {
+    display: flex; justify-content: center;
+    margin-bottom: 36px;
+    animation: fade-up 0.9s ease 0.1s both;
+  }
+
+  .hero-title {
+    font-size: 42px; font-weight: 200;
+    letter-spacing: 0.06em; line-height: 1.12;
+    color: #F0F0F0;
+    margin-bottom: 8px;
+    animation: fade-up 0.9s ease 0.15s both;
+  }
+  .hero-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 40%, #A3D9FF 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: #5A5A5A; margin-bottom: 48px;
+    animation: fade-up 0.9s ease 0.2s both;
+  }
+
+  .hero-stat-row {
+    display: flex; justify-content: center; gap: 0;
+    margin-bottom: 56px;
+    animation: fade-up 0.9s ease 0.28s both;
+  }
+  .hero-stat {
+    padding: 20px 36px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-val {
+    font-size: 28px; font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(135deg, #FCD34D, #F59E0B);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block; margin-bottom: 4px;
+  }
+  .hero-stat-lbl {
+    font-size: 8.5px; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #5A5A5A;
+  }
+
+  .cta-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    color: #000; font-weight: 600;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 18px 48px; border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 6px 40px rgba(245,158,11,0.45), 0 0 0 1px rgba(245,158,11,0.2);
+    transition: all 0.25s;
+    animation: fade-up 0.9s ease 0.35s both;
+    position: relative; overflow: hidden;
+  }
+  .cta-primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+    background-size: 400px 100%;
+    animation: shimmer 2.8s linear infinite;
+  }
+
+  .cta-note {
+    display: block; margin-top: 16px;
+    font-size: 9px; font-weight: 300;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: #3A3A3A;
+    animation: fade-up 0.9s ease 0.42s both;
+  }
+
+  /* ── TICKER ── */
+  .ticker-wrap {
+    overflow: hidden;
+    border-top: 1px solid rgba(245,158,11,0.1);
+    border-bottom: 1px solid rgba(245,158,11,0.1);
+    background: rgba(245,158,11,0.025);
+    padding: 12px 0;
+  }
+  .ticker-track {
+    display: flex; gap: 0;
+    animation: ticker 40s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 0 32px;
+    font-size: 9px; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #5A5A5A;
+  }
+  .ticker-item span { color: #F59E0B; }
+  .ticker-sep {
+    color: rgba(245,158,11,0.3);
+    font-size: 12px;
+  }
+
+  /* ── SECTION BASE ── */
+  .section { padding: 72px 48px; }
+  .section-label {
+    font-size: 8.5px; font-weight: 500;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(245,158,11,0.6);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-size: 28px; font-weight: 200;
+    letter-spacing: 0.04em; line-height: 1.18;
+    color: #F0F0F0; margin-bottom: 16px;
+  }
+  .section-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, #FCD34D, #F59E0B);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .section-body {
+    font-size: 13.5px; font-weight: 300;
+    line-height: 1.8; color: #8A8A8A;
+  }
+
+  /* ── VISUALIZATION: CHART ── */
+  .chart-section {
+    padding: 0 48px 72px;
+  }
+  .chart-card {
+    background: linear-gradient(135deg, #0D0D0D 0%, #0F0F12 100%);
+    border: 1px solid rgba(245,158,11,0.12);
+    border-radius: 18px; overflow: hidden;
+    position: relative;
+  }
+  .chart-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 28px 0;
+    margin-bottom: 8px;
+  }
+  .chart-title {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #5A5A5A;
+  }
+  .chart-live {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 8px; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #34D399;
+  }
+  .chart-live-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #34D399; flex-shrink: 0;
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+  .chart-nums {
+    display: flex; gap: 32px;
+    padding: 0 28px 20px;
+  }
+  .chart-num-val {
+    font-size: 32px; font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(135deg, #FCD34D, #F59E0B);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .chart-num-sub {
+    font-size: 8.5px; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: #4A4A4A; margin-top: 2px;
+  }
+
+  /* ── NETWORK VISUALIZATION ── */
+  .visual-section {
+    padding: 0 48px 72px;
+  }
+  .visual-wrap {
+    position: relative; width: 100%; height: 220px;
+    background: linear-gradient(135deg, #070708, #0A0C10);
+    border: 1px solid rgba(245,158,11,0.1);
+    border-radius: 18px; overflow: hidden;
+  }
+  .visual-label {
+    position: absolute; bottom: 20px; left: 24px;
+    font-size: 8px; font-weight: 400;
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: #3A3A3A; z-index: 2;
+  }
+
+  /* ── PILLARS ── */
+  .pillars { padding: 0 48px 72px; }
+  .pillar-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .pillar-card {
+    background: linear-gradient(135deg, #0D0D0D, #0F0F12);
+    border: 1px solid rgba(245,158,11,0.08);
+    border-radius: 14px; padding: 24px 22px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .pillar-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent);
+  }
+  .pillar-icon {
+    width: 36px; height: 36px; margin-bottom: 14px;
+  }
+  .pillar-name {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; color: #C8C8C8;
+    margin-bottom: 8px;
+  }
+  .pillar-desc {
+    font-size: 11.5px; font-weight: 300;
+    line-height: 1.65; color: #5A5A5A;
+  }
+
+  /* ── PAYOUT BLOCK ── */
+  .payout-section { padding: 0 48px 72px; }
+  .payout-card {
+    background: linear-gradient(135deg, #0A0C10 0%, #070708 100%);
+    border: 1px solid rgba(245,158,11,0.15);
+    border-radius: 18px; overflow: hidden;
+    position: relative;
+  }
+  .payout-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(245,158,11,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .payout-top {
+    padding: 36px 36px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    position: relative; z-index: 1;
+  }
+  .payout-eyebrow {
+    font-size: 8.5px; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(245,158,11,0.5); margin-bottom: 10px;
+  }
+  .payout-headline {
+    font-size: 34px; font-weight: 200;
+    letter-spacing: 0.02em; color: #F0F0F0;
+    margin-bottom: 6px;
+  }
+  .payout-headline strong {
+    font-weight: 300;
+    background: linear-gradient(135deg, #FCD34D, #F59E0B);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .payout-note {
+    font-size: 11px; font-weight: 300;
+    color: #484848; line-height: 1.7;
+  }
+  .payout-split {
+    display: flex; gap: 0;
+    position: relative; z-index: 1;
+  }
+  .payout-split-item {
+    flex: 1; padding: 24px 28px;
+    border-right: 1px solid rgba(255,255,255,0.04);
+  }
+  .payout-split-item:last-child { border-right: none; }
+  .payout-split-val {
+    font-size: 26px; font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 4px;
+  }
+  .payout-split-val.gold {
+    background: linear-gradient(135deg, #FCD34D, #F59E0B);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .payout-split-val.muted { color: #3A3A3A; }
+  .payout-split-lbl {
+    font-size: 8px; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #4A4A4A;
+  }
+
+  /* ── DIVIDER ── */
+  .gold-divider {
+    height: 1px; margin: 0 48px;
+    background: linear-gradient(90deg, transparent, rgba(245,158,11,0.25), transparent);
+  }
+
+  /* ── CLOSING CTA ── */
+  .closing {
+    padding: 80px 48px;
+    text-align: center;
+    background: radial-gradient(ellipse 90% 80% at 50% 100%, rgba(245,158,11,0.09) 0%, transparent 65%),
+                radial-gradient(ellipse 50% 40% at 20% 40%, rgba(163,217,255,0.04) 0%, transparent 60%);
+    position: relative;
+  }
+  .closing-ring {
+    position: absolute; width: 480px; height: 480px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,158,11,0.06);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 6s ease-in-out infinite;
+  }
+  .closing-ring-2 {
+    position: absolute; width: 340px; height: 340px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,158,11,0.1);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 6s ease-in-out 1.5s infinite;
+  }
+  .closing-inner { position: relative; z-index: 2; }
+  .closing-label {
+    font-size: 8.5px; font-weight: 500;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(245,158,11,0.5); margin-bottom: 20px;
+    display: block;
+  }
+  .closing-title {
+    font-size: 36px; font-weight: 200;
+    letter-spacing: 0.04em; line-height: 1.15;
+    color: #F0F0F0; margin-bottom: 20px;
+  }
+  .closing-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 50%, #A3D9FF 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .closing-body {
+    font-size: 13px; font-weight: 300;
+    line-height: 1.85; color: #5A5A5A;
+    max-width: 420px; margin: 0 auto 48px;
+  }
+  .closing-scarcity {
+    display: inline-block;
+    background: rgba(245,158,11,0.06);
+    border: 1px solid rgba(245,158,11,0.18);
+    border-radius: 8px; padding: 14px 24px;
+    margin-bottom: 36px;
+    animation: border-glow 3s ease-in-out infinite;
+  }
+  .closing-scarcity-text {
+    font-size: 10px; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(245,158,11,0.75);
+  }
+  .closing-scarcity-text strong {
+    color: #F59E0B; font-weight: 600;
+  }
+  .cta-large {
+    display: inline-block;
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    color: #000; font-weight: 600;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 22px 64px; border-radius: 14px;
+    text-decoration: none;
+    box-shadow:
+      0 8px 60px rgba(245,158,11,0.55),
+      0 0 0 1px rgba(245,158,11,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+    position: relative; overflow: hidden;
+  }
+  .cta-large::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background-size: 400px 100%;
+    animation: shimmer 2.4s linear infinite;
+  }
+  .cta-sub {
+    display: block; margin-top: 18px;
+    font-size: 9px; font-weight: 300;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #3A3A3A;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 40px 48px 48px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    text-align: center;
+  }
+  .footer-logo {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; margin-bottom: 20px;
+  }
+  .footer-brand {
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: #3A3A3A;
+  }
+  .footer-links {
+    display: flex; justify-content: center; gap: 24px;
+    margin-bottom: 24px;
+  }
+  .footer-link {
+    font-size: 9px; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: #3A3A3A; text-decoration: none;
+  }
+  .footer-disclaimer {
+    font-size: 9px; font-weight: 300;
+    line-height: 1.75; color: #282828;
+    max-width: 520px; margin: 0 auto;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero-inner, .section, .chart-section, .visual-section,
+    .pillars, .payout-section, .closing, .footer { padding-left: 24px; padding-right: 24px; }
+    .hero-title { font-size: 30px; }
+    .hero-stat-row { flex-direction: column; }
+    .hero-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .hero-stat:last-child { border-bottom: none; }
+    .pillar-grid { grid-template-columns: 1fr; }
+    .payout-split { flex-direction: column; }
+    .payout-split-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .closing-title { font-size: 26px; }
+    .gold-divider { margin: 0 24px; }
+    .chart-nums { flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ══════════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════════ -->
+  <div class="hero">
+    <div class="hero-scan"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-orb-a"></div>
+    <div class="hero-orb-b"></div>
+
+    <div class="hero-inner">
+
+      <div class="badge-top">
+        <span class="badge-dot"></span>
+        Private Invitation · QS1 Institutional Program
+      </div>
+
+      <!-- QS1 Mark SVG -->
+      <div class="hero-mark">
+        <svg width="88" height="88" viewBox="0 0 88 88" fill="none"
+             xmlns="http://www.w3.org/2000/svg"
+             style="animation: glow-pulse 3.5s ease-in-out infinite;">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#C8C8C8"/>
+              <stop offset="50%" stop-color="#F0F0F0"/>
+              <stop offset="100%" stop-color="#8A8A8A"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#FCD34D"/>
+              <stop offset="100%" stop-color="#F59E0B"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Outer ring -->
+          <circle cx="44" cy="44" r="40" stroke="url(#g1)" stroke-width="1.5" fill="none" opacity="0.6"/>
+          <!-- Inner ring -->
+          <circle cx="44" cy="44" r="30" stroke="rgba(245,158,11,0.25)" stroke-width="1" fill="none"/>
+          <!-- Cross lines -->
+          <line x1="44" y1="4" x2="44" y2="84" stroke="url(#g2)" stroke-width="0.75" opacity="0.5"
+                stroke-dasharray="4 6"/>
+          <line x1="4" y1="44" x2="84" y2="44" stroke="url(#g2)" stroke-width="0.75" opacity="0.5"
+                stroke-dasharray="4 6"/>
+          <!-- Diagonal lines -->
+          <line x1="15.7" y1="15.7" x2="72.3" y2="72.3" stroke="rgba(245,158,11,0.2)"
+                stroke-width="0.6" stroke-dasharray="3 7"/>
+          <line x1="72.3" y1="15.7" x2="15.7" y2="72.3" stroke="rgba(245,158,11,0.2)"
+                stroke-width="0.6" stroke-dasharray="3 7"/>
+          <!-- Center dot -->
+          <circle cx="44" cy="44" r="4" fill="url(#g2)" filter="url(#glow)"/>
+          <!-- Corner marks -->
+          <circle cx="44" cy="4"  r="2" fill="rgba(245,158,11,0.7)"/>
+          <circle cx="44" cy="84" r="2" fill="rgba(245,158,11,0.7)"/>
+          <circle cx="4"  cy="44" r="2" fill="rgba(245,158,11,0.7)"/>
+          <circle cx="84" cy="44" r="2" fill="rgba(245,158,11,0.7)"/>
+        </svg>
+      </div>
+
+      <h1 class="hero-title">
+        The Algorithm<br/>That Runs <em>While You Sleep</em>
+      </h1>
+      <p class="hero-sub">Quantara Systems · QS1 · Institutional Gold Algorithmic Program</p>
+
+      <div class="hero-stat-row">
+        <div class="hero-stat">
+          <span class="hero-stat-val">$54,243</span>
+          <span class="hero-stat-lbl">Max Net 6-Month</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">70%</span>
+          <span class="hero-stat-lbl">Client Payout Share</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">100%</span>
+          <span class="hero-stat-lbl">Automated Execution</span>
+        </div>
+      </div>
+
+      <a class="cta-primary" href="https://calendly.com/quantarasystems-sales/45min">
+        Request Private Consultation
+      </a>
+      <span class="cta-note">45 Minutes · No Obligation · Strictly Confidential</span>
+
+    </div>
+  </div>
+
+  <!-- ── TICKER ── -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <!-- duplicated for seamless loop -->
+      <span class="ticker-item"><span class="ticker-sep">·</span> GC / MGC Gold Futures <span>+QS1 v3.2</span></span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Automated Execution <span>100%</span></span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Client Payout Share <span>70%</span></span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Institutional Risk Architecture</span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Machine Learning Models <span>Deployed</span></span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Multi-Year Quantitative Research</span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Zero Manual Input Required</span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> GC / MGC Gold Futures <span>+QS1 v3.2</span></span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Automated Execution <span>100%</span></span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Client Payout Share <span>70%</span></span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Institutional Risk Architecture</span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Machine Learning Models <span>Deployed</span></span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Multi-Year Quantitative Research</span>
+      <span class="ticker-item"><span class="ticker-sep">·</span> Zero Manual Input Required</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       OPENING HOOK
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <span class="section-label">Why This Moment Matters</span>
+    <h2 class="section-title">Most people are one<br/><em>conversation away.</em></h2>
+    <p class="section-body">
+      You weren't added to this list by accident. Quantara Systems operates a private,
+      invite-only program for qualified participants — and you've been extended access
+      to a 45-minute conversation that most never get.<br/><br/>
+      QS1 is not a trading course. It is not a signal service. It is a fully-automated
+      institutional-grade algorithm — live in Gold futures markets — that generates
+      structured returns while requiring <em style="color: #C8C8C8; font-style: normal;">zero active involvement</em> from you.
+      The only question is whether you choose to be on the right side of it.
+    </p>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <!-- ══════════════════════════════════════════════
+       PERFORMANCE CHART VISUALIZATION
+  ══════════════════════════════════════════════ -->
+  <div class="chart-section" style="padding-top: 72px;">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">QS1 · 6-Month Projected Output</span>
+        <span class="chart-live"><span class="chart-live-dot"></span>System Active</span>
+      </div>
+      <div class="chart-nums">
+        <div>
+          <div class="chart-num-val">$77,490</div>
+          <div class="chart-num-sub">Peak Gross Return</div>
+        </div>
+        <div>
+          <div class="chart-num-val">$54,243</div>
+          <div class="chart-num-sub">Max Client Net (70%)</div>
+        </div>
+      </div>
+
+      <!-- SVG Chart -->
+      <svg width="100%" height="180" viewBox="0 0 600 180" preserveAspectRatio="none"
+           xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <defs>
+          <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="chartLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#D97706"/>
+            <stop offset="60%" stop-color="#F59E0B"/>
+            <stop offset="100%" stop-color="#FCD34D"/>
+          </linearGradient>
+          <filter id="lineglow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Grid lines -->
+        <line x1="0" y1="45"  x2="600" y2="45"  stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="0" y1="90"  x2="600" y2="90"  stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="0" y1="135" x2="600" y2="135" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <!-- Month markers -->
+        <line x1="100" y1="0" x2="100" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <line x1="200" y1="0" x2="200" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <line x1="300" y1="0" x2="300" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <line x1="400" y1="0" x2="400" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <line x1="500" y1="0" x2="500" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <!-- Month labels -->
+        <text x="50"  y="175" fill="#3A3A3A" font-size="9" font-family="Inter" text-anchor="middle" letter-spacing="2">M1</text>
+        <text x="150" y="175" fill="#3A3A3A" font-size="9" font-family="Inter" text-anchor="middle" letter-spacing="2">M2</text>
+        <text x="250" y="175" fill="#3A3A3A" font-size="9" font-family="Inter" text-anchor="middle" letter-spacing="2">M3</text>
+        <text x="350" y="175" fill="#3A3A3A" font-size="9" font-family="Inter" text-anchor="middle" letter-spacing="2">M4</text>
+        <text x="450" y="175" fill="#3A3A3A" font-size="9" font-family="Inter" text-anchor="middle" letter-spacing="2">M5</text>
+        <text x="550" y="175" fill="#3A3A3A" font-size="9" font-family="Inter" text-anchor="middle" letter-spacing="2">M6</text>
+        <!-- Area fill -->
+        <path d="M0,162 C60,155 80,145 130,128 C180,110 200,115 250,100 C300,84 320,72 370,58 C420,42 450,38 500,26 C530,18 560,12 600,8 L600,170 L0,170 Z"
+              fill="url(#chartFill)"/>
+        <!-- Main line -->
+        <path d="M0,162 C60,155 80,145 130,128 C180,110 200,115 250,100 C300,84 320,72 370,58 C420,42 450,38 500,26 C530,18 560,12 600,8"
+              stroke="url(#chartLine)" stroke-width="2.5" fill="none"
+              filter="url(#lineglow)"
+              stroke-dasharray="700" stroke-dashoffset="700"
+              style="animation: draw-line 2.2s ease forwards;"/>
+        <!-- Data points -->
+        <circle cx="130" cy="128" r="3.5" fill="#F59E0B" filter="url(#lineglow)"/>
+        <circle cx="250" cy="100" r="3.5" fill="#F59E0B" filter="url(#lineglow)"/>
+        <circle cx="370" cy="58"  r="3.5" fill="#FCD34D" filter="url(#lineglow)"/>
+        <circle cx="500" cy="26"  r="3.5" fill="#FCD34D" filter="url(#lineglow)"/>
+        <circle cx="600" cy="8"   r="4.5" fill="#FCD34D" filter="url(#lineglow)"/>
+        <!-- End label -->
+        <text x="580" y="5" fill="#FCD34D" font-size="8" font-family="Inter" text-anchor="middle"
+              letter-spacing="1" opacity="0.8">PEAK</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       NETWORK / ALGO VISUALIZATION
+  ══════════════════════════════════════════════ -->
+  <div class="visual-section">
+    <div class="visual-wrap">
+      <!-- Background grid -->
+      <svg width="100%" height="220" viewBox="0 0 584 220" preserveAspectRatio="xMidYMid slice"
+           xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;">
+        <defs>
+          <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F59E0B" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="nodeglow">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="edgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#F59E0B" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#F59E0B" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#A3D9FF" stop-opacity="0.2"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Connection edges -->
+        <line x1="292" y1="110" x2="100" y2="50"  stroke="url(#edgeGrad)" stroke-width="1" opacity="0.6"/>
+        <line x1="292" y1="110" x2="180" y2="180" stroke="url(#edgeGrad)" stroke-width="1" opacity="0.5"/>
+        <line x1="292" y1="110" x2="420" y2="60"  stroke="url(#edgeGrad)" stroke-width="1" opacity="0.6"/>
+        <line x1="292" y1="110" x2="480" y2="165" stroke="url(#edgeGrad)" stroke-width="1" opacity="0.5"/>
+        <line x1="292" y1="110" x2="60"  cy="140" x2="60"  y2="140" stroke="url(#edgeGrad)" stroke-width="1" opacity="0.35"/>
+        <line x1="292" y1="110" x2="530" y2="110" stroke="url(#edgeGrad)" stroke-width="1" opacity="0.4"/>
+        <line x1="100" y1="50"  x2="180" y2="180" stroke="rgba(245,158,11,0.12)" stroke-width="0.75"/>
+        <line x1="420" y1="60"  x2="480" y2="165" stroke="rgba(245,158,11,0.12)" stroke-width="0.75"/>
+        <line x1="100" y1="50"  x2="420" y2="60"  stroke="rgba(163,217,255,0.08)" stroke-width="0.75"/>
+        <line x1="180" y1="180" x2="480" y2="165" stroke="rgba(163,217,255,0.08)" stroke-width="0.75"/>
+
+        <!-- Secondary nodes -->
+        <circle cx="100" cy="50"  r="3" fill="#F59E0B" opacity="0.7" filter="url(#nodeglow)"/>
+        <circle cx="180" cy="180" r="3" fill="#F59E0B" opacity="0.6" filter="url(#nodeglow)"/>
+        <circle cx="420" cy="60"  r="3" fill="#A3D9FF" opacity="0.7" filter="url(#nodeglow)"/>
+        <circle cx="480" cy="165" r="3" fill="#A3D9FF" opacity="0.6" filter="url(#nodeglow)"/>
+        <circle cx="60"  cy="140" r="2" fill="#F59E0B" opacity="0.4"/>
+        <circle cx="530" cy="110" r="2" fill="#A3D9FF" opacity="0.4"/>
+        <circle cx="340" cy="30"  r="2" fill="#F59E0B" opacity="0.35"/>
+        <circle cx="220" cy="35"  r="2" fill="#A3D9FF" opacity="0.3"/>
+        <circle cx="370" cy="190" r="2" fill="#F59E0B" opacity="0.3"/>
+
+        <!-- Central hub glow -->
+        <circle cx="292" cy="110" r="28" fill="rgba(245,158,11,0.04)"/>
+        <circle cx="292" cy="110" r="18" fill="rgba(245,158,11,0.07)"/>
+
+        <!-- Central ring animated -->
+        <circle cx="292" cy="110" r="22" stroke="rgba(245,158,11,0.35)" stroke-width="1" fill="none"
+                stroke-dasharray="4 6"
+                style="transform-origin: 292px 110px; animation: rotate-slow 12s linear infinite;"/>
+
+        <!-- Core node -->
+        <circle cx="292" cy="110" r="7" fill="url(#nodeGlow)" filter="url(#nodeglow)" opacity="0.9"/>
+        <circle cx="292" cy="110" r="3.5" fill="#FCD34D"/>
+
+        <!-- QS1 label -->
+        <text x="292" y="148" fill="rgba(245,158,11,0.5)" font-size="8" font-family="Inter"
+              text-anchor="middle" letter-spacing="4" font-weight="400">QS1</text>
+      </svg>
+
+      <!-- Overlay text -->
+      <div style="position:absolute; top: 28px; left: 28px; z-index: 2;">
+        <div style="font-size:8.5px; font-weight:500; letter-spacing:0.26em; text-transform:uppercase;
+                    color:rgba(245,158,11,0.5); margin-bottom:8px;">Algorithm Architecture</div>
+        <div style="font-size:18px; font-weight:200; color:#C8C8C8; letter-spacing:0.06em;">
+          QS1 Neural Execution<br/>
+          <span style="font-size:12px; color:#4A4A4A; letter-spacing:0.12em;">
+            GC · MGC · Gold Futures
+          </span>
+        </div>
+      </div>
+
+      <div style="position:absolute; top: 28px; right: 28px; z-index: 2; text-align:right;">
+        <div style="font-size:8px; font-weight:400; letter-spacing:0.2em; text-transform:uppercase;
+                    color:#3A3A3A; margin-bottom:6px;">Execution Mode</div>
+        <div style="font-size:11px; font-weight:300; color:rgba(52,211,153,0.8); letter-spacing:0.1em;">
+          ● Fully Automated
+        </div>
+      </div>
+
+      <div class="visual-label">Quantitative ML · Prop Firm + Tradovate Integration</div>
+    </div>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <!-- ══════════════════════════════════════════════
+       PILLARS
+  ══════════════════════════════════════════════ -->
+  <div class="pillars" style="padding-top: 72px;">
+    <span class="section-label">Built Different</span>
+    <h2 class="section-title" style="margin-bottom:40px;">
+      Why institutions<br/><em>trust the system.</em>
+    </h2>
+
+    <div class="pillar-grid">
+
+      <div class="pillar-card">
+        <!-- Clock / Time icon -->
+        <svg class="pillar-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="14" stroke="rgba(245,158,11,0.3)" stroke-width="1.5"/>
+          <path d="M18 10v8l5 3" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="18" cy="18" r="2" fill="#F59E0B" opacity="0.6"/>
+        </svg>
+        <div class="pillar-name">Zero Time Investment</div>
+        <div class="pillar-desc">No charts. No analysis. No decisions.
+          QS1 monitors markets around the clock so you never have to.</div>
+      </div>
+
+      <div class="pillar-card">
+        <!-- Shield icon -->
+        <svg class="pillar-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 4L6 8v10c0 7 5.5 12.5 12 14 6.5-1.5 12-7 12-14V8L18 4z"
+                stroke="rgba(245,158,11,0.3)" stroke-width="1.5" fill="none"/>
+          <path d="M13 18l3.5 3.5L23 14" stroke="#F59E0B" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="pillar-name">Institutional Risk Controls</div>
+        <div class="pillar-desc">Multi-layer drawdown architecture built on
+          years of quantitative research and live market validation.</div>
+      </div>
+
+      <div class="pillar-card">
+        <!-- Chart icon -->
+        <svg class="pillar-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polyline points="4,28 12,18 20,22 30,8"
+                    stroke="rgba(245,158,11,0.3)" stroke-width="1.5"
+                    fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="30" cy="8"  r="2.5" fill="#FCD34D"/>
+          <circle cx="20" cy="22" r="2"   fill="#F59E0B" opacity="0.7"/>
+          <circle cx="12" cy="18" r="2"   fill="#F59E0B" opacity="0.5"/>
+        </svg>
+        <div class="pillar-name">Scalable Returns</div>
+        <div class="pillar-desc">Run multiple funded accounts simultaneously.
+          Scale your exposure without scaling your effort.</div>
+      </div>
+
+      <div class="pillar-card">
+        <!-- Atom icon -->
+        <svg class="pillar-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="3" fill="#F59E0B" opacity="0.8"/>
+          <ellipse cx="18" cy="18" rx="14" ry="6" stroke="rgba(245,158,11,0.3)"
+                   stroke-width="1.2" fill="none" transform="rotate(0, 18, 18)"/>
+          <ellipse cx="18" cy="18" rx="14" ry="6" stroke="rgba(163,217,255,0.2)"
+                   stroke-width="1.2" fill="none" transform="rotate(60, 18, 18)"/>
+          <ellipse cx="18" cy="18" rx="14" ry="6" stroke="rgba(163,217,255,0.2)"
+                   stroke-width="1.2" fill="none" transform="rotate(120, 18, 18)"/>
+        </svg>
+        <div class="pillar-name">ML-Powered Execution</div>
+        <div class="pillar-desc">QS1 v3.2 runs machine learning models trained
+          on multi-year market data for every execution decision.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAYOUT STRUCTURE
+  ══════════════════════════════════════════════ -->
+  <div class="payout-section">
+    <div class="payout-card">
+      <div class="payout-top">
+        <div class="payout-eyebrow">Payout Structure · Fully Transparent</div>
+        <div class="payout-headline">
+          You keep <strong>70%</strong> of every<br/>dollar the algorithm earns.
+        </div>
+        <div class="payout-note" style="margin-top: 12px;">
+          Structured on $50K, $100K, and $150K funded account tiers.
+          Select your exposure level. QS1 handles the rest.
+        </div>
+      </div>
+      <div class="payout-split">
+        <div class="payout-split-item">
+          <div class="payout-split-val gold">70%</div>
+          <div class="payout-split-lbl">Your Payout Share</div>
+        </div>
+        <div class="payout-split-item">
+          <div class="payout-split-val gold">$150K</div>
+          <div class="payout-split-lbl">Max Account Tier</div>
+        </div>
+        <div class="payout-split-item">
+          <div class="payout-split-val gold">$54,243</div>
+          <div class="payout-split-lbl">Max Net 6-Month</div>
+        </div>
+        <div class="payout-split-item">
+          <div class="payout-split-val muted">30%</div>
+          <div class="payout-split-lbl">QS1 Program Fee</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <!-- ══════════════════════════════════════════════
+       PSYCHOLOGICAL HOOK — THE COST OF WAITING
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <span class="section-label">The Uncomfortable Truth</span>
+    <h2 class="section-title">
+      Every week you wait<br/>is a week <em>already paid.</em>
+    </h2>
+    <p class="section-body">
+      QS1 is running right now. Markets are open. The algorithm is executing.
+      The people who scheduled last week are already inside the system.<br/><br/>
+      The 45-minute consultation is not a sales call. It is a structured
+      qualification session — we confirm your eligibility, walk you through
+      deployment, and answer every question with precision. You leave with
+      either a clear path forward or the clarity that this isn't the right fit.<br/><br/>
+      <span style="color: #C8C8C8;">Either outcome is valuable. Only one of them compounds.</span>
+    </p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       GOLD SEPARATOR VISUAL
+  ══════════════════════════════════════════════ -->
+  <div style="padding: 0 48px 72px;">
+    <svg width="100%" height="2" viewBox="0 0 584 2" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="sepGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#F59E0B" stop-opacity="0"/>
+          <stop offset="30%"  stop-color="#F59E0B" stop-opacity="0.6"/>
+          <stop offset="50%"  stop-color="#FCD34D" stop-opacity="1"/>
+          <stop offset="70%"  stop-color="#F59E0B" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <rect width="584" height="2" fill="url(#sepGrad)"/>
+    </svg>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       CLOSING CTA
+  ══════════════════════════════════════════════ -->
+  <div class="closing">
+    <div class="closing-ring"></div>
+    <div class="closing-ring-2"></div>
+
+    <div class="closing-inner">
+      <span class="closing-label">Your Window is Open</span>
+      <h2 class="closing-title">
+        This is what<br/><em>the decision looks like.</em>
+      </h2>
+      <p class="closing-body">
+        The next 45 minutes could be the most precise allocation of time
+        you make this quarter. Quantara Systems has one purpose: structured,
+        systematic, automated market returns — for qualified participants only.
+        You are one of them.
+      </p>
+
+      <div style="margin-bottom: 36px;">
+        <div class="closing-scarcity">
+          <span class="closing-scarcity-text">
+            Consultations are <strong>limited this week</strong> · Slots filling now
+          </span>
+        </div>
+      </div>
+
+      <a class="cta-large" href="https://calendly.com/quantarasystems-sales/45min">
+        Claim Your Consultation
+      </a>
+      <span class="cta-sub">calendly.com/quantarasystems-sales · 45 min · No cost · Confidential</span>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════ -->
+  <div class="footer">
+    <div class="footer-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="rgba(245,158,11,0.3)" stroke-width="1.2" fill="none"/>
+        <line x1="12" y1="2"  x2="12" y2="22" stroke="rgba(245,158,11,0.25)" stroke-width="0.75" stroke-dasharray="2 3"/>
+        <line x1="2"  y1="12" x2="22" y2="12" stroke="rgba(245,158,11,0.25)" stroke-width="0.75" stroke-dasharray="2 3"/>
+        <circle cx="12" cy="12" r="2.5" fill="rgba(245,158,11,0.6)"/>
+      </svg>
+      <span class="footer-brand">Quantara Systems</span>
+    </div>
+
+    <div class="footer-links">
+      <a href="https://quantarasystems.io" class="footer-link">Website</a>
+      <a href="https://calendly.com/quantarasystems-sales/45min" class="footer-link">Schedule</a>
+      <a href="mailto:sales@quantarasystems.io" class="footer-link">Contact</a>
+    </div>
+
+    <p class="footer-disclaimer">
+      All trading involves substantial risk of loss and is not appropriate for all investors.
+      Past performance is not indicative of future results. Futures trading involves leverage
+      and can result in losses exceeding initial capital. Quantara Systems is a private,
+      invite-only initiative. All projected figures are modeled estimates, not guarantees.
+      This communication is strictly confidential and intended solely for the named recipient.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
