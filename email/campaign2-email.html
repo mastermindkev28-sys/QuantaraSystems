@@ -241,51 +241,81 @@
 
     </td>
 
-    <!-- RIGHT: Static clock visual -->
-    <td valign="top" align="center" style="width:170px;" class="hide-mobile">
-      <!-- Clock face built from table cells -->
-      <table border="0" cellpadding="0" cellspacing="0" align="center" style="width:160px; height:160px;">
-      <tr>
-        <td align="center" valign="middle" style="width:160px; height:160px;">
-          <!--[if mso]>
-          <v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="width:150px;height:150px;" strokecolor="#A3D9FF" strokeweight="1.5pt" fillcolor="#0A0C12">
-          <v:fill type="gradient" color="#0A0C12" color2="#060810" angle="135"/>
-          </v:oval>
-          <![endif]-->
-          <!--[if !mso]><!-->
-          <div class="anim-float anim-glow-cyan" style="width:150px; height:150px; border-radius:50%; border:2px solid rgba(163,217,255,0.5); background-color:#0A0C12; position:relative; display:inline-block; text-align:center; vertical-align:middle;">
-            <!-- Clock face content as centered table -->
-            <table border="0" cellpadding="0" cellspacing="0" width="150" height="150" style="position:absolute; top:0; left:0;">
-            <tr>
-              <td align="center" valign="top" style="padding-top:14px; font-family:Arial,sans-serif; font-size:8px; color:rgba(163,217,255,0.6); line-height:1;">&#9646;</td>
-            </tr>
-            <tr>
-              <td align="center" valign="middle" style="height:80px;">
-                <!-- Hour hand (pointing ~10 o'clock position rendered static) -->
-                <div style="display:inline-block; width:3px; height:48px; background-color:#A3D9FF; border-radius:2px; transform:rotate(-60deg); transform-origin:bottom center; opacity:0.9; margin-bottom:-24px;"></div>
-              </td>
-            </tr>
-            <tr>
-              <td align="center" valign="middle">
-                <!-- Center dot -->
-                <div style="width:10px; height:10px; border-radius:50%; background-color:#A3D9FF; display:inline-block; margin:0 auto;"></div>
-              </td>
-            </tr>
-            <tr>
-              <td align="center" valign="bottom" style="padding-bottom:18px; font-family:Arial,sans-serif; font-size:7px; letter-spacing:4px; color:rgba(163,217,255,0.3);">QS1</td>
-            </tr>
-            </table>
-          </div>
-          <!--<![endif]-->
-        </td>
-      </tr>
-      <!-- Clock label below -->
-      <tr>
-        <td align="center" style="padding-top:12px; font-family:Arial,sans-serif; font-size:8px; letter-spacing:3px; text-transform:uppercase; color:rgba(163,217,255,0.3);">
-          &mdash; &nbsp; TIME &nbsp; &mdash;
-        </td>
-      </tr>
-      </table>
+    <!-- RIGHT: Original animated SVG clock -->
+    <td valign="top" align="center" style="width:200px;" class="hide-mobile">
+      <!--[if !mso]><!-->
+      <div style="animation: float-gentle 6s ease-in-out infinite;">
+        <svg width="190" height="190" viewBox="0 0 190 190" fill="none"
+             xmlns="http://www.w3.org/2000/svg"
+             style="animation: glow-cyan 4s ease-in-out infinite;">
+          <defs>
+            <linearGradient id="clockFace" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0A0C12"/>
+              <stop offset="100%" stop-color="#060810"/>
+            </linearGradient>
+            <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#A3D9FF" stop-opacity="0.6"/>
+              <stop offset="50%" stop-color="#7BC8F5" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#A3D9FF" stop-opacity="0.3"/>
+            </linearGradient>
+            <filter id="clockglow">
+              <feGaussianBlur stdDeviation="5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="handglow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Outer glow ring -->
+          <circle cx="95" cy="95" r="92" stroke="rgba(163,217,255,0.06)" stroke-width="1" fill="none"/>
+          <!-- Face -->
+          <circle cx="95" cy="95" r="80" fill="url(#clockFace)" stroke="url(#rimGrad)" stroke-width="1.5"/>
+          <!-- Inner ring -->
+          <circle cx="95" cy="95" r="70" stroke="rgba(163,217,255,0.06)" stroke-width="0.75" fill="none"/>
+          <!-- Hour markers -->
+          <line x1="95" y1="20" x2="95" y2="30" stroke="rgba(163,217,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="95" y1="160" x2="95" y2="170" stroke="rgba(163,217,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="20" y1="95" x2="30" y2="95" stroke="rgba(163,217,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="160" y1="95" x2="170" y2="95" stroke="rgba(163,217,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+          <!-- Minor markers -->
+          <line x1="147.2" y1="32.3" x2="142.6" y2="40.3" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="157.7" y1="47.8" x2="149.7" y2="52.4" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="32.3" y1="147.2" x2="40.3" y2="142.6" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="47.8" y1="157.7" x2="52.4" y2="149.7" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="157.7" y1="142.2" x2="149.7" y2="137.6" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="142.2" y1="157.7" x2="137.6" y2="149.7" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="32.3" y1="42.8" x2="40.3" y2="47.4" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="42.8" y1="32.3" x2="47.4" y2="40.3" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+          <!-- Hour hand -->
+          <g style="transform-origin: 95px 95px; animation: minute-crawl 720s linear infinite;">
+            <line x1="95" y1="95" x2="95" y2="42" stroke="#A3D9FF" stroke-width="2.5" stroke-linecap="round" filter="url(#handglow)" opacity="0.9"/>
+          </g>
+          <!-- Minute hand -->
+          <g style="transform-origin: 95px 95px; animation: minute-crawl 60s linear infinite;">
+            <line x1="95" y1="95" x2="95" y2="30" stroke="#A3D9FF" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+          </g>
+          <!-- Second hand -->
+          <g style="transform-origin: 95px 95px; animation: second-sweep 6s linear infinite;">
+            <line x1="95" y1="108" x2="95" y2="28" stroke="rgba(245,158,11,0.9)" stroke-width="1" stroke-linecap="round" filter="url(#handglow)"/>
+          </g>
+          <!-- Center cap -->
+          <circle cx="95" cy="95" r="5" fill="#A3D9FF" opacity="0.9" filter="url(#clockglow)"/>
+          <circle cx="95" cy="95" r="2.5" fill="#050506"/>
+          <!-- QS1 label -->
+          <text x="95" y="130" fill="rgba(163,217,255,0.25)" font-size="7" font-family="Arial,sans-serif" text-anchor="middle" letter-spacing="4" font-weight="400">QS1</text>
+        </svg>
+      </div>
+      <!--<![endif]-->
+      <!-- Outlook fallback: simple circle -->
+      <!--[if mso]>
+      <v:oval xmlns:v="urn:schemas-microsoft-com:vml" style="width:160px;height:160px;" strokecolor="#A3D9FF" strokeweight="1.5pt" fillcolor="#0A0C12">
+        <v:fill type="gradient" color="#0A0C12" color2="#060810" angle="135"/>
+        <v:textbox style="mso-fit-shape-to-text:true" inset="0,60px,0,0">
+          <center style="font-family:Arial,sans-serif;font-size:8px;letter-spacing:4px;color:rgba(163,217,255,0.3);">QS1</center>
+        </v:textbox>
+      </v:oval>
+      <![endif]-->
     </td>
 
   </tr>
