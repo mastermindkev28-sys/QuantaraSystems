@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>QS1 · The Cost of Time</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #050506;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #E8E8E8;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  @keyframes clock-tick {
+    0%, 49%  { transform: rotate(0deg); }
+    50%, 100% { transform: rotate(6deg); }
+  }
+  @keyframes second-sweep {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes minute-crawl {
+    from { transform: rotate(180deg); }
+    to   { transform: rotate(540deg); }
+  }
+  @keyframes sand-fall {
+    0%   { transform: translateY(-8px); opacity: 0; }
+    20%  { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translateY(30px); opacity: 0; }
+  }
+  @keyframes fade-left {
+    from { opacity: 0; transform: translateX(-20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shimmer-cyan {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+  @keyframes pulse-cyan {
+    0%, 100% { opacity: 0.6; }
+    50%       { opacity: 1; }
+  }
+  @keyframes line-grow {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+  @keyframes border-breathe {
+    0%, 100% { border-color: rgba(163,217,255,0.15); }
+    50%       { border-color: rgba(163,217,255,0.45); }
+  }
+  @keyframes float-gentle {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+  }
+  @keyframes redact-reveal {
+    0%, 60% { opacity: 1; }
+    70%      { opacity: 0.3; }
+    80%      { opacity: 1; }
+    90%      { opacity: 0.3; }
+    100%     { opacity: 1; }
+  }
+  @keyframes wave-drift {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-80px); }
+  }
+  @keyframes glow-cyan {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(163,217,255,0.4)); }
+    50%       { filter: drop-shadow(0 0 22px rgba(163,217,255,0.8)) drop-shadow(0 0 50px rgba(163,217,255,0.3)); }
+  }
+
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    background: #050506;
+  }
+
+  /* =============================================
+     HEADER STRIP
+  ============================================= */
+  .header-strip {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .header-logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .header-brand {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: #3A3A3A;
+  }
+  .header-classification {
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(163,217,255,0.5);
+    border: 1px solid rgba(163,217,255,0.2);
+    padding: 4px 10px; border-radius: 3px;
+  }
+
+  /* =============================================
+     HERO
+  ============================================= */
+  .hero {
+    position: relative;
+    padding: 56px 40px 0;
+    overflow: hidden;
+    background: #050506;
+  }
+
+  .hero-wave {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 200px;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    position: relative; z-index: 2;
+  }
+
+  .hero-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero-right {
+    flex-shrink: 0;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 28px;
+    animation: fade-left 0.7s ease both;
+  }
+  .hero-eyebrow-line {
+    width: 28px; height: 1px;
+    background: #A3D9FF;
+  }
+  .hero-eyebrow-text {
+    font-size: 8.5px; font-weight: 500;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: #A3D9FF;
+  }
+
+  .hero-title {
+    font-size: 48px; font-weight: 200;
+    letter-spacing: -0.01em; line-height: 1.06;
+    color: #F0F0F0;
+    margin-bottom: 10px;
+    animation: fade-left 0.8s ease 0.08s both;
+  }
+  .hero-title .accent {
+    font-style: normal;
+    background: linear-gradient(135deg, #A3D9FF 0%, #7BC8F5 50%, #F59E0B 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title-sub {
+    font-size: 13px; font-weight: 300;
+    line-height: 1.75; color: #5A5A5A;
+    max-width: 360px;
+    margin-bottom: 40px;
+    animation: fade-left 0.8s ease 0.16s both;
+  }
+
+  .hero-manifesto {
+    border-left: 2px solid #A3D9FF;
+    padding-left: 20px;
+    margin-bottom: 40px;
+    animation: fade-left 0.8s ease 0.22s both;
+  }
+  .hero-manifesto-text {
+    font-size: 15px; font-weight: 300;
+    line-height: 1.7; color: #C8C8C8;
+    font-style: italic;
+  }
+
+  .hero-cta-row {
+    display: flex; align-items: center; gap: 20px;
+    animation: fade-left 0.8s ease 0.3s both;
+  }
+  .cta-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, #A3D9FF 0%, #7BC8F5 100%);
+    color: #050506; font-weight: 600;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 16px 36px; border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 32px rgba(163,217,255,0.35), 0 0 0 1px rgba(163,217,255,0.2);
+    position: relative; overflow: hidden;
+  }
+  .cta-primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    background-size: 400px 100%;
+    animation: shimmer-cyan 2.6s linear infinite;
+  }
+  .hero-cta-note {
+    font-size: 9px; font-weight: 300;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: #3A3A3A;
+  }
+
+  /* =============================================
+     CLOCK SVG HERO VISUAL
+  ============================================= */
+  .clock-wrap {
+    position: relative;
+    width: 190px; height: 190px;
+    animation: float-gentle 6s ease-in-out infinite;
+  }
+
+  /* =============================================
+     DIVISION LINE
+  ============================================= */
+  .wave-divider {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    margin-top: -2px;
+  }
+
+  /* =============================================
+     STAT STRIP
+  ============================================= */
+  .stat-strip {
+    display: flex;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    background: rgba(163,217,255,0.02);
+  }
+  .stat-strip-item {
+    flex: 1;
+    padding: 20px 0;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.04);
+  }
+  .stat-strip-item:last-child { border-right: none; }
+  .stat-strip-val {
+    font-size: 22px; font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    color: #A3D9FF;
+    display: block; margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  .stat-strip-lbl {
+    font-size: 7.5px; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #3A3A3A;
+  }
+
+  /* =============================================
+     THE MATH SECTION
+  ============================================= */
+  .section-pad { padding: 72px 40px; }
+  .section-pad-sm { padding: 56px 40px; }
+
+  .doc-label {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 32px;
+  }
+  .doc-label-num {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: rgba(163,217,255,0.4);
+    font-variant-numeric: tabular-nums;
+  }
+  .doc-label-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(163,217,255,0.2), transparent);
+  }
+  .doc-label-text {
+    font-size: 8.5px; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(163,217,255,0.5);
+  }
+
+  .pull-quote {
+    font-size: 32px; font-weight: 200;
+    letter-spacing: -0.01em; line-height: 1.15;
+    color: #F0F0F0;
+    margin-bottom: 24px;
+  }
+  .pull-quote .hl-cyan {
+    font-style: normal;
+    color: #A3D9FF;
+  }
+  .pull-quote .hl-gold {
+    font-style: normal;
+    background: linear-gradient(135deg, #FCD34D, #F59E0B);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .body-text {
+    font-size: 13.5px; font-weight: 300;
+    line-height: 1.82; color: #7A7A7A;
+  }
+  .body-text .em {
+    color: #C8C8C8; font-style: normal;
+  }
+
+  /* =============================================
+     TIME LOG VISUAL
+  ============================================= */
+  .timelog {
+    margin: 40px 0;
+    background: linear-gradient(135deg, #0A0A0C 0%, #0D0D10 100%);
+    border: 1px solid rgba(163,217,255,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .timelog-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 24px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .timelog-title {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: #4A4A4A;
+  }
+  .timelog-badge {
+    font-size: 8px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(248,113,113,0.7);
+    border: 1px solid rgba(248,113,113,0.2);
+    padding: 3px 10px; border-radius: 100px;
+  }
+  .timelog-row {
+    display: flex; align-items: center;
+    padding: 14px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    gap: 16px;
+  }
+  .timelog-row:last-child { border-bottom: none; }
+  .timelog-activity {
+    flex: 1;
+    font-size: 11.5px; font-weight: 300;
+    color: #5A5A5A;
+  }
+  .timelog-hours {
+    font-size: 11px; font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    color: rgba(248,113,113,0.7);
+    min-width: 70px; text-align: right;
+    letter-spacing: 0.06em;
+  }
+  .timelog-bar-wrap {
+    width: 90px; height: 3px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .timelog-bar {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, rgba(248,113,113,0.4), rgba(248,113,113,0.7));
+  }
+  .timelog-total-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    background: rgba(248,113,113,0.04);
+    border-top: 1px solid rgba(248,113,113,0.1);
+  }
+  .timelog-total-lbl {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(248,113,113,0.6);
+  }
+  .timelog-total-val {
+    font-size: 20px; font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    color: rgba(248,113,113,0.8);
+  }
+  .timelog-total-sub {
+    font-size: 8px; font-weight: 300;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(248,113,113,0.4);
+  }
+
+  /* =============================================
+     SPLIT COMPARE
+  ============================================= */
+  .compare-section {
+    padding: 0 40px 72px;
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .compare-col {
+    padding: 32px 28px;
+  }
+  .compare-col.before {
+    border-right: 1px solid rgba(255,255,255,0.05);
+    background: linear-gradient(160deg, #0A0A0C, #0C0C0E);
+  }
+  .compare-col.after {
+    background: linear-gradient(160deg, #080C10, #0A0E14);
+  }
+  .compare-head {
+    font-size: 8.5px; font-weight: 600;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .compare-head.red  { color: rgba(248,113,113,0.6); }
+  .compare-head.cyan { color: rgba(163,217,255,0.6); }
+  .compare-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .compare-item:last-child { margin-bottom: 0; }
+  .compare-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 5px;
+  }
+  .compare-dot.red  { background: rgba(248,113,113,0.6); }
+  .compare-dot.cyan { background: rgba(163,217,255,0.6); }
+  .compare-text {
+    font-size: 11.5px; font-weight: 300;
+    line-height: 1.6; color: #5A5A5A;
+  }
+
+  /* =============================================
+     CONFESSION SECTION
+  ============================================= */
+  .confession {
+    padding: 72px 40px;
+    background: linear-gradient(160deg, #070708 0%, #090910 100%);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .confession-bg {
+    position: absolute;
+    right: -80px; top: -80px;
+    font-size: 300px; font-weight: 700;
+    color: rgba(163,217,255,0.015);
+    letter-spacing: -0.05em;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .confession-inner { position: relative; z-index: 2; }
+
+  .redact-block {
+    display: inline-block;
+    background: rgba(163,217,255,0.08);
+    border: 1px solid rgba(163,217,255,0.15);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.08em;
+    color: rgba(163,217,255,0.7);
+    animation: redact-reveal 5s ease-in-out infinite;
+    margin: 0 2px;
+  }
+
+  .confession-list {
+    margin-top: 32px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .confession-item {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 20px 24px;
+    background: rgba(163,217,255,0.025);
+    border: 1px solid rgba(163,217,255,0.06);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .confession-item::before {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(163,217,255,0.2), transparent);
+  }
+  .confession-num {
+    font-size: 11px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: rgba(163,217,255,0.3);
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .confession-content {}
+  .confession-title {
+    font-size: 12px; font-weight: 500;
+    color: #C8C8C8; letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .confession-body {
+    font-size: 11.5px; font-weight: 300;
+    line-height: 1.65; color: #5A5A5A;
+  }
+  .confession-body .em { color: #A3D9FF; font-style: normal; }
+
+  /* =============================================
+     PAYOUT / NUMBERS SECTION
+  ============================================= */
+  .numbers-section {
+    padding: 72px 40px;
+  }
+
+  .account-cards {
+    display: flex; flex-direction: column; gap: 2px;
+    margin-top: 36px;
+  }
+  .account-card {
+    display: flex; align-items: center;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #0A0A0C, #0C0C10);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 12px;
+    gap: 20px;
+    transition: border-color 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .account-card::after {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, transparent, rgba(163,217,255,0.5), transparent);
+  }
+  .account-tier {
+    font-size: 16px; font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    color: #A3D9FF; min-width: 76px;
+    letter-spacing: -0.01em;
+  }
+  .account-divider {
+    width: 1px; height: 36px;
+    background: rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+  .account-meta {
+    flex: 1;
+  }
+  .account-gross {
+    font-size: 11px; font-weight: 400;
+    color: #5A5A5A; letter-spacing: 0.04em;
+    margin-bottom: 2px;
+  }
+  .account-net {
+    font-size: 13px; font-weight: 300;
+    color: #C8C8C8;
+  }
+  .account-net strong {
+    font-weight: 400;
+    background: linear-gradient(135deg, #FCD34D, #F59E0B);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .account-pct {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .account-pct-val {
+    font-size: 22px; font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(135deg, #FCD34D, #F59E0B);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+  }
+  .account-pct-lbl {
+    font-size: 7.5px; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: #3A3A3A;
+  }
+
+  /* =============================================
+     TESTIMONIALS
+  ============================================= */
+  .testimonials {
+    padding: 72px 40px;
+    background: linear-gradient(160deg, #060607 0%, #080810 100%);
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .testimonial-list {
+    display: flex; flex-direction: column; gap: 16px;
+    margin-top: 36px;
+  }
+  .testimonial-card {
+    padding: 24px 26px;
+    background: rgba(163,217,255,0.025);
+    border: 1px solid rgba(163,217,255,0.06);
+    border-radius: 14px;
+    position: relative;
+  }
+  .testimonial-quote-mark {
+    font-size: 48px; font-weight: 700;
+    color: rgba(163,217,255,0.08);
+    line-height: 1;
+    margin-bottom: -12px;
+    display: block;
+    font-family: Georgia, serif;
+  }
+  .testimonial-text {
+    font-size: 12.5px; font-weight: 300;
+    line-height: 1.75; color: #7A7A7A;
+    margin-bottom: 16px;
+  }
+  .testimonial-text .key { color: #C8C8C8; font-style: normal; }
+  .testimonial-footer {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .testimonial-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(163,217,255,0.08);
+    border: 1px solid rgba(163,217,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 500;
+    color: rgba(163,217,255,0.5);
+    flex-shrink: 0;
+  }
+  .testimonial-name {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.08em; color: #4A4A4A;
+  }
+  .testimonial-loc {
+    font-size: 9px; font-weight: 300;
+    letter-spacing: 0.1em; color: #2E2E2E;
+  }
+
+  /* =============================================
+     CLOSING
+  ============================================= */
+  .closing {
+    padding: 80px 40px 72px;
+    position: relative;
+    overflow: hidden;
+    background: #050506;
+  }
+  .closing-bg-num {
+    position: absolute;
+    right: 30px; top: 30px;
+    font-size: 220px; font-weight: 700;
+    color: rgba(163,217,255,0.025);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    user-select: none;
+  }
+  .closing-inner { position: relative; z-index: 2; }
+
+  .closing-label {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 28px;
+  }
+  .closing-label-line {
+    width: 28px; height: 1px;
+    background: #A3D9FF;
+  }
+  .closing-label-text {
+    font-size: 8.5px; font-weight: 500;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: #A3D9FF;
+  }
+
+  .closing-title {
+    font-size: 42px; font-weight: 200;
+    letter-spacing: -0.01em; line-height: 1.1;
+    color: #F0F0F0;
+    margin-bottom: 20px;
+  }
+  .closing-title .accent {
+    font-style: normal;
+    background: linear-gradient(135deg, #A3D9FF, #7BC8F5 50%, #F59E0B);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .closing-body {
+    font-size: 13.5px; font-weight: 300;
+    line-height: 1.82; color: #5A5A5A;
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+  .closing-body .em { color: #C8C8C8; font-style: normal; }
+
+  .closing-time-box {
+    display: flex; align-items: center; gap: 20px;
+    padding: 20px 28px;
+    background: rgba(163,217,255,0.04);
+    border: 1px solid rgba(163,217,255,0.12);
+    border-radius: 12px;
+    margin-bottom: 36px;
+    animation: border-breathe 4s ease-in-out infinite;
+    max-width: 420px;
+  }
+  .closing-time-icon {}
+  .closing-time-text {}
+  .closing-time-big {
+    font-size: 22px; font-weight: 200;
+    color: #A3D9FF; font-variant-numeric: tabular-nums;
+    margin-bottom: 2px;
+    letter-spacing: -0.01em;
+  }
+  .closing-time-sub {
+    font-size: 8px; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #3A3A3A;
+  }
+
+  .cta-large {
+    display: inline-block;
+    background: linear-gradient(135deg, #A3D9FF 0%, #7BC8F5 100%);
+    color: #050506; font-weight: 700;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    padding: 22px 56px; border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 8px 48px rgba(163,217,255,0.4), 0 0 0 1px rgba(163,217,255,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+    position: relative; overflow: hidden;
+  }
+  .cta-large::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+    background-size: 400px 100%;
+    animation: shimmer-cyan 2.2s linear infinite;
+  }
+  .cta-sub {
+    display: block; margin-top: 16px;
+    font-size: 9px; font-weight: 300;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #282828;
+  }
+
+  /* =============================================
+     GOLD DIVIDER
+  ============================================= */
+  .cyan-divider {
+    height: 1px; margin: 0 40px;
+    background: linear-gradient(90deg, transparent, rgba(163,217,255,0.2), transparent);
+  }
+
+  /* =============================================
+     FOOTER
+  ============================================= */
+  .footer {
+    padding: 36px 40px 44px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    text-align: center;
+  }
+  .footer-logo {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; margin-bottom: 18px;
+  }
+  .footer-brand {
+    font-size: 10px; font-weight: 300;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: #2E2E2E;
+  }
+  .footer-links {
+    display: flex; justify-content: center; gap: 24px;
+    margin-bottom: 22px;
+  }
+  .footer-link {
+    font-size: 8.5px; font-weight: 400;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: #2E2E2E; text-decoration: none;
+  }
+  .footer-disclaimer {
+    font-size: 8.5px; font-weight: 300;
+    line-height: 1.75; color: #222;
+    max-width: 520px; margin: 0 auto;
+  }
+
+  /* =============================================
+     RESPONSIVE
+  ============================================= */
+  @media (max-width: 580px) {
+    .hero-layout  { flex-direction: column-reverse; gap: 24px; }
+    .hero-right   { width: 100%; }
+    .clock-wrap   { width: 140px; height: 140px; margin: 0 auto; }
+    .hero-title   { font-size: 34px; }
+    .pull-quote   { font-size: 24px; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-col.before { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .section-pad, .section-pad-sm, .numbers-section,
+    .compare-section, .confession, .testimonials,
+    .closing, .footer { padding-left: 24px; padding-right: 24px; }
+    .header-strip { padding-left: 24px; padding-right: 24px; }
+    .account-card { flex-wrap: wrap; }
+    .closing-title { font-size: 30px; }
+    .timelog-bar-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- =============================================
+       HEADER STRIP
+  ============================================= -->
+  <div class="header-strip">
+    <div class="header-logo">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="8.5" stroke="rgba(163,217,255,0.2)" stroke-width="1" fill="none"/>
+        <line x1="10" y1="1.5" x2="10" y2="18.5" stroke="rgba(163,217,255,0.15)" stroke-width="0.75" stroke-dasharray="1.5 2.5"/>
+        <line x1="1.5" y1="10" x2="18.5" y2="10" stroke="rgba(163,217,255,0.15)" stroke-width="0.75" stroke-dasharray="1.5 2.5"/>
+        <circle cx="10" cy="10" r="2" fill="rgba(163,217,255,0.5)"/>
+      </svg>
+      <span class="header-brand">Quantara Systems</span>
+    </div>
+    <div class="header-classification">Confidential · Qualified Access</div>
+  </div>
+
+  <!-- =============================================
+       HERO
+  ============================================= -->
+  <div class="hero">
+
+    <div class="hero-layout">
+
+      <!-- LEFT: COPY -->
+      <div class="hero-left">
+
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          <span class="hero-eyebrow-text">QS1 · Institutional Gold Program</span>
+        </div>
+
+        <h1 class="hero-title">
+          You Don't<br/>Have a<br/><em class="accent">Money Problem.</em>
+        </h1>
+
+        <p class="hero-title-sub">
+          You have a time problem. And right now,
+          the market is open, indifferent, and moving
+          without your permission.
+        </p>
+
+        <div class="hero-manifesto">
+          <p class="hero-manifesto-text">
+            "The most expensive thing you'll ever trade
+            is the hours you can't get back."
+          </p>
+        </div>
+
+        <div class="hero-cta-row">
+          <a class="cta-primary" href="https://calendly.com/quantarasystems-sales/45min">
+            Reclaim Your Time
+          </a>
+          <span class="hero-cta-note">45 min · Private · No cost</span>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: CLOCK VISUAL -->
+      <div class="hero-right">
+        <div class="clock-wrap">
+          <svg width="190" height="190" viewBox="0 0 190 190" fill="none"
+               xmlns="http://www.w3.org/2000/svg"
+               style="animation: glow-cyan 4s ease-in-out infinite;">
+            <defs>
+              <linearGradient id="clockFace" cx="50%" cy="50%" r="50%"
+                              x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0A0C12"/>
+                <stop offset="100%" stop-color="#060810"/>
+              </linearGradient>
+              <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#A3D9FF" stop-opacity="0.6"/>
+                <stop offset="50%" stop-color="#7BC8F5" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#A3D9FF" stop-opacity="0.3"/>
+              </linearGradient>
+              <filter id="clockglow">
+                <feGaussianBlur stdDeviation="5" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <filter id="handglow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Outer glow ring -->
+            <circle cx="95" cy="95" r="92" stroke="rgba(163,217,255,0.06)"
+                    stroke-width="1" fill="none"/>
+
+            <!-- Face -->
+            <circle cx="95" cy="95" r="80" fill="url(#clockFace)"
+                    stroke="url(#rimGrad)" stroke-width="1.5"/>
+
+            <!-- Inner ring -->
+            <circle cx="95" cy="95" r="70" stroke="rgba(163,217,255,0.06)"
+                    stroke-width="0.75" fill="none"/>
+
+            <!-- Hour markers -->
+            <line x1="95" y1="20" x2="95" y2="30" stroke="rgba(163,217,255,0.6)"
+                  stroke-width="2" stroke-linecap="round"/>
+            <line x1="95" y1="160" x2="95" y2="170" stroke="rgba(163,217,255,0.6)"
+                  stroke-width="2" stroke-linecap="round"/>
+            <line x1="20" y1="95" x2="30" y2="95" stroke="rgba(163,217,255,0.6)"
+                  stroke-width="2" stroke-linecap="round"/>
+            <line x1="160" y1="95" x2="170" y2="95" stroke="rgba(163,217,255,0.6)"
+                  stroke-width="2" stroke-linecap="round"/>
+
+            <!-- Minor markers -->
+            <line x1="147.2" y1="32.3" x2="142.6" y2="40.3" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="157.7" y1="47.8" x2="149.7" y2="52.4" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="32.3" y1="147.2" x2="40.3" y2="142.6" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="47.8" y1="157.7" x2="52.4" y2="149.7" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="157.7" y1="142.2" x2="149.7" y2="137.6" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="142.2" y1="157.7" x2="137.6" y2="149.7" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="32.3" y1="42.8" x2="40.3" y2="47.4" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="42.8" y1="32.3" x2="47.4" y2="40.3" stroke="rgba(163,217,255,0.25)" stroke-width="1" stroke-linecap="round"/>
+
+            <!-- Hour hand -->
+            <g style="transform-origin: 95px 95px; animation: minute-crawl 720s linear infinite;">
+              <line x1="95" y1="95" x2="95" y2="42"
+                    stroke="#A3D9FF" stroke-width="2.5"
+                    stroke-linecap="round" filter="url(#handglow)" opacity="0.9"/>
+            </g>
+
+            <!-- Minute hand -->
+            <g style="transform-origin: 95px 95px; animation: minute-crawl 60s linear infinite;">
+              <line x1="95" y1="95" x2="95" y2="30"
+                    stroke="#A3D9FF" stroke-width="1.8"
+                    stroke-linecap="round" opacity="0.7"/>
+            </g>
+
+            <!-- Second hand -->
+            <g style="transform-origin: 95px 95px; animation: second-sweep 6s linear infinite;">
+              <line x1="95" y1="108" x2="95" y2="28"
+                    stroke="rgba(245,158,11,0.9)" stroke-width="1"
+                    stroke-linecap="round" filter="url(#handglow)"/>
+            </g>
+
+            <!-- Center cap -->
+            <circle cx="95" cy="95" r="5" fill="#A3D9FF" opacity="0.9"
+                    filter="url(#clockglow)"/>
+            <circle cx="95" cy="95" r="2.5" fill="#050506"/>
+
+            <!-- QS1 label inside clock -->
+            <text x="95" y="130" fill="rgba(163,217,255,0.25)"
+                  font-size="7" font-family="Inter" text-anchor="middle"
+                  letter-spacing="4" font-weight="400">QS1</text>
+
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- wave bottom -->
+    <div class="wave-divider" style="margin-top: 56px;">
+      <svg width="100%" height="40" viewBox="0 0 680 40" preserveAspectRatio="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,20 C80,35 160,5 240,20 C320,35 400,5 480,20 C560,35 640,10 680,20 L680,40 L0,40 Z"
+              fill="rgba(163,217,255,0.03)"/>
+        <path d="M0,28 C100,15 200,38 300,25 C400,12 500,35 600,22 C640,16 660,20 680,22"
+              stroke="rgba(163,217,255,0.08)" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+
+  </div>
+
+  <!-- =============================================
+       STAT STRIP
+  ============================================= -->
+  <div class="stat-strip">
+    <div class="stat-strip-item">
+      <span class="stat-strip-val">0</span>
+      <span class="stat-strip-lbl">Hours You Need Daily</span>
+    </div>
+    <div class="stat-strip-item">
+      <span class="stat-strip-val">$54,243</span>
+      <span class="stat-strip-lbl">Max 6-Month Net</span>
+    </div>
+    <div class="stat-strip-item">
+      <span class="stat-strip-val">70%</span>
+      <span class="stat-strip-lbl">Your Payout Share</span>
+    </div>
+    <div class="stat-strip-item">
+      <span class="stat-strip-val">24/7</span>
+      <span class="stat-strip-lbl">Algorithm Active</span>
+    </div>
+  </div>
+
+  <!-- =============================================
+       THE MATH SECTION
+  ============================================= -->
+  <div class="section-pad">
+
+    <div class="doc-label">
+      <span class="doc-label-num">01</span>
+      <div class="doc-label-line"></div>
+      <span class="doc-label-text">The Calculation You Never Made</span>
+    </div>
+
+    <div class="pull-quote">
+      The average active trader loses<br/>
+      <em class="hl-cyan">312 hours per year</em> to the market.<br/>
+      <em class="hl-gold">What did it cost them?</em>
+    </div>
+
+    <p class="body-text">
+      Charts. News feeds. Discord servers. Twitter threads at 2am.
+      Pre-market analysis. Post-market regret. Position reviews.
+      Strategy adjustments that lead back to the same result.<br/><br/>
+      Before you count what you've <span class="em">made</span> from trading,
+      count what you've <span class="em">lost</span> giving it your attention.
+      Time is the only asset with no bid price and no ask.
+      Once it's spent, the market doesn't reimburse it.
+    </p>
+
+    <!-- TIME LOG VISUAL -->
+    <div class="timelog">
+      <div class="timelog-header">
+        <span class="timelog-title">Active Trader · Estimated Annual Time Audit</span>
+        <span class="timelog-badge">Unrecoverable</span>
+      </div>
+
+      <div class="timelog-row">
+        <span class="timelog-activity">Pre-market research and news consumption</span>
+        <div class="timelog-bar-wrap">
+          <div class="timelog-bar" style="width:75%;"></div>
+        </div>
+        <span class="timelog-hours">72 hrs</span>
+      </div>
+      <div class="timelog-row">
+        <span class="timelog-activity">Intraday chart monitoring and decision-making</span>
+        <div class="timelog-bar-wrap">
+          <div class="timelog-bar" style="width:100%;"></div>
+        </div>
+        <span class="timelog-hours">96 hrs</span>
+      </div>
+      <div class="timelog-row">
+        <span class="timelog-activity">Post-session trade reviews and journaling</span>
+        <div class="timelog-bar-wrap">
+          <div class="timelog-bar" style="width:55%;"></div>
+        </div>
+        <span class="timelog-hours">52 hrs</span>
+      </div>
+      <div class="timelog-row">
+        <span class="timelog-activity">Strategy adjustments and parameter testing</span>
+        <div class="timelog-bar-wrap">
+          <div class="timelog-bar" style="width:48%;"></div>
+        </div>
+        <span class="timelog-hours">46 hrs</span>
+      </div>
+      <div class="timelog-row">
+        <span class="timelog-activity">Emotional recovery from drawdown periods</span>
+        <div class="timelog-bar-wrap">
+          <div class="timelog-bar" style="width:46%;"></div>
+        </div>
+        <span class="timelog-hours">46 hrs</span>
+      </div>
+
+      <div class="timelog-total-row">
+        <div>
+          <div class="timelog-total-lbl">Total Annual Time Cost</div>
+          <div class="timelog-total-sub">At $250/hr opportunity value = $78,000 lost</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="timelog-total-val">312 hrs</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="body-text">
+      QS1 participants spend <span class="em">zero hours</span> on any of the above.
+      The algorithm runs. Payouts process. Life continues.
+    </p>
+
+  </div>
+
+  <div class="cyan-divider"></div>
+
+  <!-- =============================================
+       COMPARE SECTION
+  ============================================= -->
+  <div class="compare-section" style="padding-top: 72px;">
+
+    <div class="doc-label">
+      <span class="doc-label-num">02</span>
+      <div class="doc-label-line"></div>
+      <span class="doc-label-text">Two Versions of the Same Week</span>
+    </div>
+
+    <div class="compare-grid">
+
+      <div class="compare-col before">
+        <div class="compare-head red">Without QS1</div>
+        <div class="compare-item">
+          <span class="compare-dot red"></span>
+          <span class="compare-text">Sunday night: prepping charts and setups for the week ahead</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot red"></span>
+          <span class="compare-text">Monday: missed entry, second-guessed the setup, sat out</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot red"></span>
+          <span class="compare-text">Tuesday: entered late, emotional, position sized wrong</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot red"></span>
+          <span class="compare-text">Wednesday: news event hit stop loss, account down 2.3%</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot red"></span>
+          <span class="compare-text">Thursday: revenge trade. Account down 4.1%. Closed screen.</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot red"></span>
+          <span class="compare-text">Friday: 6 hours lost, no net gain, reviewing what went wrong</span>
+        </div>
+      </div>
+
+      <div class="compare-col after">
+        <div class="compare-head cyan">With QS1</div>
+        <div class="compare-item">
+          <span class="compare-dot cyan"></span>
+          <span class="compare-text">Sunday: no preparation required. System is already live.</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot cyan"></span>
+          <span class="compare-text">Monday: QS1 scanned Gold setups. Executed where conditions qualified.</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot cyan"></span>
+          <span class="compare-text">Tuesday: Zero manual input. Positions managed autonomously.</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot cyan"></span>
+          <span class="compare-text">Wednesday: Risk controls engaged on volatility. Capital preserved.</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot cyan"></span>
+          <span class="compare-text">Thursday: Payout cycle progressing. No decisions to make.</span>
+        </div>
+        <div class="compare-item">
+          <span class="compare-dot cyan"></span>
+          <span class="compare-text">Friday: 0 hours spent. System operating. Life uninterrupted.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =============================================
+       CONFESSION SECTION
+  ============================================= -->
+  <div class="confession">
+    <div class="confession-bg">QS1</div>
+
+    <div class="confession-inner">
+
+      <div class="doc-label">
+        <span class="doc-label-num">03</span>
+        <div class="doc-label-line"></div>
+        <span class="doc-label-text">What Most Systems Won't Tell You</span>
+      </div>
+
+      <div class="pull-quote" style="font-size:26px;">
+        Most algorithmic trading products<br/>
+        are designed to <em class="hl-cyan">sell you hope.</em><br/>
+        QS1 was designed to <em class="hl-gold">return your time.</em>
+      </div>
+
+      <p class="body-text" style="margin-bottom: 36px;">
+        We're going to say the things other programs won't.
+        Because the only people we want inside QS1 are the ones
+        who can handle <span class="em">precise, unfiltered information.</span>
+      </p>
+
+      <div class="confession-list">
+
+        <div class="confession-item">
+          <span class="confession-num">01</span>
+          <div class="confession-content">
+            <div class="confession-title">QS1 does not predict markets.</div>
+            <div class="confession-body">
+              It identifies environments with <span class="em">statistically observable characteristics</span>
+              and applies predefined rules without discretionary override. No one predicts Gold.
+              We don't claim to. We identify when the edge exists and execute precisely within it.
+            </div>
+          </div>
+        </div>
+
+        <div class="confession-item">
+          <span class="confession-num">02</span>
+          <div class="confession-content">
+            <div class="confession-title">There are months the system does not trade aggressively.</div>
+            <div class="confession-body">
+              When regime conditions don't qualify, QS1 waits.
+              <span class="em">Preservation is a feature, not a failure.</span>
+              The systems that blow up are the ones that force trades.
+              QS1 was built to survive first and compound second.
+            </div>
+          </div>
+        </div>
+
+        <div class="confession-item">
+          <span class="confession-num">03</span>
+          <div class="confession-content">
+            <div class="confession-title">The 30% fee only triggers on successful payouts.</div>
+            <div class="confession-body">
+              We don't charge retainers or subscription fees.
+              <span class="em">If QS1 doesn't perform, we don't get paid.</span>
+              The entire fee structure is performance-aligned. That is not accidental.
+              It is the only model we would accept for ourselves.
+            </div>
+          </div>
+        </div>
+
+        <div class="confession-item">
+          <span class="confession-num">04</span>
+          <div class="confession-content">
+            <div class="confession-title">Not everyone qualifies. We mean that.</div>
+            <div class="confession-body">
+              The consultation is not a sales call.
+              It is a <span class="em">structured qualification session.</span>
+              Some applicants are not accepted. The integrity of QS1's capacity
+              matters more to us than adding another account.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       NUMBERS SECTION
+  ============================================= -->
+  <div class="numbers-section">
+
+    <div class="doc-label">
+      <span class="doc-label-num">04</span>
+      <div class="doc-label-line"></div>
+      <span class="doc-label-text">The Numbers, Precisely</span>
+    </div>
+
+    <div class="pull-quote" style="font-size:24px; margin-bottom: 16px;">
+      Three account tiers.<br/>One algorithm.<br/>
+      <em class="hl-gold">Zero manual input.</em>
+    </div>
+
+    <p class="body-text" style="margin-bottom: 0;">
+      Select your exposure level. QS1 handles execution, risk management,
+      payout tracking, and everything else.
+    </p>
+
+    <div class="account-cards">
+
+      <div class="account-card">
+        <div class="account-tier">$50K</div>
+        <div class="account-divider"></div>
+        <div class="account-meta">
+          <div class="account-gross">Est. 6-Month Gross: $55,350</div>
+          <div class="account-net">Client Net: <strong>$38,745</strong></div>
+        </div>
+        <div class="account-pct">
+          <div class="account-pct-val">70%</div>
+          <div class="account-pct-lbl">Your Share</div>
+        </div>
+      </div>
+
+      <div class="account-card">
+        <div class="account-tier">$100K</div>
+        <div class="account-divider"></div>
+        <div class="account-meta">
+          <div class="account-gross">Est. 6-Month Gross: $66,420</div>
+          <div class="account-net">Client Net: <strong>$46,494</strong></div>
+        </div>
+        <div class="account-pct">
+          <div class="account-pct-val">70%</div>
+          <div class="account-pct-lbl">Your Share</div>
+        </div>
+      </div>
+
+      <div class="account-card">
+        <div class="account-tier">$150K</div>
+        <div class="account-divider"></div>
+        <div class="account-meta">
+          <div class="account-gross">Est. 6-Month Gross: $77,490</div>
+          <div class="account-net">Client Net: <strong>$54,243</strong></div>
+        </div>
+        <div class="account-pct">
+          <div class="account-pct-val">70%</div>
+          <div class="account-pct-lbl">Your Share</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SVG decorative data line -->
+    <div style="margin-top: 32px; padding: 0 4px;">
+      <svg width="100%" height="48" viewBox="0 0 600 48" preserveAspectRatio="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dataLine" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#A3D9FF" stop-opacity="0"/>
+            <stop offset="30%"  stop-color="#A3D9FF" stop-opacity="0.5"/>
+            <stop offset="70%"  stop-color="#F59E0B" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,40 C50,38 80,30 120,20 C160,10 180,8 220,12 C260,16 280,30 320,24 C360,18 380,8 420,6 C460,4 480,10 520,8 C560,6 580,5 600,4"
+              stroke="url(#dataLine)" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <circle cx="120" cy="20" r="2.5" fill="#A3D9FF" opacity="0.5"/>
+        <circle cx="320" cy="24" r="2.5" fill="#A3D9FF" opacity="0.5"/>
+        <circle cx="520" cy="8"  r="2.5" fill="#F59E0B" opacity="0.6"/>
+        <circle cx="600" cy="4"  r="3.5" fill="#F59E0B" opacity="0.7"/>
+        <text x="600" y="2" fill="rgba(245,158,11,0.5)" font-size="7"
+              font-family="Inter" text-anchor="end" letter-spacing="2">PEAK</text>
+      </svg>
+    </div>
+
+  </div>
+
+  <div class="cyan-divider"></div>
+
+  <!-- =============================================
+       TESTIMONIALS
+  ============================================= -->
+  <div class="testimonials">
+
+    <div class="doc-label">
+      <span class="doc-label-num">05</span>
+      <div class="doc-label-line"></div>
+      <span class="doc-label-text">From People Already Inside</span>
+    </div>
+
+    <div class="pull-quote" style="font-size:24px; margin-bottom: 8px;">
+      They stopped trading.<br/>
+      <em class="hl-cyan">The returns didn't.</em>
+    </div>
+
+    <div class="testimonial-list">
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">
+          After years of losing money trading on my own, Quantara has been a real game changer.
+          My account is up nicely over the last 8 months and I <span class="key">barely have to do anything.</span>
+          The consistent profitable months are exactly what they said.
+        </p>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">MR</div>
+          <div>
+            <div class="testimonial-name">Michael R. T.</div>
+            <div class="testimonial-loc">Chicago, Illinois</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">
+          Finally a system that works without me staring at screens all day.
+          The returns have been better than I expected and <span class="key">it's all handled professionally.</span>
+          Nice to have something that actually delivers.
+        </p>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">DC</div>
+          <div>
+            <div class="testimonial-name">David C.</div>
+            <div class="testimonial-loc">Scottsdale, Arizona</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">
+          Quantara has made trading way less stressful for me.
+          <span class="key">I just let them do their thing</span> and the results have been consistent.
+          The numbers they show are real.
+        </p>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">RM</div>
+          <div>
+            <div class="testimonial-name">Rachel M.</div>
+            <div class="testimonial-loc">Miami, Florida</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =============================================
+       CLOSING
+  ============================================= -->
+  <div class="closing">
+    <div class="closing-bg-num">45</div>
+
+    <div class="closing-inner">
+
+      <div class="closing-label">
+        <div class="closing-label-line"></div>
+        <span class="closing-label-text">The Only Trade That Matters This Week</span>
+      </div>
+
+      <h2 class="closing-title">
+        Trade 45 minutes<br/>to buy back<br/><em class="accent">the rest of your time.</em>
+      </h2>
+
+      <p class="closing-body">
+        One conversation. No obligation. No pressure.
+        We'll show you exactly how QS1 works, confirm whether you qualify,
+        and give you <span class="em">complete clarity</span> on what participation looks like
+        from day one to first payout.<br/><br/>
+        If it's not the right fit, you'll know in 45 minutes.
+        If it is, you'll wonder how much time you left on the table waiting.
+      </p>
+
+      <div class="closing-time-box">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="22" cy="22" r="19" stroke="rgba(163,217,255,0.2)" stroke-width="1.2" fill="none"/>
+          <line x1="22" y1="10" x2="22" y2="22" stroke="#A3D9FF" stroke-width="2"
+                stroke-linecap="round"
+                style="transform-origin:22px 22px; animation: minute-crawl 60s linear infinite;"/>
+          <line x1="22" y1="14" x2="22" y2="22" stroke="rgba(245,158,11,0.8)" stroke-width="1.5"
+                stroke-linecap="round"
+                style="transform-origin:22px 22px; animation: second-sweep 6s linear infinite;"/>
+          <circle cx="22" cy="22" r="2.5" fill="#A3D9FF" opacity="0.8"/>
+        </svg>
+        <div class="closing-time-text">
+          <div class="closing-time-big">45 Minutes</div>
+          <div class="closing-time-sub">The most precise time allocation you'll make this quarter</div>
+        </div>
+      </div>
+
+      <a class="cta-large" href="https://calendly.com/quantarasystems-sales/45min">
+        Schedule Your Consultation
+      </a>
+      <span class="cta-sub">calendly.com/quantarasystems-sales · Confidential · No cost · Qualified participants only</span>
+
+    </div>
+  </div>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <div class="footer">
+    <div class="footer-logo">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="8.5" stroke="rgba(163,217,255,0.15)" stroke-width="1" fill="none"/>
+        <circle cx="10" cy="10" r="2" fill="rgba(163,217,255,0.3)"/>
+      </svg>
+      <span class="footer-brand">Quantara Systems</span>
+    </div>
+
+    <div class="footer-links">
+      <a href="https://quantarasystems.io" class="footer-link">Website</a>
+      <a href="https://calendly.com/quantarasystems-sales/45min" class="footer-link">Schedule</a>
+      <a href="https://t.me/QuantaraSystems" class="footer-link">Telegram</a>
+      <a href="mailto:sales@quantarasystems.io" class="footer-link">Contact</a>
+    </div>
+
+    <p class="footer-disclaimer">
+      All trading involves substantial risk of loss and is not appropriate for all investors.
+      Past performance is not indicative of future results. Futures trading involves leverage
+      and can result in losses exceeding initial capital. Quantara Systems is a private,
+      invite-only initiative. All projected figures are modeled estimates, not guarantees.
+      This communication is strictly confidential and intended solely for the named recipient.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
