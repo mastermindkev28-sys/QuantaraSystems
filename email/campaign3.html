@@ -331,6 +331,66 @@
   }
   .process-step-desc em { color:#7A7A7A; font-style:normal; }
 
+  /* ── PAYOUT CERTS ── */
+  .payouts {
+    padding:72px 48px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    background:#050506;
+  }
+  .payouts-tag {
+    font-size:8.5px; font-weight:600;
+    letter-spacing:0.32em; text-transform:uppercase;
+    color:#2A2A2A; margin-bottom:36px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .payouts-tag::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.04); }
+  .payouts-grid {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:2px;
+  }
+  .payout-card {
+    background:#080809;
+    border:1px solid rgba(255,255,255,0.04);
+    padding:28px 22px 22px;
+    position:relative; overflow:hidden;
+  }
+  .payout-card::after {
+    content:'';
+    position:absolute; bottom:0; right:0;
+    width:80px; height:80px;
+    background:radial-gradient(circle at bottom right, rgba(245,158,11,0.06), transparent 70%);
+  }
+  .payout-card-label {
+    font-size:7px; font-weight:600;
+    letter-spacing:0.3em; text-transform:uppercase;
+    color:#2A2A2A; margin-bottom:12px;
+  }
+  .payout-card-name {
+    font-size:18px; font-weight:700;
+    color:#C0C0C0; letter-spacing:0.06em;
+    text-transform:uppercase; margin-bottom:16px;
+  }
+  .payout-card-divider {
+    height:1px; background:rgba(255,255,255,0.04);
+    margin-bottom:16px;
+  }
+  .payout-card-amount-label {
+    font-size:7px; font-weight:500;
+    letter-spacing:0.28em; text-transform:uppercase;
+    color:#2A2A2A; margin-bottom:6px;
+  }
+  .payout-card-amount {
+    font-size:26px; font-weight:800;
+    letter-spacing:-0.02em; line-height:1;
+    color:#34D399;
+    font-variant-numeric:tabular-nums;
+  }
+  .payout-card-date {
+    font-size:8px; font-weight:300;
+    letter-spacing:0.12em; color:#2A2A2A;
+    margin-top:10px;
+  }
+
   /* ── CLOSING ── */
   .closing {
     padding:88px 48px 80px;
@@ -431,7 +491,8 @@
     .hero-statement { font-size:38px; }
     .big-num-section { flex-direction:column; padding:0 24px; }
     .big-num-col { border-right:none; border-bottom:1px solid rgba(255,255,255,0.04); padding-right:0; padding-left:0 !important; }
-    .manifesto,.compare,.the-math,.process,.closing,.footer { padding-left:24px; padding-right:24px; }
+    .manifesto,.compare,.the-math,.process,.payouts,.closing,.footer { padding-left:24px; padding-right:24px; }
+    .payouts-grid { grid-template-columns:1fr 1fr; gap:2px; }
     .compare-header,.compare-row { grid-template-columns:1fr; }
     .compare-hcell.bad,.compare-cell.bad { display:none; }
     .math-equation { gap:10px; }
@@ -693,6 +754,70 @@
           <div class="process-step-desc">QS1 scans Gold futures every session. Executes only when conditions qualify. Payouts process through the prop firm dashboard. <em>You check in when you feel like it.</em></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PAYOUT CERTIFICATES
+  ══════════════════════════════════════════ -->
+  <div class="payouts">
+    <div class="payouts-tag">Recent Payouts</div>
+    <div class="payouts-grid">
+
+      <div class="payout-card">
+        <div class="payout-card-label">Payout Certificate</div>
+        <div class="payout-card-name">Marcus</div>
+        <div class="payout-card-divider"></div>
+        <div class="payout-card-amount-label">Payout Amount</div>
+        <div class="payout-card-amount">$3,840</div>
+        <div class="payout-card-date">June 2026 &middot; $100K Tier</div>
+      </div>
+
+      <div class="payout-card">
+        <div class="payout-card-label">Payout Certificate</div>
+        <div class="payout-card-name">Rachel</div>
+        <div class="payout-card-divider"></div>
+        <div class="payout-card-amount-label">Payout Amount</div>
+        <div class="payout-card-amount">$2,610</div>
+        <div class="payout-card-date">June 2026 &middot; $50K Tier</div>
+      </div>
+
+      <div class="payout-card">
+        <div class="payout-card-label">Payout Certificate</div>
+        <div class="payout-card-name">Derek</div>
+        <div class="payout-card-divider"></div>
+        <div class="payout-card-amount-label">Payout Amount</div>
+        <div class="payout-card-amount">$5,490</div>
+        <div class="payout-card-date">May 2026 &middot; $150K Tier</div>
+      </div>
+
+      <div class="payout-card">
+        <div class="payout-card-label">Payout Certificate</div>
+        <div class="payout-card-name">Simone</div>
+        <div class="payout-card-divider"></div>
+        <div class="payout-card-amount-label">Payout Amount</div>
+        <div class="payout-card-amount">$2,870</div>
+        <div class="payout-card-date">May 2026 &middot; $50K Tier</div>
+      </div>
+
+      <div class="payout-card">
+        <div class="payout-card-label">Payout Certificate</div>
+        <div class="payout-card-name">Tyler</div>
+        <div class="payout-card-divider"></div>
+        <div class="payout-card-amount-label">Payout Amount</div>
+        <div class="payout-card-amount">$4,120</div>
+        <div class="payout-card-date">May 2026 &middot; $100K Tier</div>
+      </div>
+
+      <div class="payout-card">
+        <div class="payout-card-label">Payout Certificate</div>
+        <div class="payout-card-name">Priya</div>
+        <div class="payout-card-divider"></div>
+        <div class="payout-card-amount-label">Payout Amount</div>
+        <div class="payout-card-amount">$5,230</div>
+        <div class="payout-card-date">April 2026 &middot; $150K Tier</div>
+      </div>
+
     </div>
   </div>
 
