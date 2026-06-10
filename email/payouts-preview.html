@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Payout Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#040405;
+    font-family:'Inter',Arial,sans-serif;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:60px 40px;
+  }
+  .section {
+    width:100%;
+    max-width:900px;
+  }
+  .label {
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:#2A2A2A;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:40px;
+  }
+  .label::after {
+    content:'';
+    flex:1;
+    height:1px;
+    background:rgba(255,255,255,0.05);
+  }
+  .grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
+  .grid img {
+    width:100%;
+    display:block;
+    border-radius:6px;
+    box-shadow:0 8px 40px rgba(0,0,0,0.6);
+  }
+</style>
+</head>
+<body>
+  <div class="section">
+    <div class="label">Recent Payouts</div>
+    <div class="grid">
+      <img src="https://drive.google.com/uc?export=view&id=13nkaSf6mAj2MKttbB11TgdMkkZ-zyDPp" alt="Daniel"/>
+      <img src="https://drive.google.com/uc?export=view&id=1t4vm4fjvPk5ai-zK-P5Wu7941p_cxJVS" alt="Paul"/>
+      <img src="https://drive.google.com/uc?export=view&id=1XAIArlLRNhmTvdrxOJRuQWd4rMqtZBZQ" alt="Nathan"/>
+    </div>
+  </div>
+</body>
+</html>
