@@ -646,7 +646,7 @@ export default function DashboardPage() {
           {/* Disclaimer */}
           <div style={{ marginTop: 32, padding: '16px 22px', border: '1px solid rgba(200,100,50,0.07)', borderRadius: 10, background: 'rgba(200,100,50,0.018)' }}>
             <p style={{ color: '#3A2A22', fontSize: 11, lineHeight: 1.8 }}>
-              Illustrative operational dashboard for qualified-investor review. Figures reflect representative QS1-managed account activity, not a guarantee. All futures trading involves substantial risk of loss; past performance does not indicate future results. Private &amp; confidential — quantarasystems.io.
+              Figures reflect representative QS1-managed account activity, not a guarantee. All futures trading involves substantial risk of loss; past performance does not indicate future results. Private &amp; confidential — quantarasystems.io.
             </p>
           </div>
 
