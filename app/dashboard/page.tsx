@@ -124,7 +124,7 @@ function mulberry32(seed: number) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-const ACCOUNT_COUNT = 120;
+const ACCOUNT_COUNT = 288;
 const LUCID_ACCOUNTS: LucidAccount[] = (() => {
   const rand = mulberry32(0x51A17E5);
   const perTier: Record<string, number> = {};
