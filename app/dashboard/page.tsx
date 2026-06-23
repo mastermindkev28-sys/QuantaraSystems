@@ -108,15 +108,48 @@ function Ring({ pct, size = 132, label, value, color = '#F59E0B' }: { pct: numbe
 const fmtUSD = (n: number, dp = 0) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: dp, maximumFractionDigits: dp });
 const fmtNum = (n: number, dp = 2) => n.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp });
 
-// Lucid funded accounts under QS1 management
-const LUCID_ACCOUNTS = [
-  { id: 'LCD-150K-04', size: 150000, balance: 161420, todayPnL: 1840, target: 9000, progress: 78, drawdownUsed: 22, payoutsTaken: 4, status: 'Trading' as const, strat: 'GC' },
-  { id: 'LCD-100K-11', size: 100000, balance: 106310, todayPnL: 920, target: 6000, progress: 64, drawdownUsed: 18, payoutsTaken: 3, status: 'Trading' as const, strat: 'GC' },
-  { id: 'LCD-150K-02', size: 150000, balance: 158960, todayPnL: -640, target: 9000, progress: 91, drawdownUsed: 31, payoutsTaken: 5, status: 'Payout Ready' as const, strat: 'GC' },
-  { id: 'LCD-100K-07', size: 100000, balance: 103480, todayPnL: 540, target: 6000, progress: 41, drawdownUsed: 14, payoutsTaken: 2, status: 'Trading' as const, strat: 'MGC' },
-  { id: 'LCD-50K-19', size: 50000, balance: 52740, todayPnL: 310, target: 3000, progress: 56, drawdownUsed: 11, payoutsTaken: 2, status: 'Trading' as const, strat: 'MGC' },
-  { id: 'LCD-50K-23', size: 50000, balance: 50180, todayPnL: 0, target: 3000, progress: 8, drawdownUsed: 4, payoutsTaken: 0, status: 'Evaluation' as const, strat: 'MGC' },
-];
+// Lucid funded accounts under QS1 management.
+// Generated deterministically (seeded) so server and client render identically.
+type AcctStatus = 'Trading' | 'Payout Ready' | 'Evaluation';
+interface LucidAccount {
+  id: string; size: number; balance: number; todayPnL: number; target: number;
+  progress: number; drawdownUsed: number; payoutsTaken: number; status: AcctStatus; strat: string;
+}
+function mulberry32(seed: number) {
+  let a = seed;
+  return () => {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const ACCOUNT_COUNT = 120;
+const LUCID_ACCOUNTS: LucidAccount[] = (() => {
+  const rand = mulberry32(0x51A17E5);
+  const perTier: Record<string, number> = {};
+  const out: LucidAccount[] = [];
+  for (let i = 0; i < ACCOUNT_COUNT; i++) {
+    const r = rand();
+    const size = r < 0.45 ? 50000 : r < 0.78 ? 100000 : 150000;
+    const k = `${size / 1000}`;
+    perTier[k] = (perTier[k] || 0) + 1;
+    const num = String(perTier[k]).padStart(2, '0');
+    const target = Math.round(size * 0.06);
+    const progress = Math.round(5 + rand() * 91);
+    const status: AcctStatus = progress >= 88 ? 'Payout Ready' : progress < 12 ? 'Evaluation' : 'Trading';
+    const balance = size + Math.round(target * (progress / 100));
+    const strat = size === 150000 ? 'GC' : size === 100000 ? (rand() < 0.5 ? 'GC' : 'MGC') : 'MGC';
+    const ddBase = 2 + rand() * 30;
+    const drawdownUsed = Math.round(status === 'Payout Ready' ? Math.max(ddBase, 20) : ddBase);
+    const todayPnL = status === 'Evaluation'
+      ? Math.round((rand() * 2 - 0.6) * 120)
+      : Math.round((rand() * 2.2 - 0.8) * (size / 100));
+    const payoutsTaken = status === 'Evaluation' ? 0 : Math.min(6, Math.floor(progress / 16) + (rand() < 0.4 ? 1 : 0));
+    out.push({ id: `LCD-${k}K-${num}`, size, balance, todayPnL, target, progress, drawdownUsed, payoutsTaken, status, strat });
+  }
+  return out;
+})();
 
 // The 6 strategies QS1 aligns before authorizing a trade
 const STRATEGIES = [
@@ -179,9 +212,11 @@ function AccountProgress() {
     'Payout Ready': { c: '#F59E0B', bg: 'rgba(245,158,11,0.08)' },
     'Evaluation': { c: '#A3D9FF', bg: 'rgba(163,217,255,0.08)' },
   };
+  const visible = LUCID_ACCOUNTS.slice(0, 12);
   return (
+    <>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }} className="d-acct-grid">
-      {LUCID_ACCOUNTS.map(a => {
+      {visible.map(a => {
         const pos = a.todayPnL >= 0;
         const t = statusTone[a.status];
         return (
@@ -211,6 +246,11 @@ function AccountProgress() {
         );
       })}
     </div>
+    <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, padding: '12px 18px', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 10, background: 'rgba(255,255,255,0.012)' }}>
+      <span style={{ fontSize: 11, color: '#3A3A3A' }}>Showing <span style={{ color: '#8A8A8A' }}>{visible.length}</span> of <span style={{ color: '#F59E0B' }}>{LUCID_ACCOUNTS.length}</span> accounts under management — full book available in the member portal.</span>
+      <span style={{ fontSize: 10, color: '#2E2E2E', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{LUCID_ACCOUNTS.filter(a => a.size === 150000).length} × 150K · {LUCID_ACCOUNTS.filter(a => a.size === 100000).length} × 100K · {LUCID_ACCOUNTS.filter(a => a.size === 50000).length} × 50K</span>
+    </div>
+    </>
   );
 }
 
@@ -491,6 +531,8 @@ export default function DashboardPage() {
   const pos = gold ? gold.change >= 0 : true;
   const totalAUM = LUCID_ACCOUNTS.reduce((s, a) => s + a.balance, 0);
   const openCount = LUCID_ACCOUNTS.filter(a => a.status !== 'Evaluation').length;
+  const evalCount = LUCID_ACCOUNTS.filter(a => a.status === 'Evaluation').length;
+  const payoutReadyCount = LUCID_ACCOUNTS.filter(a => a.status === 'Payout Ready').length;
   const wins = TRADES.filter(t => t.result === 'Win').length;
   const winRate = Math.round((wins / TRADES.length) * 100);
   const sessionPnL = LUCID_ACCOUNTS.reduce((s, a) => s + a.todayPnL, 0);
@@ -566,8 +608,8 @@ export default function DashboardPage() {
 
           {/* KPIs */}
           <div className="d-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gap: 14, marginBottom: 44 }}>
-            <Kpi label="Capital Under Mgmt" value={fmtUSD(totalAUM)} sub="6 Lucid accounts" tone="gold" />
-            <Kpi label="Active Accounts" value={`${openCount}`} sub="1 in evaluation" />
+            <Kpi label="Capital Under Mgmt" value={fmtUSD(totalAUM)} sub={`${LUCID_ACCOUNTS.length} Lucid accounts`} tone="gold" />
+            <Kpi label="Active Accounts" value={`${openCount}`} sub={`${evalCount} in evaluation · ${payoutReadyCount} payout-ready`} />
             <Kpi label="Session P&L" value={`${sessionPnL >= 0 ? '+' : ''}${fmtUSD(sessionPnL)}`} sub="across book" tone={sessionPnL >= 0 ? 'green' : 'silver'} />
             <Kpi label="Win Rate" value={`${winRate}%`} sub={`${wins}/${TRADES.length} today`} tone="green" />
             <Kpi label="Confluence Threshold" value="70%" sub="min. to fire" />
