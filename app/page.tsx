@@ -959,6 +959,7 @@ export default function QuantaraPage() {
             {navLinks.map(([label, id]) => (
               <button key={id} className="qs-nav-link" onClick={() => go(id)}>{label}</button>
             ))}
+            <a href="/dashboard" className="qs-nav-link" style={{ textDecoration: 'none' }}>Investor Portal</a>
             <button className="qs-btn-gold" onClick={openModal} style={{ padding: '9px 20px', fontSize: 10, borderRadius: 8, marginLeft: 8 }}>
               Request Access
             </button>
