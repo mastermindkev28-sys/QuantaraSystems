@@ -124,7 +124,7 @@ function mulberry32(seed: number) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-const ACCOUNT_COUNT = 288;
+const ACCOUNT_COUNT = 528;
 const LUCID_ACCOUNTS: LucidAccount[] = (() => {
   const rand = mulberry32(0x51A17E5);
   const perTier: Record<string, number> = {};
@@ -150,6 +150,23 @@ const LUCID_ACCOUNTS: LucidAccount[] = (() => {
   }
   return out;
 })();
+
+// Payout fee waterfall: Lucid takes 10% off the top, then QS1 takes 30% of the
+// remainder — so the client keeps 63% of every gross payout.
+const LUCID_RATE = 0.10;
+const QS1_RATE = 0.30;
+const CLIENT_PCT = Math.round((1 - LUCID_RATE) * (1 - QS1_RATE) * 100); // 63
+function feeSplit(gross: number) {
+  const lucid = gross * LUCID_RATE;
+  const afterLucid = gross - lucid;
+  const qs1 = afterLucid * QS1_RATE;
+  return { gross, lucid, qs1, client: afterLucid - qs1 };
+}
+// Representative average gross payout per cycle by account tier.
+const PAYOUT_AVG: Record<number, number> = { 50000: 1375, 100000: 2750, 150000: 3250 };
+// Book-wide payout aggregates derived from the full account book.
+const BOOK_GROSS_YTD = LUCID_ACCOUNTS.reduce((s, a) => s + a.payoutsTaken * (PAYOUT_AVG[a.size] ?? 0), 0);
+const BOOK_PENDING_GROSS = LUCID_ACCOUNTS.filter(a => a.status === 'Payout Ready').reduce((s, a) => s + (PAYOUT_AVG[a.size] ?? 0), 0);
 
 // The 6 strategies QS1 aligns before authorizing a trade
 const STRATEGIES = [
@@ -183,14 +200,14 @@ const TRADES = [
   { time: '08:46:29', acct: 'LCD-50K-19', sym: 'MGC', dir: 'Short', entry: 3371.5, exit: 3372.8, ticks: -13, pnl: -65, r: -0.4, strat: ['Trend'], result: 'Loss' },
 ];
 
-// Payout history & schedule
+// Recent payout ledger entries (client net is derived via the fee waterfall).
 const PAYOUTS = [
-  { cycle: 'Cycle 12', date: '2026-06-09', acct: 'LCD-150K-02', gross: 3500, net: 2450, status: 'Paid' as const },
-  { cycle: 'Cycle 11', date: '2026-05-22', acct: 'LCD-150K-04', gross: 3200, net: 2240, status: 'Paid' as const },
-  { cycle: 'Cycle 10', date: '2026-05-08', acct: 'LCD-100K-11', gross: 2800, net: 1960, status: 'Paid' as const },
-  { cycle: 'Cycle 13', date: '2026-06-23', acct: 'LCD-150K-02', gross: 3500, net: 2450, status: 'Processing' as const },
-  { cycle: 'Cycle 09', date: '2026-04-24', acct: 'LCD-100K-07', gross: 2500, net: 1750, status: 'Paid' as const },
-  { cycle: 'Cycle 14', date: 'Est. 2026-07-04', acct: 'LCD-100K-11', gross: 3000, net: 2100, status: 'Scheduled' as const },
+  { cycle: 'Cycle 12', date: '2026-06-09', acct: 'LCD-150K-02', gross: 3500, status: 'Paid' as const },
+  { cycle: 'Cycle 11', date: '2026-05-22', acct: 'LCD-150K-04', gross: 3200, status: 'Paid' as const },
+  { cycle: 'Cycle 10', date: '2026-05-08', acct: 'LCD-100K-11', gross: 2800, status: 'Paid' as const },
+  { cycle: 'Cycle 13', date: '2026-06-23', acct: 'LCD-150K-02', gross: 3500, status: 'Processing' as const },
+  { cycle: 'Cycle 09', date: '2026-04-24', acct: 'LCD-100K-07', gross: 2500, status: 'Paid' as const },
+  { cycle: 'Cycle 14', date: 'Est. 2026-07-04', acct: 'LCD-100K-11', gross: 3000, status: 'Scheduled' as const },
 ];
 
 // ─── KPI Card ────────────────────────────────────────────────────────────────
@@ -420,65 +437,83 @@ function TradeLog() {
 
 // ─── Payout Tracker ───────────────────────────────────────────────────────────
 function PayoutTracker() {
-  const paidNet = PAYOUTS.filter(p => p.status === 'Paid').reduce((s, p) => s + p.net, 0);
-  const pendingNet = PAYOUTS.filter(p => p.status !== 'Paid').reduce((s, p) => s + p.net, 0);
+  const ytd = feeSplit(BOOK_GROSS_YTD);
+  const pending = feeSplit(BOOK_PENDING_GROSS);
   const tone: Record<string, { c: string; bg: string }> = {
     'Paid': { c: '#34D399', bg: 'rgba(52,211,153,0.08)' },
     'Processing': { c: '#F59E0B', bg: 'rgba(245,158,11,0.08)' },
     'Scheduled': { c: '#A3D9FF', bg: 'rgba(163,217,255,0.08)' },
   };
+  const waterfall = [
+    { label: 'Gross payouts', val: ytd.gross, pct: 100, c: '#C8C8C8' },
+    { label: `Lucid fee (${Math.round(LUCID_RATE * 100)}%)`, val: -ytd.lucid, pct: 10, c: '#F87171' },
+    { label: `QS1 fee (${Math.round(QS1_RATE * 100)}% of remainder)`, val: -ytd.qs1, pct: 27, c: '#8A7A4A' },
+    { label: `Client net (${CLIENT_PCT}%)`, val: ytd.client, pct: CLIENT_PCT, c: '#F59E0B' },
+  ];
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: 16 }} className="d-payout-grid">
+    <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 16 }} className="d-payout-grid">
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div style={{ padding: '26px', background: 'linear-gradient(135deg,#0D0D0D,#0F1018)', border: '1px solid rgba(245,158,11,0.1)', borderRadius: 16, boxShadow: '0 0 40px rgba(245,158,11,0.03)' }}>
           <div style={{ fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#2E2E2E', marginBottom: 14 }}>Client Net Paid (YTD)</div>
-          <div style={{ fontSize: 32, fontWeight: 200, letterSpacing: '-0.02em', color: '#F59E0B', fontVariantNumeric: 'tabular-nums', marginBottom: 8 }}>{fmtUSD(paidNet)}</div>
-          <div style={{ fontSize: 11, color: '#3A3A3A' }}>across all Lucid accounts · after 30% fee</div>
+          <div style={{ fontSize: 32, fontWeight: 200, letterSpacing: '-0.02em', color: '#F59E0B', fontVariantNumeric: 'tabular-nums', marginBottom: 8 }}>{fmtUSD(ytd.client)}</div>
+          <div style={{ fontSize: 11, color: '#3A3A3A' }}>across {LUCID_ACCOUNTS.length} Lucid accounts · {CLIENT_PCT}% of {fmtUSD(ytd.gross)} gross</div>
         </div>
         <div style={{ padding: '26px', background: '#0D0D0D', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16 }}>
-          <div style={{ fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#2E2E2E', marginBottom: 14 }}>In Pipeline</div>
-          <div style={{ fontSize: 26, fontWeight: 200, color: '#C8C8C8', fontVariantNumeric: 'tabular-nums', marginBottom: 8 }}>{fmtUSD(pendingNet)}</div>
-          <div style={{ fontSize: 11, color: '#3A3A3A' }}>processing + scheduled</div>
-          <div style={{ marginTop: 18, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 8 }}>
-              <span style={{ color: '#3A3A3A' }}>Client share</span><span style={{ color: '#F59E0B' }}>70%</span>
+          <div style={{ fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#2E2E2E', marginBottom: 16 }}>Payout Waterfall · YTD</div>
+          {waterfall.map((w, i) => (
+            <div key={w.label} style={{ marginBottom: i < waterfall.length - 1 ? 14 : 0 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 6 }}>
+                <span style={{ color: '#4A4A4A' }}>{w.label}</span>
+                <span style={{ color: w.c, fontVariantNumeric: 'tabular-nums' }}>{w.val < 0 ? '−' : ''}{fmtUSD(Math.abs(w.val))}</span>
+              </div>
+              <div style={{ height: 5, background: 'rgba(255,255,255,0.03)', borderRadius: 3, overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${w.pct}%`, background: `linear-gradient(90deg, ${w.c}, ${w.c}55)`, borderRadius: 3 }} />
+              </div>
             </div>
-            <div style={{ height: 6, background: 'rgba(255,255,255,0.03)', borderRadius: 3, overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: '70%', background: 'linear-gradient(90deg,#F59E0B66,#F59E0B33)', borderRadius: 3 }} />
-            </div>
-          </div>
+          ))}
+        </div>
+        <div style={{ padding: '20px 26px', background: '#0D0D0D', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16 }}>
+          <div style={{ fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#2E2E2E', marginBottom: 10 }}>In Pipeline (Payout-Ready)</div>
+          <div style={{ fontSize: 22, fontWeight: 200, color: '#C8C8C8', fontVariantNumeric: 'tabular-nums' }}>{fmtUSD(pending.client)}</div>
+          <div style={{ fontSize: 10.5, color: '#3A3A3A', marginTop: 6 }}>client net · {fmtUSD(pending.gross)} gross queued</div>
         </div>
       </div>
       <div style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, overflow: 'hidden', background: '#0C0C0D' }}>
-        <div style={{ padding: '18px 24px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-          <span style={{ fontSize: 11, color: '#444', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Payout Ledger</span>
+        <div style={{ padding: '18px 24px', borderBottom: '1px solid rgba(255,255,255,0.04)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+          <span style={{ fontSize: 11, color: '#444', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Payout Ledger · Recent</span>
+          <span style={{ fontSize: 9, color: '#2E2E2E', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Gross → Lucid 10% → QS1 30% → Client {CLIENT_PCT}%</span>
         </div>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5 }}>
-          <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-              {['Cycle', 'Date', 'Account', 'Gross', 'Client Net', 'Status'].map(h => (
-                <th key={h} style={{ padding: '11px 22px', textAlign: 'left', color: '#252525', fontWeight: 500, fontSize: 8.5, letterSpacing: '0.14em', textTransform: 'uppercase' }}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {PAYOUTS.map((p, i) => {
-              const t = tone[p.status];
-              return (
-                <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.025)' }} className="d-row">
-                  <td style={{ padding: '13px 22px', color: '#8A8A8A' }}>{p.cycle}</td>
-                  <td style={{ padding: '13px 22px', color: '#484848', fontVariantNumeric: 'tabular-nums' }}>{p.date}</td>
-                  <td style={{ padding: '13px 22px', color: '#6A6A6A' }}>{p.acct}</td>
-                  <td style={{ padding: '13px 22px', color: '#6A6A6A', fontVariantNumeric: 'tabular-nums' }}>{fmtUSD(p.gross)}</td>
-                  <td style={{ padding: '13px 22px', color: '#F59E0B', fontVariantNumeric: 'tabular-nums' }}>{fmtUSD(p.net)}</td>
-                  <td style={{ padding: '13px 22px' }}>
-                    <span style={{ fontSize: 8.5, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 100, background: t.bg, color: t.c, border: `1px solid ${t.c}30` }}>{p.status}</span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5, minWidth: 720 }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                {['Cycle', 'Date', 'Account', 'Gross', 'Lucid 10%', 'QS1 30%', 'Client Net', 'Status'].map(h => (
+                  <th key={h} style={{ padding: '11px 20px', textAlign: 'left', color: '#252525', fontWeight: 500, fontSize: 8.5, letterSpacing: '0.14em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {PAYOUTS.map((p, i) => {
+                const t = tone[p.status];
+                const f = feeSplit(p.gross);
+                return (
+                  <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.025)' }} className="d-row">
+                    <td style={{ padding: '13px 20px', color: '#8A8A8A' }}>{p.cycle}</td>
+                    <td style={{ padding: '13px 20px', color: '#484848', fontVariantNumeric: 'tabular-nums' }}>{p.date}</td>
+                    <td style={{ padding: '13px 20px', color: '#6A6A6A' }}>{p.acct}</td>
+                    <td style={{ padding: '13px 20px', color: '#6A6A6A', fontVariantNumeric: 'tabular-nums' }}>{fmtUSD(f.gross)}</td>
+                    <td style={{ padding: '13px 20px', color: '#7A4A4A', fontVariantNumeric: 'tabular-nums' }}>−{fmtUSD(f.lucid)}</td>
+                    <td style={{ padding: '13px 20px', color: '#6A5A38', fontVariantNumeric: 'tabular-nums' }}>−{fmtUSD(f.qs1)}</td>
+                    <td style={{ padding: '13px 20px', color: '#F59E0B', fontVariantNumeric: 'tabular-nums' }}>{fmtUSD(f.client)}</td>
+                    <td style={{ padding: '13px 20px' }}>
+                      <span style={{ fontSize: 8.5, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 100, background: t.bg, color: t.c, border: `1px solid ${t.c}30` }}>{p.status}</span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -536,7 +571,7 @@ export default function DashboardPage() {
   const wins = TRADES.filter(t => t.result === 'Win').length;
   const winRate = Math.round((wins / TRADES.length) * 100);
   const sessionPnL = LUCID_ACCOUNTS.reduce((s, a) => s + a.todayPnL, 0);
-  const paidNet = PAYOUTS.filter(p => p.status === 'Paid').reduce((s, p) => s + p.net, 0);
+  const paidNet = feeSplit(BOOK_GROSS_YTD).client;
 
   return (
     <>
@@ -613,7 +648,7 @@ export default function DashboardPage() {
             <Kpi label="Session P&L" value={`${sessionPnL >= 0 ? '+' : ''}${fmtUSD(sessionPnL)}`} sub="across book" tone={sessionPnL >= 0 ? 'green' : 'silver'} />
             <Kpi label="Win Rate" value={`${winRate}%`} sub={`${wins}/${TRADES.length} today`} tone="green" />
             <Kpi label="Confluence Threshold" value="70%" sub="min. to fire" />
-            <Kpi label="Client Net Paid YTD" value={fmtUSD(paidNet)} sub="after fee" tone="gold" />
+            <Kpi label="Client Net Paid YTD" value={fmtUSD(paidNet)} sub={`${CLIENT_PCT}% to client, net of fees`} tone="gold" />
           </div>
 
           {/* Account progress */}
@@ -639,7 +674,7 @@ export default function DashboardPage() {
 
           {/* Payouts */}
           <section style={{ marginBottom: 24 }}>
-            <SectionHead kicker="Payouts" title="Payout Tracking" sub="Client receives 70% of every successful payout; QS1's 30% fee applies only on realized payouts." />
+            <SectionHead kicker="Payouts" title="Payout Tracking" sub={`On every successful payout, Lucid takes 10% off the top, then QS1's 30% fee applies to the remainder — leaving the client ${CLIENT_PCT}%. Fees apply only on realized payouts.`} />
             <PayoutTracker />
           </section>
 
