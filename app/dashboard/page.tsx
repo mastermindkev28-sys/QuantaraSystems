@@ -255,8 +255,7 @@ function AccountProgress() {
             <div style={{ height: 5, background: 'rgba(255,255,255,0.04)', borderRadius: 3, overflow: 'hidden', marginBottom: 14 }}>
               <div style={{ height: '100%', width: `${a.progress}%`, background: 'linear-gradient(90deg,#F59E0B,#FCD34D)', borderRadius: 3, boxShadow: '0 0 8px rgba(245,158,11,0.4)', transition: 'width 0.9s ease' }} />
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#3A3A3A' }}>
-              <span>Drawdown used <span style={{ color: a.drawdownUsed > 28 ? '#F59E0B' : '#5A5A5A' }}>{a.drawdownUsed}%</span></span>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', fontSize: 10, color: '#3A3A3A' }}>
               <span>{a.payoutsTaken} payouts</span>
             </div>
           </div>
