@@ -161,7 +161,8 @@ function SparkLine({ points, positive, width = 240, height = 52 }: { points: Gol
 }
 
 // ─── Ticker Tape ──────────────────────────────────────────────────────────────
-function TickerTape({ data }: { data: GoldData | null }) {
+function TickerTape({ data: raw }: { data: GoldData | null }) {
+  const data = raw && !raw.error ? raw : null;
   const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const pos = data ? data.change >= 0 : true;
   const items = [
@@ -357,17 +358,17 @@ function PerformanceSection() {
 
       <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative' }}>
         <div style={{ marginBottom: 60 }}>
-          <Badge>QS1 Performance</Badge>
+          <Badge>The Numbers</Badge>
           <h2 style={{
             fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em',
             background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 50%, #F59E0B 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             marginTop: 20, marginBottom: 16, maxWidth: 540,
           }}>
-            Projected Account Performance
+            What This Looks Like On Your Account
           </h2>
           <p style={{ color: '#484848', fontSize: 15, lineHeight: 1.9, maxWidth: 580, fontWeight: 300 }}>
-            Illustrative projections based on QS1&apos;s systematic execution framework and prop firm payout parameters.
+            Pick the account size you are considering and see the projected numbers. These are illustrative projections built on the payout parameters of the funded account, not a promise, and we would rather show you the model than a screenshot of somebody&apos;s best week.
           </p>
         </div>
 
@@ -525,17 +526,17 @@ function AccountDashboard() {
 
       <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative' }}>
         <div style={{ marginBottom: 52 }}>
-          <Badge>Member Portal</Badge>
+          <Badge>Your New Routine</Badge>
           <h2 style={{
             fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em',
             background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 50%, #A3D9FF 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             marginTop: 20, marginBottom: 12,
           }}>
-            Account Progress Tracker
+            What You Will Log Into
           </h2>
           <p style={{ color: '#3A3A3A', fontSize: 13, maxWidth: 480, lineHeight: 1.8 }}>
-            Illustrative dashboard representing projected QS1-managed account behavior on the prop firm platform.
+            This is the whole job now. Open it when you feel like it, request a payout when one is available, close it again.
           </p>
         </div>
 
@@ -666,13 +667,13 @@ function HowItWorks({ onOpen }: { onOpen: () => void }) {
 
       <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative' }}>
         <div style={{ marginBottom: 68 }}>
-          <Badge>How It Works</Badge>
+          <Badge>Onboarding</Badge>
           <h2 style={{
             fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20, maxWidth: 480,
             background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 60%, #F59E0B 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
           }}>
-            Six Steps to Automated Execution
+            What The First Week Actually Looks Like
           </h2>
         </div>
 
@@ -725,7 +726,7 @@ function HowItWorks({ onOpen }: { onOpen: () => void }) {
         </div>
 
         <div style={{ textAlign: 'center' }}>
-          <button onClick={onOpen} className="qs-btn-gold">Begin Enrollment →</button>
+          <button onClick={onOpen} className="qs-btn-gold">Start week one →</button>
         </div>
       </div>
     </section>
@@ -735,12 +736,12 @@ function HowItWorks({ onOpen }: { onOpen: () => void }) {
 // ─── Why QS1 ──────────────────────────────────────────────────────────────
 function WhyQS1() {
   const reasons = [
-    { icon: '◷', title: 'Time Efficiency', body: 'No charts, no technical analysis, no market psychology. QS1 handles all execution autonomously while you focus elsewhere.' },
-    { icon: '◈', title: 'Institutional Infrastructure', body: 'Built around quantitative execution engines, multi-layer risk controls, and institutional-grade automated safety systems.' },
-    { icon: '⊞', title: 'Scalability', body: 'Multiple funded accounts can be operated simultaneously, compounding systematic exposure across all three account tiers.' },
-    { icon: '◎', title: 'Passive Exposure', body: 'Fully hands-free automated execution. Your account operates every session the markets are open, without you watching.' },
-    { icon: '∿', title: 'Consistency Focused', body: 'Prioritizes sustainable, repeatable payouts over aggressive strategies that risk violating funded account rules.' },
-    { icon: '⬡', title: 'Professional Management', body: 'Managed directly by quantitative developers and systematic trading operators with years of institutional-grade experience.' },
+    { icon: '◷', title: 'You get your evenings back', body: 'No charts, no analysis, no waiting for a setup that never comes. The market opens and closes without needing anything from you, which is the first week most people describe as unsettling and the second week they describe as relief.' },
+    { icon: '◎', title: 'Nothing depends on your mood anymore', body: 'The worst trades of your life were taken on your worst days. A system does not have days. It executes the same way after four losses as it did after four wins, which is the single thing you were never able to do reliably.' },
+    { icon: '∿', title: 'Boring on purpose', body: 'Built for repeatable payouts rather than a spectacular month, because one blown rule ends a funded account. You are not going to get a story out of this. You are going to get a payout schedule.' },
+    { icon: '◈', title: 'A defined downside, known up front', body: 'You are on funded capital with hard risk parameters, not your own account with a stop you might move at 11pm. What you can lose is a number you know before you start rather than one you discover afterwards.' },
+    { icon: '⊞', title: 'It scales without costing you more time', body: 'A second account does not mean a second job. Multiple funded accounts run the same system simultaneously, and your involvement stays exactly where it was, at zero.' },
+    { icon: '⬡', title: 'Our fee only exists after your payout does', body: 'We are not paid on enrollment, on a subscription, or on a course you might not finish. Thirty percent of successful payouts, and nothing at all otherwise. Check that against every other offer you have been shown.' },
   ];
 
   return (
@@ -749,13 +750,13 @@ function WhyQS1() {
 
       <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative' }}>
         <div style={{ marginBottom: 68 }}>
-          <Badge>Value Proposition</Badge>
+          <Badge>What Changes</Badge>
           <h2 style={{
             fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20, maxWidth: 600,
             background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 50%, #F59E0B 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
           }}>
-            Why High-Net-Worth Clients Choose QS1
+            Why People Stop Trading Manually And Never Go Back
           </h2>
         </div>
 
@@ -772,13 +773,619 @@ function WhyQS1() {
 
         <div style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.04) 0%, rgba(163,217,255,0.02) 50%, rgba(245,158,11,0.02) 100%)', border: '1px solid rgba(245,158,11,0.1)', borderRadius: 18, padding: '48px', textAlign: 'center', boxShadow: '0 0 60px rgba(245,158,11,0.04)' }}>
           <p style={{ color: '#4A4A4A', fontSize: 16, lineHeight: 2, maxWidth: 800, margin: '0 auto', fontWeight: 300 }}>
-            QS1 was engineered for individuals seeking sophisticated algorithmic market exposure without becoming full-time traders. Combining <span style={{ color: '#6A6A6A' }}>artificial intelligence</span>, <span style={{ color: '#6A6A6A' }}>quantitative research</span>, <span style={{ color: '#6A6A6A' }}>tick-data analysis</span>, <span style={{ color: '#6A6A6A' }}>institutional risk frameworks</span>, and <span style={{ color: '#6A6A6A' }}>automated execution systems</span>, delivering a structured, scalable, hands-free approach to modern futures trading.
+You did not get into this because you wanted to look at charts. You got into it because you wanted the thing on the other side of the charts. QS1 exists for people who want <span style={{ color: '#8A8A8A' }}>the outcome of trading</span> without <span style={{ color: '#8A8A8A' }}>the life of a trader</span>, and who have been at it long enough to know those two things were never the same purchase.
           </p>
           <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' }}>
             {['Private', 'Capacity-Limited', 'Selectively Offered'].map(t => (
               <span key={t} style={{ fontSize: 9, color: '#2A2A2A', letterSpacing: '0.22em', textTransform: 'uppercase' }}>{t}</span>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── SALES NARRATIVE: PROBLEM → EMOTION → OUTCOME → OFFER ──────────────────────
+
+// ─── 1. THE PROBLEM ───────────────────────────────────────────────────────────
+const PROBLEM_ITEMS = [
+  "You have had winning weeks. You just cannot string them together into a winning year.",
+  "You have blown at least one funded challenge. Probably more than one. Possibly on the final day.",
+  "You knew exactly what you were doing wrong during your last big loss. You did it anyway.",
+  "You have moved a stop loss and told yourself you were giving it room.",
+  "You check your phone at dinner, in bed, and at 2am, and you have gotten good at doing it quietly.",
+  "You have paid for a course, a signal group, or a mentor, and ended up back where you started.",
+  "You have quietly stopped telling people how the trading is going.",
+  "You started this to buy back your time. It has taken more of your time than your job does.",
+];
+
+function ProblemSection() {
+  const [checked, setChecked] = useState<number[]>([]);
+  const toggle = (i: number) => setChecked(c => c.includes(i) ? c.filter(x => x !== i) : [...c, i]);
+  const n = checked.length;
+
+  return (
+    <section id="qs-problem" className="qs-section" style={{ padding: '130px 48px', background: 'linear-gradient(180deg, #070708 0%, #0A0A0C 100%)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: '20%', left: '-8%', width: 560, height: 560, borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,11,0.03) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative' }}>
+        <div style={{ marginBottom: 48 }}>
+          <Badge>The Problem</Badge>
+          <h2 style={{
+            fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20, marginBottom: 18,
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 55%, #F59E0B 100%)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+          }}>Sound familiar?</h2>
+          <p style={{ color: '#5E5E5E', fontSize: 16, lineHeight: 1.9, fontWeight: 300, maxWidth: 620 }}>
+            Nobody is watching. Be honest with yourself. How many of these are true right now?
+          </p>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 40 }}>
+          {PROBLEM_ITEMS.map((item, i) => {
+            const on = checked.includes(i);
+            return (
+              <button key={i} onClick={() => toggle(i)} style={{
+                display: 'flex', alignItems: 'flex-start', gap: 18, textAlign: 'left',
+                padding: '22px 26px', cursor: 'pointer', width: '100%',
+                background: on ? 'linear-gradient(135deg, rgba(245,158,11,0.06), rgba(245,158,11,0.015))' : 'rgba(255,255,255,0.014)',
+                border: on ? '1px solid rgba(245,158,11,0.22)' : '1px solid rgba(255,255,255,0.05)',
+                borderRadius: 12, fontFamily: 'inherit', transition: 'all 0.25s',
+                boxShadow: on ? '0 0 30px rgba(245,158,11,0.05)' : 'none',
+              }}>
+                <span style={{
+                  flexShrink: 0, width: 20, height: 20, marginTop: 1, borderRadius: 5,
+                  border: on ? '1px solid #F59E0B' : '1px solid rgba(255,255,255,0.14)',
+                  background: on ? 'rgba(245,158,11,0.16)' : 'transparent',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: '#F59E0B', fontSize: 11, transition: 'all 0.2s',
+                }}>{on ? '✓' : ''}</span>
+                <span style={{ fontSize: 15, lineHeight: 1.75, fontWeight: 300, color: on ? '#C8C8C8' : '#6A6A6A', transition: 'color 0.25s' }}>{item}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div style={{
+          padding: '28px 32px', borderRadius: 14, textAlign: 'center',
+          background: n >= 3 ? 'linear-gradient(135deg, rgba(245,158,11,0.05), rgba(245,158,11,0.015))' : 'rgba(255,255,255,0.014)',
+          border: n >= 3 ? '1px solid rgba(245,158,11,0.16)' : '1px solid rgba(255,255,255,0.045)',
+          transition: 'all 0.35s',
+        }}>
+          {n === 0 ? (
+            <p style={{ color: '#3A3A3A', fontSize: 14, lineHeight: 1.9, fontWeight: 300 }}>
+              Tap the ones that are true. Most people stop at four because it starts to sting.
+            </p>
+          ) : (
+            <>
+              <div style={{
+                fontSize: 40, fontWeight: 200, letterSpacing: '-0.03em', marginBottom: 10,
+                background: 'linear-gradient(135deg, #F59E0B, #FCD34D)',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+              }}>{n} of 8</div>
+              <p style={{ color: n >= 3 ? '#6A6A6A' : '#3A3A3A', fontSize: 15, lineHeight: 1.9, fontWeight: 300, maxWidth: 560, margin: '0 auto' }}>
+                {n >= 3
+                  ? 'Then you already know none of this is a strategy problem. Keep reading. The next part is the one nobody says out loud.'
+                  : 'Keep going. The ones people skip are usually the ones that are true.'}
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 2. THE EMOTION ───────────────────────────────────────────────────────────
+const SCENES = [
+  {
+    time: '2:14 AM',
+    title: 'The one you do in the dark.',
+    body: 'You are not asleep. You are looking at a phone at the lowest brightness it goes, watching a position you promised yourself you would close six hours ago. Someone is asleep next to you. You have done this often enough that you have learned how to do it silently.',
+  },
+  {
+    time: 'RED LIGHT',
+    title: 'The math you do in the car.',
+    body: 'How far down you are this year. What you would need to make just to be flat again. How many months that takes at your actual rate. You have run this calculation so many times that you know the answer before you finish asking.',
+  },
+  {
+    time: 'SATURDAY',
+    title: 'The question you stopped answering honestly.',
+    body: 'Someone asks how the trading is going and you say it is going alright, because the real answer is a longer conversation than anyone wants at a barbecue. Somewhere in the last two years this stopped being exciting and started being something you manage.',
+  },
+  {
+    time: 'STILL WAITING',
+    title: 'The version of you that was supposed to be here by now.',
+    body: 'The one who would be free by now. Off the payroll, at the school pickup, on the flight, done explaining himself. He has not gone anywhere. He has just been waiting a great deal longer than you told him he would have to.',
+  },
+];
+
+function CostSection({ onOpen }: { onOpen: () => void }) {
+  const [hrs, setHrs] = useState(15);
+  const [yrs, setYrs] = useState(3);
+  const [dd, setDd] = useState(35);
+
+  const totalHours = hrs * 52 * yrs;
+  const workWeeks = Math.round(totalHours / 40);
+  const toEven = dd >= 99 ? 9900 : Math.round((dd / (100 - dd)) * 100);
+
+
+  return (
+    <section id="qs-cost" className="qs-section" style={{ padding: '130px 48px', background: 'linear-gradient(180deg, #0A0A0C 0%, #040405 45%, #060607 100%)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: '35%', right: '-10%', width: 640, height: 640, borderRadius: '50%', background: 'radial-gradient(circle, rgba(180,70,60,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative' }}>
+
+        <div style={{ marginBottom: 68, maxWidth: 700 }}>
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: 7,
+            background: 'rgba(180,70,60,0.06)', border: '1px solid rgba(180,70,60,0.2)',
+            borderRadius: 100, padding: '5px 14px', fontSize: 9,
+            letterSpacing: '0.22em', textTransform: 'uppercase', color: '#B4463C',
+          }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#B4463C', display: 'inline-block' }} />
+            The Real Cost
+          </span>
+          <h2 style={{
+            fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20, marginBottom: 20,
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #A8A8A8 60%, #B4463C 100%)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+          }}>The part nobody posts about.</h2>
+          <p style={{ color: '#5E5E5E', fontSize: 16, lineHeight: 1.95, fontWeight: 300 }}>
+            The screenshots go up. The losses go quiet. Here is what the quiet part actually looks like, and you already know whether this is accurate.
+          </p>
+        </div>
+
+        <div className="qs-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 72 }}>
+          {SCENES.map(s => (
+            <div key={s.time} style={{
+              padding: '38px 36px', borderRadius: 16,
+              background: 'linear-gradient(150deg, #0B0B0C 0%, #0D0A0A 100%)',
+              border: '1px solid rgba(180,70,60,0.09)',
+            }}>
+              <div style={{ fontSize: 9, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(180,70,60,0.55)', marginBottom: 20, fontVariantNumeric: 'tabular-nums' }}>{s.time}</div>
+              <h3 style={{ fontSize: 20, fontWeight: 300, color: '#BEBEBE', marginBottom: 16, letterSpacing: '-0.015em', lineHeight: 1.35 }}>{s.title}</h3>
+              <p style={{ color: '#5A5A5A', fontSize: 14, lineHeight: 2, fontWeight: 300 }}>{s.body}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Cost calculator */}
+        <div className="qs-pad-lg" style={{
+          padding: '52px 48px', borderRadius: 20,
+          background: 'linear-gradient(150deg, #0B0B0C 0%, #0E0A0A 100%)',
+          border: '1px solid rgba(180,70,60,0.14)',
+          boxShadow: '0 0 70px rgba(180,70,60,0.04)',
+        }}>
+          <h3 style={{ fontSize: 26, fontWeight: 200, color: '#C0C0C0', letterSpacing: '-0.02em', marginBottom: 12 }}>
+            Put your own numbers in it.
+          </h3>
+          <p style={{ color: '#3A3A3A', fontSize: 14, lineHeight: 1.9, marginBottom: 44, maxWidth: 560, fontWeight: 300 }}>
+            Not our numbers. Yours. This is arithmetic, not persuasion.
+          </p>
+
+          <div className="qs-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 36, marginBottom: 48 }}>
+            {[
+              { label: 'Hours a week at the charts', val: `${hrs} hrs`, min: 1, max: 60, v: hrs, set: setHrs },
+              { label: 'Years doing this', val: `${yrs} ${yrs === 1 ? 'year' : 'years'}`, min: 1, max: 20, v: yrs, set: setYrs },
+              { label: 'Down from your peak', val: `${dd}%`, min: 0, max: 90, v: dd, set: setDd },
+            ].map(s => (
+              <div key={s.label}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
+                  <span style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#333' }}>{s.label}</span>
+                  <span style={{ fontSize: 15, color: '#9A9A9A', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{s.val}</span>
+                </div>
+                <input className="qs-range" type="range" min={s.min} max={s.max} value={s.v}
+                  onChange={e => s.set(Number(e.target.value))} />
+              </div>
+            ))}
+          </div>
+
+          <div className="qs-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+            {[
+              { big: totalHours.toLocaleString('en-US'), unit: 'hours', sub: 'given to the screen so far' },
+              { big: workWeeks.toLocaleString('en-US'), unit: 'work weeks', sub: 'the same hours, at a full time job' },
+              { big: `${toEven}%`, unit: 'to break even', sub: 'the gain required just to be flat again' },
+            ].map(t => (
+              <div key={t.sub} style={{ padding: '32px 28px', background: 'rgba(180,70,60,0.035)', border: '1px solid rgba(180,70,60,0.12)', borderRadius: 14 }}>
+                <div style={{
+                  fontSize: 40, fontWeight: 200, letterSpacing: '-0.035em', lineHeight: 1.05, marginBottom: 6, fontVariantNumeric: 'tabular-nums',
+                  background: 'linear-gradient(135deg, #E8E8E8 0%, #B4463C 100%)',
+                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                }}>{t.big}</div>
+                <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(180,70,60,0.6)', marginBottom: 12 }}>{t.unit}</div>
+                <div style={{ fontSize: 13, color: '#3A3A3A', lineHeight: 1.7 }}>{t.sub}</div>
+              </div>
+            ))}
+          </div>
+
+          <p style={{ color: '#4A4A4A', fontSize: 16, lineHeight: 2, marginTop: 44, fontWeight: 300, maxWidth: 720 }}>
+            That is the real price, and almost none of it is the money. The money you can make back. The hours are gone, and the account is roughly where it was when you started spending them.
+          </p>
+
+          <div style={{ marginTop: 36 }}>
+            <button className="qs-btn-gold" onClick={onOpen}>I am done doing it this way →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 3. THE REFRAME ───────────────────────────────────────────────────────────
+const CONTRAST = [
+  { row: 'Needs sleep', you: 'Every night', qs1: 'Never' },
+  { row: 'Fear after a big loss', you: 'Unavoidable', qs1: 'Not a variable' },
+  { row: 'Follows the plan', you: 'Depends on the day', qs1: 'Identically, every time' },
+  { row: 'Hours available to trade', you: 'Whatever is left after work', qs1: 'Every session, in full' },
+  { row: 'Moves a stop under pressure', you: 'You have done it', qs1: 'Structurally cannot' },
+  { row: 'Needs to be right', you: 'Badly', qs1: 'Indifferent' },
+];
+
+function ReframeSection() {
+  return (
+    <section id="qs-reframe" className="qs-section" style={{ padding: '130px 48px', background: 'linear-gradient(180deg, #060607 0%, #0A0C10 100%)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: '10%', left: '40%', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,11,0.03) 0%, transparent 68%)', pointerEvents: 'none' }} />
+      <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative' }}>
+        <div className="qs-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'start' }}>
+          <div>
+            <Badge>Why This Keeps Happening</Badge>
+            <h2 style={{
+              fontSize: 46, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20, marginBottom: 28, lineHeight: 1.1,
+              background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 55%, #F59E0B 100%)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            }}>This was never a discipline problem.</h2>
+            <p style={{ color: '#5A5A5A', fontSize: 15, lineHeight: 2.05, fontWeight: 300, marginBottom: 24 }}>
+              Every education business in this industry needs you to believe your results are a character flaw. That you lack discipline. That you have a mindset issue. It is a convenient story, because it means the next course can fix you, and there is always a next course.
+            </p>
+            <p style={{ color: '#5A5A5A', fontSize: 15, lineHeight: 2.05, fontWeight: 300, marginBottom: 24 }}>
+              Here is the less flattering and far more useful version. You are a human being with a nervous system, sitting in front of a market where an enormous share of the volume is executed by machines. They do not get tired. They do not get scared after two losses. They do not need to be right, and they do not have a mortgage due on the first.
+            </p>
+            <p style={{ color: '#6A6A6A', fontSize: 15, lineHeight: 2.05, fontWeight: 300 }}>
+              You were never going to out-discipline that. Nobody is. The people who win at this consistently stopped trying years ago and started doing what those machines do. Define the rules once, then remove yourself from the execution entirely.
+            </p>
+          </div>
+
+          <div style={{ border: '1px solid rgba(245,158,11,0.1)', borderRadius: 18, overflow: 'hidden', background: 'linear-gradient(135deg, #0D0D0D, #0F1018)', boxShadow: '0 0 60px rgba(245,158,11,0.03)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr 1fr', padding: '18px 24px', borderBottom: '1px solid rgba(245,158,11,0.08)' }}>
+              {['', 'You, at the screen', 'QS1'].map((h, i) => (
+                <div key={i} style={{ fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: i === 2 ? 'rgba(245,158,11,0.7)' : '#2E2E2E' }}>{h}</div>
+              ))}
+            </div>
+            {CONTRAST.map((c, i) => (
+              <div key={c.row} style={{
+                display: 'grid', gridTemplateColumns: '1.3fr 1fr 1fr', gap: 12,
+                padding: '20px 24px', alignItems: 'center',
+                borderBottom: i < CONTRAST.length - 1 ? '1px solid rgba(255,255,255,0.035)' : 'none',
+              }}>
+                <div style={{ fontSize: 13, color: '#5A5A5A', lineHeight: 1.5 }}>{c.row}</div>
+                <div style={{ fontSize: 13, color: '#B4463C', opacity: 0.75, lineHeight: 1.5 }}>{c.you}</div>
+                <div style={{ fontSize: 13, color: '#F59E0B', lineHeight: 1.5 }}>{c.qs1}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 4. THE OUTCOME ───────────────────────────────────────────────────────────
+const SHIFTS = [
+  { label: 'Hours at the charts each week', now: '15 to 25', then: 'Zero' },
+  { label: 'Who executes the trades', now: 'You, after a full work day', then: 'QS1, every session' },
+  { label: 'Emotional load', now: 'Constant', then: 'None' },
+  { label: 'What a bad day costs you', now: 'Whatever you decide at the time', then: 'Bounded by fixed risk rules' },
+  { label: 'What you actually do', now: 'Watch, wait, second guess', then: 'Check a dashboard occasionally' },
+  { label: 'Your edge', now: 'A plan you have to execute perfectly', then: 'A system that executes it the same way every time' },
+];
+
+function OutcomeSection({ onOpen }: { onOpen: () => void }) {
+  const [view, setView] = useState<'now' | 'then'>('then');
+
+  return (
+    <section id="qs-outcome" className="qs-section" style={{ padding: '140px 48px', background: 'linear-gradient(180deg, #0A0C10 0%, #070708 50%, #0A0C10 100%)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: '18%', left: '50%', transform: 'translateX(-50%)', width: 900, height: 900, borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,11,0.05) 0%, transparent 62%)', pointerEvents: 'none' }} />
+      <div style={{ maxWidth: 1000, margin: '0 auto', position: 'relative' }}>
+
+        <div style={{ textAlign: 'center', marginBottom: 60 }}>
+          <Badge>The Outcome</Badge>
+          <h2 style={{
+            fontSize: 52, fontWeight: 200, letterSpacing: '-0.035em', marginTop: 22, marginBottom: 24, lineHeight: 1.08,
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 35%, #F59E0B 78%, #FCD34D 100%)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+          }}>Picture the first Thursday of month seven.</h2>
+        </div>
+
+        <div style={{ maxWidth: 700, margin: '0 auto 72px' }}>
+          {[
+            'It is an unremarkable Thursday. You are at lunch, or in a meeting, or waiting in a school pickup line. Your phone buzzes. It is a payout notification. You look at it for about four seconds, put the phone back in your pocket, and carry on with the conversation you were already having.',
+            'That is the entire moment. And it is the one you have actually been chasing this whole time.',
+            'Not the adrenaline. Not being right about a call. Not the screenshot you were going to post. Just money arriving on a schedule, from a process that ran all week without asking you for a single thing.',
+          ].map((p, i) => (
+            <p key={i} style={{ color: i === 1 ? '#B0B0B0' : '#6A6A6A', fontSize: i === 1 ? 19 : 17, lineHeight: 2.05, fontWeight: 300, marginBottom: 26, textAlign: 'center' }}>{p}</p>
+          ))}
+
+          <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(245,158,11,0.2), transparent)', margin: '44px 0' }} />
+
+          <p style={{ color: '#6A6A6A', fontSize: 17, lineHeight: 2, fontWeight: 300, marginBottom: 28, textAlign: 'center' }}>
+            Six months of that, and things change quietly.
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            {[
+              'You stop checking your phone at dinner, because there is nothing on it to check.',
+              'The 2am conversation with yourself simply stops happening.',
+              'Your charting software is still installed. You have not opened it in three weeks.',
+              'Someone asks how the trading is going and you tell them the truth, and the truth is boring, and boring is what winning has looked like the entire time.',
+              'The number in your account finally moves in one direction long enough for you to plan around it.',
+            ].map((line, i) => (
+              <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                <span style={{ color: '#F59E0B', fontSize: 12, marginTop: 6, opacity: 0.7, flexShrink: 0 }}>◆</span>
+                <span style={{ color: '#6E6E6E', fontSize: 15, lineHeight: 1.95, fontWeight: 300 }}>{line}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Before / after */}
+        <div style={{ border: '1px solid rgba(245,158,11,0.1)', borderRadius: 20, overflow: 'hidden', background: 'linear-gradient(135deg, #0D0D0D, #0F1018)', boxShadow: '0 0 70px rgba(245,158,11,0.04)' }}>
+          <div style={{ padding: '32px 36px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+            <h3 style={{ fontSize: 22, fontWeight: 200, color: '#C0C0C0', letterSpacing: '-0.02em' }}>What actually changes</h3>
+            <div style={{ display: 'inline-flex', background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: 3 }}>
+              {([['now', 'Today'], ['then', 'Month Seven']] as const).map(([k, label]) => (
+                <button key={k} onClick={() => setView(k)} style={{
+                  background: view === k ? (k === 'then' ? 'rgba(245,158,11,0.12)' : 'rgba(180,70,60,0.12)') : 'transparent',
+                  border: view === k ? `1px solid ${k === 'then' ? 'rgba(245,158,11,0.22)' : 'rgba(180,70,60,0.22)'}` : '1px solid transparent',
+                  color: view === k ? (k === 'then' ? '#F59E0B' : '#B4463C') : '#3A3A3A',
+                  padding: '8px 22px', fontSize: 12, fontFamily: 'inherit', cursor: 'pointer', borderRadius: 8, transition: 'all 0.22s',
+                }}>{label}</button>
+              ))}
+            </div>
+          </div>
+          <div style={{ padding: '28px 36px 36px' }}>
+            {SHIFTS.map((s, i) => (
+              <div key={s.label} style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24,
+                padding: '20px 0', borderBottom: i < SHIFTS.length - 1 ? '1px solid rgba(255,255,255,0.035)' : 'none',
+              }}>
+                <span style={{ fontSize: 14, color: '#4A4A4A', fontWeight: 300, lineHeight: 1.5 }}>{s.label}</span>
+                <span style={{
+                  fontSize: 15, textAlign: 'right', lineHeight: 1.5, transition: 'color 0.3s',
+                  color: view === 'then' ? '#F59E0B' : '#B4463C',
+                  opacity: view === 'then' ? 1 : 0.8,
+                }}>{view === 'then' ? s.then : s.now}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: 52 }}>
+          <button className="qs-btn-gold" onClick={onOpen} style={{ padding: '17px 48px', fontSize: 11 }}>Show me how this works →</button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 5. THE BRIDGE / THE OFFER ────────────────────────────────────────────────
+const MOVES = [
+  {
+    n: '01',
+    title: 'You trade funded capital, not your savings.',
+    body: 'You are not wiring your own money into a market account. You are placed on a funded account through a prop firm, which means your exposure is defined and known before a single trade is placed. Your upside is a share of real payouts from that account.',
+    tag: 'Downside defined up front',
+  },
+  {
+    n: '02',
+    title: 'QS1 is installed on it, and you never touch it.',
+    body: 'QS1 v3.2 deploys directly onto the account and takes over identification, entry, sizing, management and exit in Gold futures. It is non-discretionary. It cannot revenge trade, because it has nothing to avenge. It cannot widen a stop because it is having a bad week. It does not have weeks.',
+    tag: 'Zero manual input',
+  },
+  {
+    n: '03',
+    title: 'We are paid only when you are paid.',
+    body: 'Our fee is 30% of successful payouts. Not a subscription. Not a course. Not a monthly retainer that bills whether the account works or not. If there is no payout, there is no fee. There is no version of this arrangement where we do well and you do not.',
+    tag: '70% of every payout is yours',
+  },
+];
+
+const REMOVED = [
+  'Watching charts', 'Choosing a strategy', 'Position sizing', 'Entries and exits',
+  'Deciding when to stop for the day', 'Revenge trades', 'The 2am check',
+  'Second guessing the plan', 'Learning yet another system',
+];
+
+function BridgeSection({ onOpen }: { onOpen: () => void }) {
+  return (
+    <section id="qs-bridge" className="qs-section" style={{ padding: '130px 48px', background: '#070708', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', bottom: '5%', right: '-6%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,11,0.035) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative' }}>
+
+        <div style={{ marginBottom: 64, maxWidth: 660 }}>
+          <Badge>How You Get There</Badge>
+          <h2 style={{
+            fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20, marginBottom: 20, lineHeight: 1.1,
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 55%, #F59E0B 100%)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+          }}>Three moves. None of them require you to become a better trader.</h2>
+          <p style={{ color: '#5E5E5E', fontSize: 16, lineHeight: 1.95, fontWeight: 300 }}>
+            That is the whole point. Getting better at trading is the thing that has not worked for several years running. So we are not going to ask you to do it again.
+          </p>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 56 }}>
+          {MOVES.map(m => (
+            <div key={m.n} className="qs-card-gold qs-pad-lg" style={{
+              display: 'grid', gridTemplateColumns: '80px 1fr', gap: 32, padding: '40px 44px',
+              background: 'linear-gradient(135deg, #0D0D0D, #0F0F12)',
+              border: '1px solid rgba(255,255,255,0.055)', borderRadius: 16, transition: 'all 0.3s',
+            }} >
+              <div style={{
+                fontSize: 42, fontWeight: 200, letterSpacing: '-0.04em', lineHeight: 1,
+                background: 'linear-gradient(135deg, #F59E0B66, #F59E0B22)',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+              }}>{m.n}</div>
+              <div>
+                <h3 style={{ fontSize: 22, fontWeight: 300, color: '#C8C8C8', marginBottom: 16, letterSpacing: '-0.02em', lineHeight: 1.35 }}>{m.title}</h3>
+                <p style={{ color: '#5A5A5A', fontSize: 15, lineHeight: 2, fontWeight: 300, marginBottom: 20, maxWidth: 780 }}>{m.body}</p>
+                <span style={{
+                  display: 'inline-block', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase',
+                  color: '#F59E0B', background: 'rgba(245,158,11,0.06)',
+                  border: '1px solid rgba(245,158,11,0.16)', borderRadius: 100, padding: '5px 14px',
+                }}>{m.tag}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="qs-pad-lg" style={{
+          padding: '44px 48px', borderRadius: 18,
+          background: 'linear-gradient(135deg, rgba(245,158,11,0.04) 0%, rgba(163,217,255,0.02) 60%, rgba(245,158,11,0.02) 100%)',
+          border: '1px solid rgba(245,158,11,0.1)',
+        }}>
+          <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#3A3A3A', marginBottom: 26 }}>
+            What comes off your plate on day one
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 32 }}>
+            {REMOVED.map(r => (
+              <span key={r} style={{
+                fontSize: 13, color: '#4A4A4A', padding: '9px 18px', borderRadius: 100,
+                background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
+                textDecoration: 'line-through', textDecorationColor: 'rgba(245,158,11,0.45)', textDecorationThickness: '1px',
+              }}>{r}</span>
+            ))}
+          </div>
+          <p style={{ color: '#6A6A6A', fontSize: 16, lineHeight: 2, fontWeight: 300, maxWidth: 700, marginBottom: 32 }}>
+            What is left on your plate is a login, a dashboard, and a payout request button. That is the job now.
+          </p>
+          <button className="qs-btn-gold" onClick={onOpen}>Book a private 45 minute call →</button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 6. OBJECTIONS ────────────────────────────────────────────────────────────
+const OBJECTIONS = [
+  {
+    q: 'This sounds too good. What is the catch?',
+    a: 'The catch is that futures trading carries real risk of loss and we are not going to pretend otherwise. QS1 is a systematic approach to risk, not the removal of it. What has been engineered out is the human error layer: the fear, the fatigue, the moved stop, the trade you took because you were bored. Market risk stays exactly where it has always been. Anyone who tells you they have removed that is selling you something worse than a course.',
+  },
+  {
+    q: 'If it works, why share it instead of just trading it yourselves?',
+    a: 'We do trade it. The reason for the program is capacity, not charity. Funded accounts carry per-account payout ceilings, so scaling means running the system across more accounts rather than pushing more size through one. Your account is additional capacity for us, and a hands-free position for you. Those two things happen to line up, which is why the program exists at all.',
+  },
+  {
+    q: 'I have been burned before. Signal group, bot, mentor, all of it.',
+    a: 'Nearly everyone we speak to has, and it is a reasonable thing to lead with. The thing worth examining is not the promise, it is the incentive. A signal seller is paid on subscription whether you profit or not. A course seller is paid at enrollment and has no exposure to your outcome at all. We are paid on payouts, which means our revenue cannot exist until yours does. Judge us on that structure rather than on our adjectives.',
+  },
+  {
+    q: 'How much of my time is this actually going to take?',
+    a: 'Onboarding runs about a week, and most of that is you waiting on account credentials rather than doing anything. After that it is effectively zero. There is no chart to watch, no setup to approve, and no decision waiting on you. If you wanted to, you could go a full month without logging in.',
+  },
+  {
+    q: 'I do not really know how to trade. Is that a problem?',
+    a: 'It is genuinely not, and in some ways it helps. There is nothing here for you to execute, so there is no skill gap to close. People who have never placed a trade and people with ten years of screen time end up in exactly the same seat: watching a system do the work.',
+  },
+  {
+    q: 'What happens if the account breaks a prop firm rule?',
+    a: 'Funded account rules, daily loss limits, drawdown thresholds and payout constraints are built into the risk layer as hard parameters rather than guidelines, because a breach ends the account. That is the reason the system is tuned for repeatable payouts instead of aggressive months. It is also the honest answer to why you will not see anyone here promising you a spectacular number.',
+  },
+  {
+    q: 'Who is this not for?',
+    a: 'Anyone who needs this money inside the next ninety days. Anyone who wants to keep trading the same account manually on the side, which defeats the entire mechanism. Anyone shopping for a guaranteed return, because nobody in this industry can honestly offer one and the ones who do are the ones you should be worried about. If any of those describe you, we will tell you on the call and neither of us will have wasted an afternoon.',
+  },
+];
+
+function ObjectionsSection() {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <section id="qs-objections" className="qs-section" style={{ padding: '130px 48px', background: 'linear-gradient(180deg, #070708 0%, #0A0A0C 100%)' }}>
+      <div style={{ maxWidth: 880, margin: '0 auto' }}>
+        <div style={{ marginBottom: 56 }}>
+          <Badge>Straight Answers</Badge>
+          <h2 style={{
+            fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20, marginBottom: 18,
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 55%, #F59E0B 100%)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+          }}>The questions you are already asking.</h2>
+          <p style={{ color: '#5E5E5E', fontSize: 16, lineHeight: 1.9, fontWeight: 300, maxWidth: 600 }}>
+            You have been sold to before. So here are the answers without the marketing voice, including the ones that are not flattering to us.
+          </p>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {OBJECTIONS.map((o, i) => {
+            const on = open === i;
+            return (
+              <div key={i} style={{
+                border: on ? '1px solid rgba(245,158,11,0.18)' : '1px solid rgba(255,255,255,0.05)',
+                borderRadius: 14, overflow: 'hidden',
+                background: on ? 'linear-gradient(135deg, #0F0F12, #0D0D0D)' : 'rgba(255,255,255,0.014)',
+                transition: 'all 0.25s',
+              }}>
+                <button onClick={() => setOpen(on ? null : i)} style={{
+                  width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24,
+                  padding: '26px 30px', background: 'none', border: 'none', cursor: 'pointer',
+                  textAlign: 'left', fontFamily: 'inherit',
+                }}>
+                  <span style={{ fontSize: 16, fontWeight: 300, color: on ? '#C8C8C8' : '#6A6A6A', lineHeight: 1.55, transition: 'color 0.2s' }}>{o.q}</span>
+                  <span style={{
+                    flexShrink: 0, width: 24, height: 24, borderRadius: '50%',
+                    border: `1px solid ${on ? 'rgba(245,158,11,0.35)' : 'rgba(255,255,255,0.1)'}`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: on ? '#F59E0B' : '#3A3A3A', fontSize: 13, lineHeight: 1,
+                    transform: on ? 'rotate(45deg)' : 'none', transition: 'all 0.25s',
+                  }}>+</span>
+                </button>
+                {on && (
+                  <div style={{ padding: '0 30px 30px' }}>
+                    <p style={{ color: '#5A5A5A', fontSize: 15, lineHeight: 2.05, fontWeight: 300, maxWidth: 760 }}>{o.a}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 7. THE CLOSE ─────────────────────────────────────────────────────────────
+function ClosingSection({ onOpen }: { onOpen: () => void }) {
+  return (
+    <section id="qs-access" className="qs-section" style={{ padding: '150px 48px', background: '#070708', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 950, height: 950, borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,11,0.05) 0%, transparent 64%)', pointerEvents: 'none' }} />
+      <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+        <Badge>Private Program</Badge>
+        <h2 style={{
+          fontSize: 52, fontWeight: 200, letterSpacing: '-0.035em', marginTop: 24, marginBottom: 28, lineHeight: 1.1,
+          background: 'linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 38%, #F59E0B 78%, #FCD34D 100%)',
+          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+        }}>The next six months are going to pass either way.</h2>
+
+        <p style={{ color: '#6E6E6E', fontSize: 17, lineHeight: 2.05, marginBottom: 24, fontWeight: 300 }}>
+          You already know what they look like if nothing changes, because you have just finished living them. The only real question left is whether the account is still being run by a tired person at 2am, or by something that never gets tired in the first place.
+        </p>
+        <p style={{ color: '#5A5A5A', fontSize: 16, lineHeight: 2, marginBottom: 48, fontWeight: 300 }}>
+          The call is 45 minutes. It is a conversation, not a pitch. We look at your situation, tell you whether this is a fit, and tell you plainly when it is not.
+        </p>
+
+        <button className="qs-btn-gold" onClick={onOpen} style={{ padding: '19px 58px', fontSize: 12, borderRadius: 12 }}>
+          Book your 45 minute call
+        </button>
+
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 32, flexWrap: 'wrap', marginTop: 32 }}>
+          {['No cost, no obligation', 'Capacity limited', 'We will tell you if you are not a fit'].map(t => (
+            <span key={t} style={{ fontSize: 10, color: '#2E2E2E', letterSpacing: '0.14em', textTransform: 'uppercase' }}>{t}</span>
+          ))}
+        </div>
+
+        <div style={{ marginTop: 56, padding: '20px 24px', border: '1px solid rgba(180,60,60,0.1)', borderRadius: 10, background: 'rgba(180,60,60,0.02)' }}>
+          <p style={{ color: '#3A2828', fontSize: 12, lineHeight: 1.9 }}>
+            Trading futures involves substantial risk of loss and is not suitable for every investor. Past performance does not indicate future results. No specific outcome is guaranteed.
+          </p>
         </div>
       </div>
     </section>
@@ -840,9 +1447,9 @@ export default function QuantaraPage() {
   const openModal = () => window.Calendly?.initPopupWidget({ url: CALENDLY_URL });
 
   const navLinks: [string, string][] = [
-    ['Markets', 'qs-markets'], ['Performance', 'qs-performance'],
-    ['Process', 'qs-process'], ['Dashboard', 'qs-dashboard'],
-    ['Systems', 'qs-systems'], ['Access', 'qs-access'],
+    ['The Problem', 'qs-problem'], ['The Outcome', 'qs-outcome'],
+    ['How It Works', 'qs-bridge'], ['Results', 'qs-performance'],
+    ['Questions', 'qs-objections'],
   ];
 
   const pos = goldData ? goldData.change >= 0 : true;
@@ -910,6 +1517,12 @@ export default function QuantaraPage() {
         .qs-card-gold:hover { border-color: rgba(245,158,11,0.15) !important; background: linear-gradient(135deg, #0F0F12, #111215) !important; box-shadow: 0 0 40px rgba(245,158,11,0.05); }
         .qs-step-card:hover { background: #0D0D0E !important; }
 
+        /* ── Range sliders ── */
+        .qs-range { -webkit-appearance: none; appearance: none; width: 100%; height: 3px; border-radius: 2px; cursor: pointer; background: rgba(255,255,255,0.07); outline: none; margin-top: 18px; }
+        .qs-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 15px; height: 15px; border-radius: 50%; background: linear-gradient(135deg, #C4564A, #8E332B); border: none; cursor: pointer; box-shadow: 0 0 10px rgba(180,70,60,0.5); }
+        .qs-range::-moz-range-thumb { width: 15px; height: 15px; border-radius: 50%; background: linear-gradient(135deg, #C4564A, #8E332B); border: none; cursor: pointer; box-shadow: 0 0 10px rgba(180,70,60,0.5); }
+        .qs-range::-moz-range-track { height: 3px; border-radius: 2px; background: rgba(255,255,255,0.07); }
+
         /* ── Shimmer on price ── */
         @keyframes qs-shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
 
@@ -926,6 +1539,7 @@ export default function QuantaraPage() {
           .qs-payout-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 640px) {
+          .qs-pad-lg { padding: 32px 22px !important; }
           .qs-bento-3 { grid-template-columns: 1fr !important; }
           .qs-ticker-price { font-size: 32px !important; }
           .qs-stat-grid { grid-template-columns: 1fr 1fr !important; }
@@ -960,7 +1574,7 @@ export default function QuantaraPage() {
               <button key={id} className="qs-nav-link" onClick={() => go(id)}>{label}</button>
             ))}
             <button className="qs-btn-gold" onClick={openModal} style={{ padding: '9px 20px', fontSize: 10, borderRadius: 8, marginLeft: 8 }}>
-              Request Access
+              Book a call
             </button>
           </div>
         </nav>
@@ -983,37 +1597,38 @@ export default function QuantaraPage() {
             </div>
 
             <div className="qs-a1" style={{ display: 'flex', justifyContent: 'center', marginBottom: 28 }}>
-              <Badge>Quantitative Market Systems · Powered by QS1</Badge>
+              <Badge>For traders who are tired of starting over</Badge>
             </div>
 
             <h1 className="qs-a2 qs-hero-h1" style={{
-              fontSize: 64, fontWeight: 200, letterSpacing: '-0.04em', lineHeight: 1.04, marginBottom: 12,
+              fontSize: 64, fontWeight: 200, letterSpacing: '-0.04em', lineHeight: 1.06, marginBottom: 26,
               background: 'linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 35%, #F59E0B 70%, #FCD34D 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             }}>
-              Quantara System One
+              You have done the work.
+              <br />The account still does not show it.
             </h1>
 
             <div className="qs-a2" style={{ fontSize: 12, letterSpacing: '0.26em', textTransform: 'uppercase', color: '#333', marginBottom: 28, fontWeight: 300 }}>
-              QS1 &nbsp;·&nbsp; Institutional Gold Algorithmic Program
+              Quantara System One &nbsp;·&nbsp; Automated Gold Futures Execution
             </div>
 
-            <p className="qs-a3" style={{ color: '#444', fontSize: 16, lineHeight: 1.9, maxWidth: 660, margin: '0 auto 48px', fontWeight: 300 }}>
-              A proprietary quantitative framework powered by QS1. Algorithmic execution in Gold futures markets. Machine learning models, statistical frameworks, and institutional risk architecture.
+            <p className="qs-a3" style={{ color: '#5E5E5E', fontSize: 17, lineHeight: 1.95, maxWidth: 680, margin: '0 auto 48px', fontWeight: 300 }}>
+              Years of screen time. Thousands spent on courses. Hundreds of hours backtesting. And a balance that keeps resetting to roughly the number it started at. The problem was never how hard you worked, and it was probably never even your strategy. Here is what it actually was.
             </p>
 
             <div className="qs-a4" style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 64 }}>
-              <button className="qs-btn-gold" onClick={openModal}>Request Consideration</button>
-              <button className="qs-btn-outline" onClick={() => go('qs-markets')}>View Live Markets</button>
+              <button className="qs-btn-gold" onClick={openModal}>Book a private call</button>
+              <button className="qs-btn-outline" onClick={() => go('qs-problem')}>Show me what is going wrong</button>
             </div>
 
             {/* Hero stat bar */}
             <div className="qs-a4 qs-stat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, maxWidth: 800, margin: '0 auto', background: 'rgba(245,158,11,0.04)', border: '1px solid rgba(245,158,11,0.08)', borderRadius: 14, overflow: 'hidden' }}>
               {[
-                { val: goldData && !goldData.error ? `$${goldData.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '---', label: 'GC Futures Live' },
-                { val: '$77,490', label: '6-Month Gross Peak' },
-                { val: '70%', label: 'Client Payout Share' },
-                { val: '100%', label: 'Automated Execution' },
+                { val: goldData && !goldData.error ? `$${goldData.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '---', label: 'Gold, Trading Right Now' },
+                { val: '0 hrs', label: 'Your Time At The Charts' },
+                { val: '70%', label: 'Of Every Payout Is Yours' },
+                { val: '30%', label: 'Our Fee, Only If You Get Paid' },
               ].map((s, i) => (
                 <div key={i} style={{ padding: '18px 16px', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(245,158,11,0.06)' : 'none' }}>
                   <div style={{ fontSize: 18, fontWeight: 200, color: i === 0 ? (pos ? '#F59E0B' : '#F87171') : '#9A9A9A', letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums', marginBottom: 4 }}>{s.val}</div>
@@ -1029,20 +1644,88 @@ export default function QuantaraPage() {
           </div>
         </section>
 
-        {/* ── LIVE MARKET DATA ── */}
+                {/* ── ACT I · THE PROBLEM ── */}
+        <ProblemSection />
+
+        {/* ── ACT II · THE REAL COST ── */}
+        <CostSection onOpen={openModal} />
+
+        {/* ── ACT III · THE REFRAME ── */}
+        <ReframeSection />
+
+        {/* ── ACT IV · THE OUTCOME ── */}
+        <OutcomeSection onOpen={openModal} />
+
+        {/* ── ACT V · THE OFFER ── */}
+        <BridgeSection onOpen={openModal} />
+
+{/* ── LIVE MARKET DATA ── */}
         <GoldTickerBar data={goldData} loading={goldLoading} />
 
         {/* ── ANIMATED STATS ── */}
         <section style={{ padding: '80px 48px', background: '#070708', borderBottom: '1px solid rgba(245,158,11,0.04)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div className="qs-stat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-              <StatCard prefix="$" value={77490} label="Peak 6-Month Gross" delay={0} />
-              <StatCard prefix="$" value={54243} label="Max Client Net 6M" delay={0.1} />
-              <StatCard value={70} suffix="%" label="Client Payout Share" delay={0.2} />
-              <StatCard value={100} suffix="%" label="Automated Execution" delay={0.3} />
+              <StatCard prefix="$" value={54243} label="Projected 6-Month Net To You" delay={0} />
+              <StatCard value={70} suffix="%" label="Of Every Payout Is Yours" delay={0.1} />
+              <StatCard value={0} suffix=" hrs" label="Of Your Week It Costs" delay={0.2} />
+              <StatCard value={0} label="Trades You Have To Place" delay={0.3} />
             </div>
           </div>
         </section>
+
+        {/* ── PERFORMANCE ── */}
+        <PerformanceSection />
+
+        {/* ── PERSPECTIVES ── */}
+        <section id="qs-infrastructure" style={{ padding: '130px 48px', background: '#070708' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ marginBottom: 68 }}>
+              <Badge>Proof</Badge>
+              <h2 style={{
+                fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20,
+                background: 'linear-gradient(135deg, #FFFFFF, #C8C8C8 60%, #F59E0B 100%)',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+              }}>People Who Were Where You Are</h2>
+              <p style={{ color: '#5E5E5E', fontSize: 16, lineHeight: 1.9, fontWeight: 300, maxWidth: 640, marginTop: 18 }}>
+                Every one of them had already tried doing it themselves first. That is not a coincidence, it is the pattern.
+              </p>
+            </div>
+            <div className="qs-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 56 }}>
+              {[
+                { q: "After years of losing money trading on my own, Quantara has been a real game changer. My account is up nicely over the last 8 months and I barely have to do anything. The consistent profitable months are exactly what they said. Super happy with it.", name: 'Michael R. T.', role: 'Chicago, Illinois' },
+                { q: "I was pretty skeptical at first, but it's been solid. My account has been growing steadily and the team is very transparent. I check in every couple weeks and everything looks good. Definitely glad I gave them a shot.", name: 'Sarah P.', role: 'Austin, Texas' },
+                { q: "Finally a system that works without me staring at screens all day. The returns have been better than I expected and it's all handled professionally. No complaints so far. Nice to have something that actually delivers.", name: 'David C.', role: 'Scottsdale, Arizona' },
+                { q: "Quantara has made trading way less stressful for me. I just let them do their thing and the results have been consistent. The numbers they show are real. I'm really pleased with how it's going.", name: 'Rachel M.', role: 'Miami, Florida' },
+              ].map((t, i) => (
+                <div key={i} style={{ border: '1px solid rgba(255,255,255,0.05)', borderRadius: 14, padding: '36px', background: 'linear-gradient(135deg, #0D0D0D, #0F0F12)', transition: 'border-color 0.25s' }} className="qs-card-gold">
+                  <div style={{
+                    fontSize: 40, lineHeight: 1, marginBottom: 20, fontWeight: 200,
+                    background: 'linear-gradient(135deg, #F59E0B44, #F59E0B22)',
+                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                  }}>&ldquo;</div>
+                  <p style={{ color: '#555', fontSize: 15, lineHeight: 1.95, fontWeight: 300, marginBottom: 28, fontStyle: 'italic' }}>{t.q}</p>
+                  <div style={{ borderTop: '1px solid rgba(245,158,11,0.06)', paddingTop: 18 }}>
+                    <div style={{ fontSize: 13, color: '#A8A8A8', fontWeight: 400 }}>{t.name}</div>
+                    <div style={{ fontSize: 11, color: '#333', marginTop: 3, letterSpacing: '0.04em' }}>{t.role}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <button className="qs-btn-gold" onClick={openModal}>Book a private call →</button>
+            </div>
+          </div>
+        </section>
+
+        {/* ── HOW IT WORKS ── */}
+        <HowItWorks onOpen={openModal} />
+
+        {/* ── ACCOUNT DASHBOARD ── */}
+        <AccountDashboard />
+
+        {/* ── WHY QS1 ── */}
+        <WhyQS1 />
 
         {/* ── THE SYSTEM ── */}
         <section id="qs-systems" style={{ padding: '130px 48px', background: 'linear-gradient(180deg, #070708 0%, #0A0C10 100%)' }}>
@@ -1054,10 +1737,10 @@ export default function QuantaraPage() {
                 background: 'linear-gradient(135deg, #FFFFFF 0%, #C8C8C8 60%, #F59E0B 100%)',
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
               }}>
-                Structured Quantitative Execution
+                For The Part Of You That Wants To See The Machine
               </h2>
               <p style={{ color: '#3A3A3A', fontSize: 16, lineHeight: 1.92, maxWidth: 640, fontWeight: 300 }}>
-                QS1 is an institutional-grade algorithmic infrastructure powered by QS1, focused on Gold futures (GC/MGC). Multi-year quantitative research, machine learning models, and non-discretionary execution.
+                Some people book the call after the last section. Others need to look under the hood first, which is a reasonable instinct given what you have already been sold. Here is what is actually running.
               </p>
             </div>
 
@@ -1086,18 +1769,6 @@ export default function QuantaraPage() {
           </div>
         </section>
 
-        {/* ── PERFORMANCE ── */}
-        <PerformanceSection />
-
-        {/* ── HOW IT WORKS ── */}
-        <HowItWorks onOpen={openModal} />
-
-        {/* ── ACCOUNT DASHBOARD ── */}
-        <AccountDashboard />
-
-        {/* ── WHY QS1 ── */}
-        <WhyQS1 />
-
         {/* ── APPROACH ── */}
         <section id="qs-approach" style={{ padding: '130px 48px', background: 'linear-gradient(180deg, #070708 0%, #0A0C10 60%, #070708 100%)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -1107,7 +1778,7 @@ export default function QuantaraPage() {
                 fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20, maxWidth: 480,
                 background: 'linear-gradient(135deg, #FFFFFF, #C8C8C8 60%, #F59E0B 100%)',
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}>Research-Driven Development</h2>
+              }}>It Took Years Before We Let Anyone Else Near It</h2>
             </div>
             <div className="qs-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 88, alignItems: 'start' }}>
               <div>
@@ -1152,45 +1823,10 @@ export default function QuantaraPage() {
           </div>
         </section>
 
-        {/* ── PERSPECTIVES ── */}
-        <section id="qs-infrastructure" style={{ padding: '130px 48px', background: '#070708' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ marginBottom: 68 }}>
-              <Badge>Perspectives</Badge>
-              <h2 style={{
-                fontSize: 48, fontWeight: 200, letterSpacing: '-0.03em', marginTop: 20,
-                background: 'linear-gradient(135deg, #FFFFFF, #C8C8C8 60%, #F59E0B 100%)',
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}>Participant Perspectives</h2>
-            </div>
-            <div className="qs-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 56 }}>
-              {[
-                { q: "After years of losing money trading on my own, Quantara has been a real game changer. My account is up nicely over the last 8 months and I barely have to do anything. The consistent profitable months are exactly what they said. Super happy with it.", name: 'Michael R. T.', role: 'Chicago, Illinois' },
-                { q: "I was pretty skeptical at first, but it's been solid. My account has been growing steadily and the team is very transparent. I check in every couple weeks and everything looks good. Definitely glad I gave them a shot.", name: 'Sarah P.', role: 'Austin, Texas' },
-                { q: "Finally a system that works without me staring at screens all day. The returns have been better than I expected and it's all handled professionally. No complaints so far. Nice to have something that actually delivers.", name: 'David C.', role: 'Scottsdale, Arizona' },
-                { q: "Quantara has made trading way less stressful for me. I just let them do their thing and the results have been consistent. The numbers they show are real. I'm really pleased with how it's going.", name: 'Rachel M.', role: 'Miami, Florida' },
-              ].map((t, i) => (
-                <div key={i} style={{ border: '1px solid rgba(255,255,255,0.05)', borderRadius: 14, padding: '36px', background: 'linear-gradient(135deg, #0D0D0D, #0F0F12)', transition: 'border-color 0.25s' }} className="qs-card-gold">
-                  <div style={{
-                    fontSize: 40, lineHeight: 1, marginBottom: 20, fontWeight: 200,
-                    background: 'linear-gradient(135deg, #F59E0B44, #F59E0B22)',
-                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-                  }}>&ldquo;</div>
-                  <p style={{ color: '#555', fontSize: 15, lineHeight: 1.95, fontWeight: 300, marginBottom: 28, fontStyle: 'italic' }}>{t.q}</p>
-                  <div style={{ borderTop: '1px solid rgba(245,158,11,0.06)', paddingTop: 18 }}>
-                    <div style={{ fontSize: 13, color: '#A8A8A8', fontWeight: 400 }}>{t.name}</div>
-                    <div style={{ fontSize: 11, color: '#333', marginTop: 3, letterSpacing: '0.04em' }}>{t.role}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <button className="qs-btn-gold" onClick={openModal}>Request Consideration</button>
-            </div>
-          </div>
-        </section>
+                {/* ── ACT VI · OBJECTIONS ── */}
+        <ObjectionsSection />
 
-        {/* ── PROGRAM CONSIDERATIONS ── */}
+{/* ── PROGRAM CONSIDERATIONS ── */}
         <section id="qs-considerations" style={{ padding: '130px 48px', background: 'linear-gradient(180deg, #070708, #0A0C10)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ marginBottom: 68 }}>
@@ -1250,29 +1886,10 @@ export default function QuantaraPage() {
           </div>
         </section>
 
-        {/* ── ACCESS ── */}
-        <section id="qs-access" style={{ padding: '140px 48px', background: '#070708', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 900, height: 900, borderRadius: '50%', background: 'radial-gradient(circle, rgba(245,158,11,0.04) 0%, transparent 65%)', pointerEvents: 'none' }} />
-          <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-            <Badge>Private Program</Badge>
-            <h2 style={{
-              fontSize: 52, fontWeight: 200, letterSpacing: '-0.035em', marginTop: 24, marginBottom: 20,
-              background: 'linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 40%, #F59E0B 80%, #FCD34D 100%)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-            }}>
-              Request Consideration
-            </h2>
-            <p style={{ color: '#3A3A3A', fontSize: 16, lineHeight: 1.9, marginBottom: 48, fontWeight: 300 }}>
-              Quantara System One operates as a private, invite-only initiative. QS1-managed accounts are capacity-limited and offered selectively. All information submitted is treated with strict confidentiality.
-            </p>
-            <button className="qs-btn-gold" onClick={openModal} style={{ padding: '18px 56px', fontSize: 12, borderRadius: 12 }}>
-              Begin Your Application
-            </button>
-            <p style={{ color: '#1E1E1E', fontSize: 11, marginTop: 24, letterSpacing: '0.06em' }}>Qualified applicants only · Private & Confidential · No solicitation</p>
-          </div>
-        </section>
+                {/* ── ACT VII · THE CLOSE ── */}
+        <ClosingSection onOpen={openModal} />
 
-        {/* ── FOOTER ── */}
+{/* ── FOOTER ── */}
         <footer style={{ borderTop: '1px solid rgba(245,158,11,0.05)', background: '#040405', padding: '60px 48px 40px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div className="qs-footer-inner" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, marginBottom: 52 }}>
@@ -1311,7 +1928,7 @@ export default function QuantaraPage() {
         {/* ── FLOATING CTA ── */}
         <div style={{ position: 'fixed', bottom: 32, right: 32, zIndex: 100 }}>
           <button className="qs-btn-gold" onClick={openModal} style={{ padding: '12px 24px', fontSize: 10, borderRadius: 10, backdropFilter: 'blur(20px)' }}>
-            Request Access
+            Book a call
           </button>
         </div>
 
