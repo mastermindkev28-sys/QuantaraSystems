@@ -9,7 +9,6 @@ interface GoldData {
   points: GoldPoint[]; ts: number; error?: boolean;
 }
 
-// 20 consecutive winning trades — total $4,188
 const RAW_TRADES = [
   { id:  1, eT:'07:32:14', xT:'07:44:52', sd:'LONG',  en:2318.5, ex:2320.3, pnl: 180 },
   { id:  2, eT:'08:15:07', xT:'08:26:33', sd:'SHORT', en:2319.8, ex:2317.7, pnl: 210 },
@@ -45,6 +44,68 @@ const ACCOUNTS = [
   { size: '$150,000', key: '150k', payoutRange: '$3,000–$3,500', early: 2460, mature: 2870, monthly: 12915, sixMonth: 77490, clientNet: 54243, qs1Rev: 23247 },
 ] as const;
 
+// ── Countdown Timer ────────────────────────────────────────────
+function CountdownTimer() {
+  const [time, setTime] = useState({ days: 8, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const target = Date.now() + 8 * 24 * 60 * 60 * 1000;
+    const tick = () => {
+      const diff = Math.max(0, target - Date.now());
+      setTime({
+        days: Math.floor(diff / 86400000),
+        hours: Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
+      });
+    };
+    tick();
+    const iv = setInterval(tick, 1000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const units = [
+    { val: time.days, label: 'DAYS' },
+    { val: time.hours, label: 'HOURS' },
+    { val: time.minutes, label: 'MINUTES' },
+    { val: time.seconds, label: 'SECONDS' },
+  ];
+
+  return (
+    <section style={{ padding: '72px 48px', background: '#0A0C14', borderTop: '1px solid #1A2236', borderBottom: '1px solid #1A2236' }}>
+      <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+        <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#C9A84C', letterSpacing: '0.28em', textTransform: 'uppercase', marginBottom: 32 }}>
+          ONE CALL TO FIRST PAYOUT
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 32 }}>
+          {units.map(({ val, label }) => (
+            <div key={label} style={{ textAlign: 'center' }}>
+              <div style={{
+                fontFamily: '"JetBrains Mono", monospace',
+                fontSize: 56,
+                fontWeight: 700,
+                color: '#C9A84C',
+                background: '#0D0F1A',
+                border: '1px solid rgba(201,168,76,0.2)',
+                borderRadius: 10,
+                padding: '14px 22px',
+                minWidth: 108,
+                letterSpacing: '-0.02em',
+                textShadow: '0 0 40px rgba(201,168,76,0.3)',
+              }}>{pad(val)}</div>
+              <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#4A5568', letterSpacing: '0.18em', marginTop: 10 }}>{label}</div>
+            </div>
+          ))}
+        </div>
+        <p style={{ color: '#4A5568', fontSize: 15, lineHeight: 1.9, maxWidth: 520, margin: '0 auto' }}>
+          Eight days from one conversation to your first funded payout. That is the entire distance between where you are now and a system generating income on your behalf.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 // ── P&L Step Chart ────────────────────────────────────────────
 function PLChart() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -74,7 +135,7 @@ function PLChart() {
       ctx.font = '10px "JetBrains Mono", monospace';
       for (let i = 0; i <= 4; i++) {
         const y = padT + (ch / 4) * i;
-        ctx.strokeStyle = 'rgba(0,180,208,0.07)';
+        ctx.strokeStyle = 'rgba(201,168,76,0.06)';
         ctx.lineWidth = 0.5;
         ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + cw, y); ctx.stroke();
         const val = maxPnl - (maxPnl / 4) * i;
@@ -182,7 +243,7 @@ function PLChart() {
   return <canvas ref={canvasRef} style={{ width: '100%', height: '100%', display: 'block' }} />;
 }
 
-// ── Animated Trade Log ──────────────────────────────────────────────
+// ── Animated Trade Log ────────────────────────────────────────────────
 function TradeLog() {
   const [visible, setVisible] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -228,7 +289,7 @@ function TradeLog() {
                 <td style={{ padding: '9px 14px', fontFamily: '"JetBrains Mono", monospace', color: '#4A5568' }}>{t.eT}</td>
                 <td style={{ padding: '9px 14px', fontFamily: '"JetBrains Mono", monospace', color: '#4A5568' }}>{t.xT}</td>
                 <td style={{ padding: '9px 14px' }}>
-                  <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, letterSpacing: '0.1em', color: t.sd === 'LONG' ? '#00B4D0' : '#F59E0B' }}>{t.sd}</span>
+                  <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, letterSpacing: '0.1em', color: t.sd === 'LONG' ? '#00B4D0' : '#C9A84C' }}>{t.sd}</span>
                 </td>
                 <td style={{ padding: '9px 14px', fontFamily: '"JetBrains Mono", monospace', color: '#7A8899' }}>{f2(t.en)}</td>
                 <td style={{ padding: '9px 14px', fontFamily: '"JetBrains Mono", monospace', color: '#7A8899' }}>{f2(t.ex)}</td>
@@ -330,13 +391,14 @@ function TickerTape({ data }: { data: GoldData | null }) {
     { label: 'EXECUTION', val: '100% AUTOMATED' },
     { label: 'SPLIT', val: '70 / 30' },
     { label: 'ACCOUNTS', val: '$50K · $100K · $150K' },
+    { label: 'GUARANTEE', val: '45 DAY MONEY-BACK', color: '#C9A84C' },
   ];
   const all = [...items, ...items];
   return (
     <div style={{ background: '#040B14', borderBottom: '1px solid #0A1628', height: 32, overflow: 'hidden', display: 'flex', alignItems: 'center', position: 'relative', zIndex: 50 }}>
       <div style={{ position: 'absolute', left: 0, width: 40, height: '100%', background: 'linear-gradient(to right, #040B14, transparent)', zIndex: 2 }} />
       <div style={{ position: 'absolute', right: 0, width: 40, height: '100%', background: 'linear-gradient(to left, #040B14, transparent)', zIndex: 2 }} />
-      <div style={{ display: 'flex', animation: 'qs-ticker 44s linear infinite', whiteSpace: 'nowrap', willChange: 'transform' }}>
+      <div style={{ display: 'flex', animation: 'qs-ticker 48s linear infinite', whiteSpace: 'nowrap', willChange: 'transform' }}>
         {all.map((item, i) => (
           <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0 28px', fontFamily: '"JetBrains Mono", monospace' }}>
             <span style={{ color: '#112030', fontSize: 9, letterSpacing: '0.14em' }}>{item.label}</span>
@@ -393,21 +455,21 @@ function PerformanceSection() {
     <section id="qs-performance" style={{ padding: '100px 48px', background: '#060D16' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ marginBottom: 52 }}>
-          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// PERFORMANCE PROJECTIONS</span>
+          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#C9A84C', letterSpacing: '0.2em' }}>// PERFORMANCE PROJECTIONS</span>
           <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 42, fontWeight: 400, color: '#E8E0D0', marginTop: 16, marginBottom: 12, letterSpacing: '-0.01em' }}>
-            Account Performance
+            What Your Account Can Generate
           </h2>
           <p style={{ color: '#4A5568', fontSize: 14, lineHeight: 1.85, maxWidth: 520 }}>
-            Illustrative projections based on QS1&apos;s systematic execution framework and prop firm payout parameters.
+            Illustrative projections based on QS1&apos;s systematic execution framework and prop firm payout parameters. Select your account size to explore the numbers.
           </p>
         </div>
 
         <div style={{ display: 'inline-flex', gap: 0, marginBottom: 40, background: '#0A1628', border: '1px solid #162036', borderRadius: 10, overflow: 'hidden', padding: 4 }}>
           {ACCOUNTS.map((a, i) => (
             <button key={a.key} onClick={() => setActive(i)} style={{
-              background: active === i ? 'rgba(0,180,208,0.1)' : 'transparent',
-              border: active === i ? '1px solid rgba(0,180,208,0.25)' : '1px solid transparent',
-              color: active === i ? '#00B4D0' : '#4A5568',
+              background: active === i ? 'rgba(201,168,76,0.1)' : 'transparent',
+              border: active === i ? '1px solid rgba(201,168,76,0.3)' : '1px solid transparent',
+              color: active === i ? '#C9A84C' : '#4A5568',
               padding: '9px 28px', fontSize: 12, fontFamily: '"JetBrains Mono", monospace',
               cursor: 'pointer', borderRadius: 8, transition: 'all 0.2s',
             }}>
@@ -450,7 +512,7 @@ function PerformanceSection() {
             <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#4A5568', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 20 }}>6-Month Revenue Split</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
               <div style={{ padding: '18px', background: 'rgba(0,217,126,0.05)', border: '1px solid rgba(0,217,126,0.15)', borderRadius: 10 }}>
-                <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>Client Net (70%)</div>
+                <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>Your Net (70%)</div>
                 <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 24, color: '#00D97E' }}>{fmt(acct.clientNet)}</div>
               </div>
               <div style={{ padding: '18px', background: 'rgba(255,255,255,0.02)', border: '1px solid #162036', borderRadius: 10 }}>
@@ -476,28 +538,31 @@ function PerformanceSection() {
 
 function HowItWorks({ onOpen }: { onOpen: () => void }) {
   const steps = [
-    { n: '01', title: 'Initial Enrollment', body: 'Select your account size ($50K, $100K, or $150K) and submit the one-time program fee to initiate onboarding.' },
-    { n: '02', title: 'Create Prop Firm Account', body: 'Register with the prop firm — the platform used to house your funded account and manage payouts.' },
-    { n: '03', title: 'Obtain Tradovate Credentials', body: 'Receive your Tradovate execution credentials through the prop firm. Trading credentials only, separate from your dashboard login.' },
-    { n: '04', title: 'Secure Integration', body: 'Provide credentials to the QS1 team via encrypted intake. Infrastructure is configured and connected to your account.' },
-    { n: '05', title: 'Algorithm Deployment', body: 'QS1 v3.2 deploys directly onto your account. Risk systems activate. Trade detection, management, and execution become fully autonomous.' },
-    { n: '06', title: 'Automated Trading Begins', body: 'QS1 scans continuously for optimal Gold setups. Trades only when conditions are favorable. No manual experience required.' },
+    { n: '01', title: 'Book Your Discovery Call', body: 'Start with a 45-minute conversation with our team. We will walk you through the program, answer every question, and make sure QS1 is the right fit for your goals.' },
+    { n: '02', title: 'Select Your Account Size', body: 'Choose your funded account tier ($50K, $100K, or $150K) and complete your enrollment. Our team guides you through every step.' },
+    { n: '03', title: 'Create Your Prop Firm Account', body: 'Register with the prop firm that houses your funded account and manages your payouts. Simple, straightforward setup.' },
+    { n: '04', title: 'Receive Tradovate Credentials', body: 'You receive trading credentials through the prop firm. These are execution-only credentials, separate from your account dashboard login.' },
+    { n: '05', title: 'Secure Integration', body: 'Provide credentials to our team via encrypted intake. Your infrastructure is configured and securely connected within 24 hours.' },
+    { n: '06', title: 'QS1 Goes to Work', body: 'QS1 v3.2 deploys directly onto your account. Risk systems activate. From this point forward, every trade is fully autonomous. You sit back and receive payouts.' },
   ];
 
   return (
     <section id="qs-process" style={{ padding: '100px 48px', background: '#08101C' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ marginBottom: 56 }}>
-          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// ENROLLMENT PROCESS</span>
+          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#C9A84C', letterSpacing: '0.2em' }}>// HOW IT WORKS</span>
           <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 42, fontWeight: 400, color: '#E8E0D0', marginTop: 16, letterSpacing: '-0.01em' }}>
-            Six Steps to Automated Execution
+            Six Steps to Automated Income
           </h2>
+          <p style={{ color: '#4A5568', fontSize: 14, lineHeight: 1.85, maxWidth: 520, marginTop: 12 }}>
+            From your first call to your first payout in as little as eight days. Our team is with you at every stage.
+          </p>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: '#0F1E32', border: '1px solid #162036', borderRadius: 16, overflow: 'hidden', marginBottom: 36 }}>
           {steps.map((step) => (
             <div key={step.n} className="qs-step-card" style={{ padding: '32px 26px', background: '#08101C', borderRight: '1px solid #0F1E32', borderBottom: '1px solid #0F1E32', transition: 'background 0.2s' }}>
-              <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.12em', marginBottom: 14, opacity: 0.5 }}>{step.n}</div>
+              <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#C9A84C', letterSpacing: '0.12em', marginBottom: 14, opacity: 0.7 }}>{step.n}</div>
               <h3 style={{ fontSize: 14, fontWeight: 500, color: '#A0AEC0', marginBottom: 10, lineHeight: 1.4 }}>{step.title}</h3>
               <p style={{ color: '#2A3A4A', fontSize: 13, lineHeight: 1.85 }}>{step.body}</p>
             </div>
@@ -506,16 +571,16 @@ function HowItWorks({ onOpen }: { onOpen: () => void }) {
 
         <div style={{ background: '#0A1628', border: '1px solid #162036', borderRadius: 14, padding: '36px', marginBottom: 36 }}>
           <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// PAYOUT PROCEDURE</span>
-          <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 24, color: '#E8E0D0', marginTop: 12, marginBottom: 24 }}>Requesting Your Payout</h3>
+          <h3 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 24, color: '#E8E0D0', marginTop: 12, marginBottom: 24 }}>Collecting Your Earnings</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
             {[
               { n: '1', title: 'Log In', body: 'Access your prop firm dashboard using your registered credentials.' },
               { n: '2', title: 'Complete KYC', body: 'Complete the identity verification required by the prop firm.' },
               { n: '3', title: 'Add Banking', body: 'Input your banking details for direct deposit payout processing.' },
-              { n: '4', title: 'Request Payout', body: 'Submit directly through the prop firm dashboard.' },
+              { n: '4', title: 'Request Payout', body: 'Submit directly through the prop firm dashboard. Funds arrive fast.' },
             ].map(s => (
               <div key={s.n} style={{ padding: '18px', background: '#060D16', borderRadius: 10, border: '1px solid #162036' }}>
-                <div style={{ fontFamily: '"JetBrains Mono", monospace', width: 26, height: 26, borderRadius: '50%', background: 'rgba(0,180,208,0.08)', border: '1px solid rgba(0,180,208,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14, fontSize: 11, color: '#00B4D0' }}>{s.n}</div>
+                <div style={{ fontFamily: '"JetBrains Mono", monospace', width: 26, height: 26, borderRadius: '50%', background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14, fontSize: 11, color: '#C9A84C' }}>{s.n}</div>
                 <div style={{ fontSize: 13, color: '#7A8899', marginBottom: 8 }}>{s.title}</div>
                 <p style={{ fontSize: 12, color: '#2A3A4A', lineHeight: 1.8 }}>{s.body}</p>
               </div>
@@ -524,181 +589,9 @@ function HowItWorks({ onOpen }: { onOpen: () => void }) {
         </div>
 
         <div style={{ textAlign: 'center' }}>
-          <button onClick={onOpen} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'linear-gradient(135deg, #00D97E, #00B4D0)', border: 'none', color: '#060D16', borderRadius: 10, padding: '14px 36px', fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: '"JetBrains Mono", monospace', fontWeight: 700, boxShadow: '0 0 40px rgba(0,217,126,0.15)' }}>
-            Begin Enrollment →
+          <button onClick={onOpen} className="qs-btn-gold">
+            Book Your Discovery Call
           </button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function AccountDashboard() {
-  const [acctIdx, setAcctIdx] = useState(0);
-  const [payoutNum, setPayoutNum] = useState(3);
-  const acct = ACCOUNTS[acctIdx];
-  const payoutAvg = payoutNum <= 3 ? acct.early : acct.mature;
-  const fmtCur = (n: number) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 });
-
-  const recentPayouts = [
-    { cycle: `Cycle ${Math.max(1, payoutNum - 2)}`, date: '2026-02-12', amount: fmtCur(acct.early), status: 'Processed' },
-    { cycle: `Cycle ${Math.max(1, payoutNum - 1)}`, date: '2026-03-28', amount: fmtCur(acct.early), status: 'Processed' },
-    { cycle: `Cycle ${payoutNum}`, date: 'Pending', amount: fmtCur(payoutAvg), status: 'In Progress' },
-  ];
-
-  const systemStatus = [
-    { label: 'QS1 Engine', val: 'v3.2 · Active' },
-    { label: 'Risk System', val: 'Engaged' },
-    { label: 'Tradovate Feed', val: 'Connected' },
-    { label: 'Prop Firm Platform', val: 'Linked' },
-  ];
-
-  return (
-    <section id="qs-dashboard" style={{ padding: '100px 48px', background: '#060D16' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ marginBottom: 48 }}>
-          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// MEMBER PORTAL</span>
-          <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 42, fontWeight: 400, color: '#E8E0D0', marginTop: 16, marginBottom: 12, letterSpacing: '-0.01em' }}>
-            Account Progress Tracker
-          </h2>
-          <p style={{ color: '#4A5568', fontSize: 13, maxWidth: 480, lineHeight: 1.8 }}>
-            Illustrative dashboard representing projected QS1-managed account behavior on the prop firm platform.
-          </p>
-        </div>
-
-        <div style={{ display: 'flex', gap: 24, marginBottom: 24, flexWrap: 'wrap', alignItems: 'center' }}>
-          <div>
-            <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 8 }}>Account Size</div>
-            <div style={{ display: 'inline-flex', background: '#0A1628', border: '1px solid #162036', borderRadius: 10, overflow: 'hidden', padding: 3 }}>
-              {ACCOUNTS.map((a, i) => (
-                <button key={a.key} onClick={() => setAcctIdx(i)} style={{
-                  background: acctIdx === i ? 'rgba(0,180,208,0.1)' : 'transparent',
-                  border: acctIdx === i ? '1px solid rgba(0,180,208,0.2)' : '1px solid transparent',
-                  color: acctIdx === i ? '#00B4D0' : '#2A3A4A', padding: '7px 20px', fontSize: 12,
-                  fontFamily: '"JetBrains Mono", monospace', cursor: 'pointer', borderRadius: 7, transition: 'all 0.2s',
-                }}>{a.size}</button>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 8 }}>Payout Cycle</div>
-            <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-              <button onClick={() => setPayoutNum(p => Math.max(1, p - 1))} style={{ background: '#0A1628', border: '1px solid #162036', color: '#4A5568', borderRadius: 8, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontFamily: 'inherit', fontSize: 16 }}>−</button>
-              <span style={{ fontFamily: '"JetBrains Mono", monospace', color: '#7A8899', fontSize: 14, minWidth: 70, textAlign: 'center' }}>Cycle {payoutNum}</span>
-              <button onClick={() => setPayoutNum(p => Math.min(10, p + 1))} style={{ background: '#0A1628', border: '1px solid #162036', color: '#4A5568', borderRadius: 8, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontFamily: 'inherit', fontSize: 16 }}>+</button>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 14 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            <div style={{ padding: '24px', background: '#0A1628', border: '1px solid rgba(0,217,126,0.15)', borderRadius: 14, textAlign: 'center' }}>
-              <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.14em', marginBottom: 16 }}>PROJECTED PAYOUT</div>
-              <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 28, color: '#00D97E', fontWeight: 700, marginBottom: 6 }}>{fmtCur(payoutAvg)}</div>
-              <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A' }}>CYCLE {payoutNum} ESTIMATE</div>
-            </div>
-            <div style={{ padding: '20px', background: '#0A1628', border: '1px solid #162036', borderRadius: 14 }}>
-              <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.14em', marginBottom: 16 }}>SYSTEM STATUS</div>
-              {systemStatus.map(s => (
-                <div key={s.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid rgba(22,32,54,0.8)' }}>
-                  <span style={{ fontSize: 11, color: '#2A3A4A' }}>{s.label}</span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: 5, fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00D97E' }}>
-                    <span className="qs-dot" style={{ width: 5, height: 5, borderRadius: '50%', background: '#00D97E', boxShadow: '0 0 5px #00D97E', display: 'inline-block' }} />
-                    {s.val}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
-              {[
-                { label: 'Monthly Gross', val: `$${acct.monthly.toLocaleString()}`, sub: 'est. per month' },
-                { label: '6-Month Gross', val: `$${acct.sixMonth.toLocaleString()}`, sub: 'cumulative est.' },
-                { label: 'Client Net 6M', val: `$${acct.clientNet.toLocaleString()}`, sub: 'after 30% fee' },
-              ].map(m => (
-                <div key={m.label} style={{ border: '1px solid #162036', borderRadius: 12, padding: '18px', background: '#0A1628' }}>
-                  <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 10 }}>{m.label}</div>
-                  <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 18, color: '#A0AEC0', marginBottom: 4 }}>{m.val}</div>
-                  <div style={{ fontSize: 10, color: '#1E2A3A' }}>{m.sub}</div>
-                </div>
-              ))}
-            </div>
-
-            <div style={{ border: '1px solid #162036', borderRadius: 14, overflow: 'hidden', background: '#0A1628', flex: 1 }}>
-              <div style={{ padding: '16px 22px', borderBottom: '1px solid #162036', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Payout History</span>
-                <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#1E2A3A', letterSpacing: '0.1em' }}>via Prop Firm Dashboard</span>
-              </div>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
-                <thead>
-                  <tr style={{ borderBottom: '1px solid #0F1E32' }}>
-                    {['Cycle', 'Date', 'Amount', 'Status'].map(h => (
-                      <th key={h} style={{ padding: '10px 22px', textAlign: 'left', fontFamily: '"JetBrains Mono", monospace', color: '#1E2A3A', fontWeight: 400, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentPayouts.map((r, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid rgba(15,30,50,0.8)' }}>
-                      <td style={{ padding: '12px 22px', color: '#4A5568', fontFamily: '"JetBrains Mono", monospace' }}>{r.cycle}</td>
-                      <td style={{ padding: '12px 22px', color: '#2A3A4A', fontFamily: '"JetBrains Mono", monospace' }}>{r.date}</td>
-                      <td style={{ padding: '12px 22px', color: '#7A8899', fontFamily: '"JetBrains Mono", monospace' }}>{r.amount}</td>
-                      <td style={{ padding: '12px 22px' }}>
-                        <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, letterSpacing: '0.1em', padding: '4px 10px', borderRadius: 100, background: r.status === 'Processed' ? 'rgba(0,217,126,0.08)' : 'rgba(0,180,208,0.08)', color: r.status === 'Processed' ? '#00D97E' : '#00B4D0', border: `1px solid ${r.status === 'Processed' ? 'rgba(0,217,126,0.2)' : 'rgba(0,180,208,0.2)'}` }}>
-                          {r.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function WhyQS1() {
-  const reasons = [
-    { icon: '◷', title: 'Time Efficiency', body: 'No charts, no technical analysis, no market psychology. QS1 handles all execution autonomously.' },
-    { icon: '◈', title: 'Institutional Infrastructure', body: 'Built around quantitative execution engines, multi-layer risk controls, and automated safety systems.' },
-    { icon: '⊞', title: 'Scalability', body: 'Multiple funded accounts can be operated simultaneously across all three account tiers.' },
-    { icon: '◎', title: 'Passive Exposure', body: 'Fully hands-free automated execution. Your account operates every session markets are open.' },
-    { icon: '∿', title: 'Consistency Focused', body: 'Prioritizes sustainable, repeatable payouts over aggressive strategies that risk violating rules.' },
-    { icon: '⬡', title: 'Professional Management', body: 'Managed by quantitative developers and systematic trading operators with institutional experience.' },
-  ];
-
-  return (
-    <section id="qs-why" style={{ padding: '100px 48px', background: '#08101C' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ marginBottom: 56 }}>
-          <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// VALUE PROPOSITION</span>
-          <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 42, fontWeight: 400, color: '#E8E0D0', marginTop: 16, maxWidth: 560, letterSpacing: '-0.01em' }}>
-            Why Qualified Clients Choose QS1
-          </h2>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 40 }}>
-          {reasons.map(r => (
-            <div key={r.title} style={{ border: '1px solid #162036', borderRadius: 12, padding: '28px', background: '#0A1628', transition: 'border-color 0.25s' }}>
-              <div style={{ fontSize: 20, marginBottom: 16, color: '#00B4D0', opacity: 0.7 }}>{r.icon}</div>
-              <h3 style={{ fontSize: 14, fontWeight: 500, color: '#A0AEC0', marginBottom: 10 }}>{r.title}</h3>
-              <p style={{ color: '#2A3A4A', fontSize: 13, lineHeight: 1.85 }}>{r.body}</p>
-            </div>
-          ))}
-        </div>
-        <div style={{ background: 'rgba(0,180,208,0.03)', border: '1px solid rgba(0,180,208,0.08)', borderRadius: 16, padding: '40px', textAlign: 'center' }}>
-          <p style={{ color: '#2A3A4A', fontSize: 15, lineHeight: 2, maxWidth: 780, margin: '0 auto', fontWeight: 300 }}>
-            QS1 was engineered for individuals seeking sophisticated algorithmic market exposure without becoming full-time traders — combining <span style={{ color: '#4A5568' }}>artificial intelligence</span>, <span style={{ color: '#4A5568' }}>quantitative research</span>, <span style={{ color: '#4A5568' }}>tick-data analysis</span>, and <span style={{ color: '#4A5568' }}>institutional risk frameworks</span>.
-          </p>
-          <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' }}>
-            {['Private', 'Capacity-Limited', 'Selectively Offered'].map(t => (
-              <span key={t} style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#1E2A3A', letterSpacing: '0.2em', textTransform: 'uppercase' }}>{t}</span>
-            ))}
-          </div>
         </div>
       </div>
     </section>
@@ -758,9 +651,9 @@ export default function QuantaraPage() {
   const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const navLinks: [string, string][] = [
-    ['Markets', 'qs-markets'], ['Chronicle', 'qs-chronicle'],
-    ['Performance', 'qs-performance'], ['Process', 'qs-process'],
-    ['Systems', 'qs-systems'], ['Access', 'qs-access'],
+    ['About QS1', 'qs-about'], ['Results', 'qs-chronicle'],
+    ['How It Works', 'qs-process'], ['Performance', 'qs-performance'],
+    ['Testimonials', 'qs-testimonials'],
   ];
 
   return (
@@ -777,6 +670,7 @@ export default function QuantaraPage() {
         @keyframes qs-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
         @keyframes qs-row-in { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
         @keyframes qs-blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+        @keyframes qs-gold-glow { 0%,100% { box-shadow: 0 0 20px rgba(201,168,76,0.15); } 50% { box-shadow: 0 0 40px rgba(201,168,76,0.35); } }
         .qs-a0 { animation: qs-up 0.9s ease both; }
         .qs-a1 { animation: qs-up 0.9s ease 0.14s both; }
         .qs-a2 { animation: qs-up 0.9s ease 0.26s both; }
@@ -784,17 +678,23 @@ export default function QuantaraPage() {
         .qs-a4 { animation: qs-up 0.9s ease 0.54s both; }
         .qs-dot { animation: qs-pulse 2.4s ease-in-out infinite; }
         .qs-cursor { animation: qs-blink 1.1s step-end infinite; display: inline-block; color: #00D97E; }
-        .qs-nav-link { background: none; border: none; color: #2A3A4A; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: color 0.2s; padding: 4px 0; font-family: 'Inter', sans-serif; }
-        .qs-nav-link:hover { color: #7A8899; }
+        .qs-nav-link { background: none; border: none; color: #4A5568; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: color 0.2s; padding: 4px 0; font-family: 'Inter', sans-serif; }
+        .qs-nav-link:hover { color: #A0AEC0; }
+        .qs-btn-gold { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #C9A84C, #E8C56A); border: none; color: #0A0C14; border-radius: 10px; padding: 14px 36px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; font-family: "JetBrains Mono", monospace; font-weight: 700; transition: all 0.25s; box-shadow: 0 0 40px rgba(201,168,76,0.2); }
+        .qs-btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(201,168,76,0.4); }
         .qs-btn-green { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #00D97E, #00B4D0); border: none; color: #060D16; border-radius: 10px; padding: 14px 36px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; font-family: "JetBrains Mono", monospace; font-weight: 700; transition: all 0.25s; box-shadow: 0 0 40px rgba(0,217,126,0.15); }
         .qs-btn-green:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(0,217,126,0.3); }
         .qs-btn-outline { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 1px solid #162036; color: #4A5568; border-radius: 10px; padding: 14px 28px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; font-family: "JetBrains Mono", monospace; transition: all 0.25s; }
-        .qs-btn-outline:hover { border-color: rgba(0,217,126,0.3); color: #00D97E; }
+        .qs-btn-outline:hover { border-color: rgba(201,168,76,0.4); color: #C9A84C; }
         .qs-step-card:hover { background: #0C1A2C !important; }
+        .qs-feature-card { border: 1px solid #162036; border-radius: 14px; padding: 32px; background: #0A1628; transition: border-color 0.25s, transform 0.25s; }
+        .qs-feature-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-3px); }
+        .qs-testimonial-card { border: 1px solid #162036; border-radius: 14px; padding: 32px; background: #0A1628; }
         @media (max-width: 1024px) {
           .qs-nav-links { display: none !important; }
           .qs-hero-h1 { font-size: 36px !important; }
           .qs-grid-3 { grid-template-columns: 1fr !important; }
+          .qs-grid-2 { grid-template-columns: 1fr !important; }
           .qs-section { padding: 72px 24px !important; }
         }
         @media (max-width: 640px) {
@@ -826,51 +726,57 @@ export default function QuantaraPage() {
             {navLinks.map(([label, id]) => (
               <button key={id} className="qs-nav-link" onClick={() => go(id)}>{label}</button>
             ))}
-            <button onClick={openModal} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', border: '1px solid rgba(0,217,126,0.25)', color: '#00D97E', borderRadius: 8, padding: '8px 18px', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: '"JetBrains Mono", monospace', transition: 'all 0.2s' }}>
-              Request Access
+            <button onClick={openModal} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'linear-gradient(135deg, #C9A84C, #E8C56A)', border: 'none', color: '#0A0C14', borderRadius: 8, padding: '9px 20px', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: '"JetBrains Mono", monospace', fontWeight: 700, transition: 'all 0.2s' }}>
+              Book Your Call
             </button>
           </div>
         </nav>
 
         <section id="qs-hero" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: '120px 48px 80px' }}>
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(0,180,208,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,180,208,0.025) 1px, transparent 1px)', backgroundSize: '80px 80px', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', top: '20%', left: '10%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,217,126,0.04) 0%, transparent 65%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', bottom: '20%', right: '8%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,180,208,0.06) 0%, transparent 65%)', filter: 'blur(50px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(201,168,76,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.015) 1px, transparent 1px)', backgroundSize: '80px 80px', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: '20%', left: '10%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 65%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: '20%', right: '8%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,180,208,0.05) 0%, transparent 65%)', filter: 'blur(50px)', pointerEvents: 'none' }} />
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 200, background: 'linear-gradient(to top, #060D16, transparent)', pointerEvents: 'none' }} />
 
-          <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: 880 }}>
+          <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: 900 }}>
             <div className="qs-a0" style={{ display: 'flex', justifyContent: 'center', marginBottom: 32 }}>
               <QMark size={76} />
             </div>
 
-            <div className="qs-a1" style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+            <div className="qs-a1" style={{ display: 'flex', justifyContent: 'center', marginBottom: 28 }}>
               <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00D97E', letterSpacing: '0.2em', background: 'rgba(0,217,126,0.06)', border: '1px solid rgba(0,217,126,0.18)', padding: '5px 16px', borderRadius: 100, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                 <span className="qs-dot" style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: '#00D97E', boxShadow: '0 0 6px #00D97E' }} />
-                QS1 ACTIVE · QUANTITATIVE MARKET SYSTEMS
+                QS1 ACTIVE · QUANTITATIVE GOLD FUTURES
               </span>
             </div>
 
-            <h1 className="qs-a2 qs-hero-h1" style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 60, fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.1, color: '#E8E0D0', marginBottom: 16 }}>
-              Twenty trades.<br />
-              Twenty winners.<br />
-              <em style={{ color: '#4A5568', fontStyle: 'italic' }}>He placed none of them.</em>
+            <h1 className="qs-a2 qs-hero-h1" style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 64, fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.08, color: '#E8E0D0', marginBottom: 24 }}>
+              Professional Gold futures<br />
+              trading, working for you<br />
+              <em style={{ color: '#C9A84C', fontStyle: 'italic' }}>around the clock.</em>
             </h1>
 
-            <p className="qs-a3" style={{ color: '#4A5568', fontSize: 16, lineHeight: 1.85, maxWidth: 560, margin: '0 auto 40px', fontWeight: 300 }}>
-              QS1 is a fully autonomous algorithmic program executing Gold futures on your behalf. No decisions. No monitoring. No manual input. Just systematic results.
+            <p className="qs-a3" style={{ color: '#7A8899', fontSize: 17, lineHeight: 1.85, maxWidth: 600, margin: '0 auto 40px', fontWeight: 300 }}>
+              Most people who want to participate in futures markets lack the time, tools, or consistency to do it profitably. QS1 is the answer. Our algorithm runs every market session so you do not have to lift a finger. You receive the payouts. We do the work.
             </p>
 
-            <div className="qs-a4" style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 56 }}>
-              <button className="qs-btn-green" onClick={openModal}>Request Consideration</button>
-              <button className="qs-btn-outline" onClick={() => go('qs-markets')}>View Live Markets</button>
+            <div className="qs-a4" style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 24 }}>
+              <button className="qs-btn-gold" onClick={openModal}>Book Your Discovery Call</button>
+              <button className="qs-btn-outline" onClick={() => go('qs-chronicle')}>See Real Results</button>
             </div>
 
-            <div className="qs-a4 qs-stat-bar" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, maxWidth: 780, margin: '0 auto', background: '#0F1E32', border: '1px solid #162036', borderRadius: 12, overflow: 'hidden' }}>
+            <div className="qs-a4" style={{ display: 'flex', justifyContent: 'center', marginBottom: 56 }}>
+              <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#C9A84C', background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.2)', padding: '6px 18px', borderRadius: 100, letterSpacing: '0.14em' }}>
+                45 DAY MONEY-BACK GUARANTEE
+              </span>
+            </div>
+
+            <div className="qs-a4 qs-stat-bar" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, maxWidth: 800, margin: '0 auto', background: '#0F1E32', border: '1px solid #162036', borderRadius: 12, overflow: 'hidden' }}>
               {[
                 { val: goldData && !goldData.error ? `$${fmt(goldData.price)}` : '---', label: 'GC Futures Live', color: pos ? '#00D97E' : '#FF3B5C' },
-                { val: '$77,490', label: '6-Month Gross Peak' },
-                { val: '70%', label: 'Client Payout Share' },
-                { val: '100%', label: 'Automated Execution' },
+                { val: '$77,490', label: '6-Month Gross Peak', color: '#C9A84C' },
+                { val: '70%', label: 'Your Payout Share' },
+                { val: '45 days', label: 'Money-Back Guarantee', color: '#C9A84C' },
               ].map((s, i) => (
                 <div key={i} style={{ padding: '16px 12px', textAlign: 'center', borderRight: i < 3 ? '1px solid #0F1E32' : 'none', background: '#08101C' }}>
                   <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 15, fontWeight: 700, color: s.color ?? '#E8E0D0', marginBottom: 5 }}>{s.val}</div>
@@ -881,12 +787,76 @@ export default function QuantaraPage() {
           </div>
 
           <div style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, zIndex: 2 }}>
-            <div style={{ width: 1, height: 40, background: 'linear-gradient(to bottom, transparent, rgba(0,217,126,0.4))' }} />
-            <div className="qs-dot" style={{ width: 4, height: 4, borderRadius: '50%', background: '#00D97E', boxShadow: '0 0 6px #00D97E' }} />
+            <div style={{ width: 1, height: 40, background: 'linear-gradient(to bottom, transparent, rgba(201,168,76,0.4))' }} />
+            <div className="qs-dot" style={{ width: 4, height: 4, borderRadius: '50%', background: '#C9A84C', boxShadow: '0 0 6px #C9A84C' }} />
           </div>
         </section>
 
-        <section id="qs-markets" style={{ padding: '80px 48px', background: '#08101C', borderTop: '1px solid #0F1E32', borderBottom: '1px solid #0F1E32' }}>
+        <CountdownTimer />
+
+        <section style={{ padding: '0', background: '#060D16', borderBottom: '1px solid #0F1E32' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
+            {[
+              { val: '2-3 DAYS', label: 'TO FUNDED' },
+              { val: '0 TRADES', label: 'YOU PLACE' },
+              { val: '80%+', label: 'AVG WIN RATE' },
+              { val: '45 DAYS', label: 'MONEY-BACK GUARANTEE', gold: true },
+            ].map((m, i) => (
+              <div key={i} style={{ padding: '32px 24px', textAlign: 'center', borderRight: i < 3 ? '1px solid #0F1E32' : 'none', background: m.gold ? 'rgba(201,168,76,0.04)' : 'transparent' }}>
+                <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 22, fontWeight: 700, color: m.gold ? '#C9A84C' : '#E8E0D0', marginBottom: 6 }}>{m.val}</div>
+                <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#4A5568', letterSpacing: '0.18em' }}>{m.label}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="qs-about" style={{ padding: '100px 48px', background: '#08101C' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', marginBottom: 72 }}>
+              <div>
+                <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#C9A84C', letterSpacing: '0.2em' }}>// ABOUT QS1</span>
+                <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 46, fontWeight: 400, color: '#E8E0D0', marginTop: 16, marginBottom: 20, letterSpacing: '-0.01em', lineHeight: 1.1 }}>
+                  A team that finally<br />
+                  <em style={{ color: '#C9A84C' }}>has your back.</em>
+                </h2>
+                <p style={{ color: '#7A8899', fontSize: 15, lineHeight: 1.95, marginBottom: 20, fontWeight: 300 }}>
+                  Most trading programs leave you on your own. You study charts for hours, second-guess your entries, and watch profits evaporate from emotion. We built QS1 because we believed there was a better way.
+                </p>
+                <p style={{ color: '#7A8899', fontSize: 15, lineHeight: 1.95, fontWeight: 300 }}>
+                  QS1 is a fully autonomous Gold futures algorithm that executes on your funded prop firm account while you live your life. Our team handles strategy, risk, execution, and ongoing optimization. Your only job is to collect your payout.
+                </p>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                {[
+                  { icon: '◷', title: 'Fully Autonomous', body: 'Zero screen time required. QS1 identifies setups, enters trades, manages risk, and exits positions completely on its own.' },
+                  { icon: '◈', title: 'Institutional Risk Controls', body: 'Multi-layer risk management built to protect your funded account and keep you within prop firm drawdown limits at all times.' },
+                  { icon: '⊞', title: 'You Keep 70%', body: 'Every dollar QS1 earns is split 70% to you, 30% to us. Our fee is taken only on profitable payouts. We win when you win.' },
+                  { icon: '◎', title: 'Built Around Your Success', body: 'From onboarding to your first payout, our team is available to guide, support, and ensure your experience is seamless.' },
+                ].map(f => (
+                  <div key={f.title} className="qs-feature-card">
+                    <div style={{ fontSize: 20, marginBottom: 14, color: '#C9A84C' }}>{f.icon}</div>
+                    <h3 style={{ fontSize: 14, fontWeight: 500, color: '#A0AEC0', marginBottom: 10, lineHeight: 1.4 }}>{f.title}</h3>
+                    <p style={{ color: '#2A3A4A', fontSize: 13, lineHeight: 1.85 }}>{f.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ background: 'rgba(201,168,76,0.04)', border: '1px solid rgba(201,168,76,0.12)', borderRadius: 16, padding: '40px', textAlign: 'center' }}>
+              <p style={{ color: '#7A8899', fontSize: 16, lineHeight: 2, maxWidth: 720, margin: '0 auto', fontWeight: 300 }}>
+                You do not need trading experience. You do not need to understand charts. You do not need to monitor anything.
+                All you need is a funded account and the willingness to let a proven system work on your behalf.
+              </p>
+              <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' }}>
+                {['Gold Futures', 'Prop Firm Accounts', 'Fully Automated', 'Capacity-Limited'].map(t => (
+                  <span key={t} style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#C9A84C', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6 }}>{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="qs-markets" style={{ padding: '80px 48px', background: '#060D16', borderTop: '1px solid #0F1E32', borderBottom: '1px solid #0F1E32' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28 }}>
               <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// LIVE MARKET FEED</span>
@@ -949,10 +919,10 @@ export default function QuantaraPage() {
             <div style={{ marginBottom: 52 }}>
               <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// LIVE ACCOUNT CHRONICLE · 08/29/2026</span>
               <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 42, fontWeight: 400, color: '#E8E0D0', marginTop: 16, marginBottom: 12, letterSpacing: '-0.01em' }}>
-                Twenty trades. Twenty winners.
+                Real results from a real account.
               </h2>
-              <p style={{ color: '#4A5568', fontSize: 14, lineHeight: 1.85, maxWidth: 540 }}>
-                A single trading day. Every entry, every exit, every result — logged in real time. Zero human intervention at any stage.
+              <p style={{ color: '#4A5568', fontSize: 14, lineHeight: 1.85, maxWidth: 560 }}>
+                Below is a single trading day, captured in full. Every entry, every exit, every result logged in real time. No manual decisions were made. QS1 executed all 20 trades autonomously.
               </p>
             </div>
             <div style={{ background: '#0A1628', border: '1px solid #162036', borderRadius: 14, padding: '24px 24px 20px', marginBottom: 20 }}>
@@ -973,153 +943,97 @@ export default function QuantaraPage() {
             <div className="qs-stat-bar" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
               <StatCard prefix="$" value={77490} label="Peak 6-Month Gross" />
               <StatCard prefix="$" value={54243} label="Max Client Net 6M" />
-              <StatCard value={70} suffix="%" label="Client Payout Share" />
+              <StatCard value={70} suffix="%" label="Your Payout Share" />
               <StatCard value={100} suffix="%" label="Automated Execution" />
             </div>
           </div>
         </section>
 
-        <section id="qs-systems" style={{ padding: '100px 48px', background: '#060D16' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ marginBottom: 56 }}>
-              <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// THE SYSTEM</span>
-              <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 42, fontWeight: 400, color: '#E8E0D0', marginTop: 16, marginBottom: 16, maxWidth: 540, letterSpacing: '-0.01em' }}>
-                Structured Quantitative Execution
-              </h2>
-              <p style={{ color: '#4A5568', fontSize: 15, lineHeight: 1.9, maxWidth: 580, fontWeight: 300 }}>
-                QS1 is institutional-grade algorithmic infrastructure focused on Gold futures (GC/MGC). Multi-year quantitative research, machine learning models, non-discretionary execution.
-              </p>
-            </div>
-            <div className="qs-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: '#0F1E32', border: '1px solid #162036', borderRadius: 16, overflow: 'hidden', marginBottom: 40 }}>
-              {[
-                { n: '01', title: 'Market Microstructure Evaluation', body: 'Session-aware analysis of order flow dynamics, liquidity zones, and structural inflection points in Gold futures markets.' },
-                { n: '02', title: 'Statistical Pattern Recognition', body: 'Neural architectures trained on tick-level historical data to identify environments with statistically observable characteristics.' },
-                { n: '03', title: 'Volatility Regime Filtering', body: 'Multi-regime detection that adapts execution parameters based on prevailing volatility and correlation states.' },
-                { n: '04', title: 'Dynamic Risk Architecture', body: 'Proprietary risk allocation with adaptive position sizing, drawdown controls, and funded account rule compliance.' },
-                { n: '05', title: 'Automated Execution Engine', body: 'Fully automated trade identification, entry, and management. Zero manual intervention required at any stage.' },
-                { n: '06', title: 'Platform Integration', body: 'Native connectivity to Tradovate, TradingView, and prop firm capital program infrastructure.' },
-              ].map(item => (
-                <div key={item.n} className="qs-step-card" style={{ padding: '32px 28px', background: '#060D16', borderRight: '1px solid #0F1E32', borderBottom: '1px solid #0F1E32', transition: 'background 0.2s' }}>
-                  <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#1E2A3A', letterSpacing: '0.1em', marginBottom: 14 }}>{item.n}</div>
-                  <h3 style={{ fontSize: 14, fontWeight: 500, color: '#A0AEC0', marginBottom: 10, lineHeight: 1.4 }}>{item.title}</h3>
-                  <p style={{ color: '#2A3A4A', fontSize: 13, lineHeight: 1.85 }}>{item.body}</p>
-                </div>
-              ))}
-            </div>
-            <div style={{ border: '1px solid rgba(255,59,92,0.07)', borderRadius: 10, padding: '16px 22px', background: 'rgba(255,59,92,0.02)' }}>
-              <p style={{ color: '#2A3A4A', fontSize: 12, lineHeight: 1.85 }}>
-                <span style={{ color: '#3A3A4A', fontWeight: 500 }}>Risk Disclosure:</span> All trading involves substantial risk of loss. Past performance does not indicate future results. QS1 does not predict markets or guarantee specific outcomes. Participation is restricted to qualified individuals only.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <PerformanceSection />
         <HowItWorks onOpen={openModal} />
-        <AccountDashboard />
-        <WhyQS1 />
+        <PerformanceSection />
 
-        <section id="qs-infrastructure" style={{ padding: '100px 48px', background: '#060D16' }}>
+        <section id="qs-testimonials" style={{ padding: '100px 48px', background: '#060D16' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ marginBottom: 56 }}>
-              <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// PARTICIPANT PERSPECTIVES</span>
+              <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#C9A84C', letterSpacing: '0.2em' }}>// CLIENT EXPERIENCES</span>
               <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 42, fontWeight: 400, color: '#E8E0D0', marginTop: 16, letterSpacing: '-0.01em' }}>
-                Participant Perspectives
+                What our clients are saying.
               </h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 48 }}>
               {[
-                { q: 'After years of losing money trading on my own, Quantara has been a real game changer. My account is up nicely over the last 8 months and I barely have to do anything. The consistent profitable months are exactly what they said.', name: 'Michael R. T.', role: 'Chicago, Illinois' },
-                { q: "I was pretty skeptical at first, but it's been solid. My account has been growing steadily and the team is very transparent. I check in every couple weeks and everything looks good. Definitely glad I gave them a shot.", name: 'Sarah P.', role: 'Austin, Texas' },
-                { q: "Finally a system that works without me staring at screens all day. The returns have been better than I expected and it's all handled professionally. No complaints so far. Nice to have something that actually delivers.", name: 'David C.', role: 'Scottsdale, Arizona' },
-                { q: "Quantara has made trading way less stressful for me. I just let them do their thing and the results have been consistent. The numbers they show are real. I'm really pleased with how it's going.", name: 'Rachel M.', role: 'Miami, Florida' },
+                { q: 'I had tried trading on my own for years and kept losing money. Joining Quantara was the best financial decision I have made. My account has grown consistently for eight months and the only thing I do is check my payouts. The team genuinely cares about my results.', name: 'Michael R. T.', role: 'Chicago, Illinois' },
+                { q: 'I was skeptical when I first heard about this. I did my research, spoke with the team on a call, and decided to try it. Three months in and the results have been exactly what they described. The team is transparent, responsive, and actually has my back. I am really glad I made that call.', name: 'Sarah P.', role: 'Austin, Texas' },
+                { q: 'The relief of not having to watch charts all day is worth it alone. But on top of that the returns have been consistent and better than I expected. I feel like I finally have a professional team working for me in the markets. That peace of mind is something I could not put a price on.', name: 'David C.', role: 'Scottsdale, Arizona' },
+                { q: 'Quantara changed how I think about passive income. My funded account generates payouts every cycle and I have not placed a single trade. Their team walked me through everything from start to finish and they are still just as available now as they were on day one. Highly recommend.', name: 'Rachel M.', role: 'Miami, Florida' },
               ].map((t, i) => (
-                <div key={i} style={{ border: '1px solid #162036', borderRadius: 14, padding: '32px', background: '#0A1628' }}>
-                  <div style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 36, lineHeight: 1, marginBottom: 18, color: 'rgba(0,180,208,0.2)' }}>&ldquo;</div>
-                  <p style={{ color: '#4A5568', fontSize: 14, lineHeight: 1.9, fontWeight: 300, marginBottom: 24, fontStyle: 'italic' }}>{t.q}</p>
+                <div key={i} className="qs-testimonial-card">
+                  <div style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 36, lineHeight: 1, marginBottom: 18, color: 'rgba(201,168,76,0.25)' }}>&ldquo;</div>
+                  <p style={{ color: '#7A8899', fontSize: 14, lineHeight: 1.9, fontWeight: 300, marginBottom: 24, fontStyle: 'italic' }}>{t.q}</p>
                   <div style={{ borderTop: '1px solid #162036', paddingTop: 16 }}>
-                    <div style={{ fontSize: 13, color: '#7A8899', fontWeight: 400 }}>{t.name}</div>
+                    <div style={{ fontSize: 13, color: '#A0AEC0', fontWeight: 400 }}>{t.name}</div>
                     <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#2A3A4A', marginTop: 3, letterSpacing: '0.06em' }}>{t.role}</div>
                   </div>
                 </div>
               ))}
             </div>
             <div style={{ textAlign: 'center' }}>
-              <button className="qs-btn-green" onClick={openModal}>Request Consideration</button>
+              <button className="qs-btn-gold" onClick={openModal}>Join Them Today</button>
             </div>
           </div>
         </section>
 
-        <section id="qs-considerations" style={{ padding: '100px 48px', background: '#08101C' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ marginBottom: 56 }}>
-              <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// PARAMETERS</span>
-              <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 42, fontWeight: 400, color: '#E8E0D0', marginTop: 16, letterSpacing: '-0.01em' }}>Program Considerations</h2>
+        <section style={{ padding: '100px 48px', background: '#08101C', borderTop: '1px solid #0F1E32' }}>
+          <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 72, height: 72, borderRadius: '50%', background: 'rgba(201,168,76,0.08)', border: '2px solid rgba(201,168,76,0.25)', marginBottom: 32 }}>
+              <span style={{ fontSize: 28 }}>◈</span>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, marginBottom: 40 }}>
-              <div>
-                <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 20 }}>Program Structure</div>
-                {[
-                  ['Structure', 'Private, invite-only initiative'],
-                  ['Focus', 'Gold futures (GC/MGC)'],
-                  ['AI Engine', 'QS1 v3.2 (Quantitative ML)'],
-                  ['Integration', 'Prop Firm + Tradovate'],
-                  ['Fee Model', '30% on successful payouts only'],
-                  ['Access', 'Qualified participants only'],
-                  ['Operation', 'Fully automated, zero manual input'],
-                ].map(([k, v]) => (
-                  <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: '1px solid rgba(15,30,50,0.8)', gap: 16 }}>
-                    <span style={{ color: '#2A3A4A', fontSize: 13 }}>{k}</span>
-                    <span style={{ color: '#4A5568', fontSize: 13, textAlign: 'right', fontFamily: k === 'Fee Model' ? '"JetBrains Mono", monospace' : 'inherit' }}>{v}</span>
+            <span style={{ display: 'block', fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#C9A84C', letterSpacing: '0.28em', textTransform: 'uppercase', marginBottom: 20 }}>// ZERO RISK TO GET STARTED</span>
+            <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 48, fontWeight: 400, color: '#E8E0D0', marginBottom: 24, letterSpacing: '-0.01em', lineHeight: 1.1 }}>
+              45-Day Money-Back<br />
+              <em style={{ color: '#C9A84C' }}>Guarantee.</em>
+            </h2>
+            <p style={{ color: '#7A8899', fontSize: 16, lineHeight: 1.95, maxWidth: 620, margin: '0 auto 48px', fontWeight: 300 }}>
+              We are so confident in QS1 that we back every enrollment with a full 45-day money-back guarantee. If you are not satisfied for any reason within the first 45 calendar days, you receive a complete refund. No questions asked. No conditions. No fine print.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 48, flexWrap: 'wrap', marginBottom: 48 }}>
+              {[
+                { label: 'Full Refund', detail: '100% of your enrollment fee returned' },
+                { label: 'No Questions Asked', detail: 'Zero conditions or explanations required' },
+                { label: '45 Calendar Days', detail: 'Full 45 days from your enrollment date' },
+              ].map(g => (
+                <div key={g.label} style={{ textAlign: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 8 }}>
+                    <span style={{ color: '#C9A84C', fontSize: 16 }}>✓</span>
+                    <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 11, color: '#C9A84C', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{g.label}</span>
                   </div>
-                ))}
-              </div>
-              <div>
-                <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#2A3A4A', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 20 }}>Account Parameters</div>
-                <div style={{ border: '1px solid rgba(0,180,208,0.1)', borderRadius: 12, overflow: 'hidden', marginBottom: 18, background: '#0A1628' }}>
-                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                    <thead>
-                      <tr style={{ borderBottom: '1px solid #162036' }}>
-                        {['Account Size', 'Max / Cycle', 'Client / QS1'].map(h => (
-                          <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontFamily: '"JetBrains Mono", monospace', color: '#2A3A4A', fontWeight: 400, fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[['$50,000','$1,250–$1,500','70% / 30%'],['$100,000','$2,500–$3,000','70% / 30%'],['$150,000','$3,000–$3,500','70% / 30%']].map(([sz,mp,sp]) => (
-                        <tr key={sz} style={{ borderBottom: '1px solid rgba(15,30,50,0.8)' }}>
-                          <td style={{ padding: '12px 16px', fontFamily: '"JetBrains Mono", monospace', color: '#A0AEC0' }}>{sz}</td>
-                          <td style={{ padding: '12px 16px', fontFamily: '"JetBrains Mono", monospace', color: '#4A5568' }}>{mp}</td>
-                          <td style={{ padding: '12px 16px', fontFamily: '"JetBrains Mono", monospace', color: '#2A3A4A' }}>{sp}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                  <p style={{ color: '#2A3A4A', fontSize: 12, lineHeight: 1.7 }}>{g.detail}</p>
                 </div>
-                <div style={{ padding: '16px 18px', border: '1px solid rgba(255,59,92,0.1)', borderRadius: 10, background: 'rgba(255,59,92,0.025)' }}>
-                  <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#3A2028', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 6 }}>Risk Disclosure</div>
-                  <p style={{ color: '#2A2028', fontSize: 12, lineHeight: 1.8 }}>All trading involves substantial risk of loss. Past performance does not indicate future results. No specific outcomes are guaranteed.</p>
-                </div>
-              </div>
+              ))}
             </div>
+            <button className="qs-btn-gold" onClick={openModal} style={{ padding: '18px 52px', fontSize: 12 }}>
+              Start Risk-Free Today
+            </button>
           </div>
         </section>
 
         <section id="qs-access" style={{ padding: '140px 48px', background: '#060D16', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 800, height: 800, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,217,126,0.04) 0%, transparent 65%)', pointerEvents: 'none' }} />
-          <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-            <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#00B4D0', letterSpacing: '0.2em' }}>// PRIVATE PROGRAM</span>
-            <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 48, fontWeight: 400, letterSpacing: '-0.02em', marginTop: 20, marginBottom: 20, color: '#E8E0D0', lineHeight: 1.1 }}>
-              Request Consideration
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 800, height: 800, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%)', pointerEvents: 'none' }} />
+          <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+            <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: '#C9A84C', letterSpacing: '0.2em' }}>// ONE DECISION. ONE CALL.</span>
+            <h2 style={{ fontFamily: '"Playfair Display", Georgia, serif', fontSize: 52, fontWeight: 400, letterSpacing: '-0.02em', marginTop: 20, marginBottom: 24, color: '#E8E0D0', lineHeight: 1.1 }}>
+              A better trading outcome<br />
+              starts with a single<br />
+              <em style={{ color: '#C9A84C' }}>45-minute call.</em>
             </h2>
-            <p style={{ color: '#4A5568', fontSize: 15, lineHeight: 1.9, marginBottom: 48, fontWeight: 300 }}>
-              Quantara System One operates as a private, invite-only initiative. QS1-managed accounts are capacity-limited and offered selectively. All information submitted is treated with strict confidentiality.
+            <p style={{ color: '#7A8899', fontSize: 16, lineHeight: 1.95, marginBottom: 48, fontWeight: 300, maxWidth: 540, margin: '0 auto 48px' }}>
+              Picture what your financial life looks like when a professional algorithm is working for you every market session. Consistent payouts. No screen time. A team that is genuinely invested in your success. All of that begins with one conversation.
             </p>
-            <button className="qs-btn-green" onClick={openModal} style={{ padding: '18px 56px', fontSize: 12, borderRadius: 12 }}>
-              Begin Your Application
+            <button className="qs-btn-gold" onClick={openModal} style={{ padding: '18px 56px', fontSize: 12, borderRadius: 12 }}>
+              Book Your Discovery Call
             </button>
             <p style={{ fontFamily: '"JetBrains Mono", monospace', color: '#1E2A3A', fontSize: 10, marginTop: 24, letterSpacing: '0.08em' }}>
-              Qualified applicants only · Private &amp; Confidential · No solicitation
+              45-day money-back guarantee · Qualified participants only · Fully confidential
             </p>
           </div>
         </section>
@@ -1136,7 +1050,7 @@ export default function QuantaraPage() {
                   </div>
                 </div>
                 <p style={{ color: '#1E2A3A', fontSize: 12, lineHeight: 1.9, maxWidth: 340 }}>
-                  Quantitative market systems powered by QS1. Structured algorithmic approaches to Gold futures for qualified participants seeking systematic, hands-free market exposure.
+                  Professional Gold futures trading managed entirely by QS1. Our team handles all execution so you can focus on receiving your payouts.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -1145,6 +1059,9 @@ export default function QuantaraPage() {
                   Qualified inquiries only.<br />All communications are confidential.<br />
                   <span style={{ color: '#2A3A4A' }}>quantarasystems.com</span>
                 </p>
+                <div style={{ marginTop: 16, display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(201,168,76,0.06)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: 100, padding: '6px 14px' }}>
+                  <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 9, color: '#C9A84C', letterSpacing: '0.14em' }}>45 DAY MONEY-BACK GUARANTEE</span>
+                </div>
               </div>
             </div>
             <div style={{ borderTop: '1px solid #0F1E32', paddingTop: 24 }}>
@@ -1160,8 +1077,8 @@ export default function QuantaraPage() {
         </footer>
 
         <div style={{ position: 'fixed', bottom: 28, right: 28, zIndex: 100 }}>
-          <button className="qs-btn-green" onClick={openModal} style={{ padding: '11px 22px', fontSize: 10, borderRadius: 9 }}>
-            Request Access
+          <button className="qs-btn-gold" onClick={openModal} style={{ padding: '11px 22px', fontSize: 10, borderRadius: 9, animation: 'qs-gold-glow 3s ease-in-out infinite' }}>
+            Book Your Call
           </button>
         </div>
       </div>
