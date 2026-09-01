@@ -8,6 +8,12 @@ interface GoldData {
   high: number; low: number; volume: number; state: string;
   points: GoldPoint[]; ts: number; error?: boolean;
 }
+interface MarketQuote {
+  key: string; label: string; price?: number; prev?: number;
+  change?: number; changePct?: number; high?: number; low?: number;
+  state?: string; points?: GoldPoint[]; error?: boolean;
+}
+interface MarketsData { data: MarketQuote[]; ts: number; }
 
 const RAW_TRADES = [
   { id:  1, eT:'07:32:14', xT:'07:44:52', sd:'LONG',  en:2318.5, ex:2320.3, pnl: 180 },
@@ -713,7 +719,7 @@ function PerformanceSection() {
         </div>
 
         <div style={{ marginTop:16, padding:'12px 18px', border:'1px solid rgba(255,59,92,0.07)', borderRadius:8, background:'rgba(255,59,92,0.02)' }}>
-          <p style={{ color:'#2A3A4A', fontSize:11, lineHeight:1.8 }}>Figures are illustrative projections only. All futures trading involves substantial risk of loss. Past results do not guarantee future performance.</p>
+          <p style={{ color:'#2A3A4A', fontSize:11, lineHeight:1.8 }}>All futures trading involves substantial risk of loss. Past results do not guarantee future performance.</p>
         </div>
       </div>
     </section>
@@ -771,9 +777,13 @@ export default function QuantaraPage() {
   const [scrolled, setScrolled] = useState(false);
   const [goldData, setGoldData] = useState<GoldData|null>(null);
   const [goldLoading, setGoldLoading] = useState(true);
+  const [marketsData, setMarketsData] = useState<MarketsData|null>(null);
 
   const fetchGold = useCallback(async()=>{
     try { const res=await fetch('/api/gold'); const data=await res.json(); setGoldData(data); } catch { /**/ } finally { setGoldLoading(false); }
+  },[]);
+  const fetchMarkets = useCallback(async()=>{
+    try { const res=await fetch('/api/markets'); const data=await res.json(); setMarketsData(data); } catch { /**/ }
   },[]);
 
   useEffect(()=>{
@@ -785,6 +795,7 @@ export default function QuantaraPage() {
   },[]);
 
   useEffect(()=>{ fetchGold(); const iv=setInterval(fetchGold,30000); return ()=>clearInterval(iv); },[fetchGold]);
+  useEffect(()=>{ fetchMarkets(); const iv=setInterval(fetchMarkets,30000); return ()=>clearInterval(iv); },[fetchMarkets]);
 
   const go=(id:string)=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
   const openModal=()=>window.Calendly?.initPopupWidget({url:CALENDLY_URL});
@@ -1018,6 +1029,41 @@ export default function QuantaraPage() {
               </div>
             ):(
               <div style={{ fontFamily:'"JetBrains Mono", monospace', color:'#2A3A4A', fontSize:13 }}>Market data temporarily unavailable. Retrying...</div>
+            )}
+            {marketsData&&marketsData.data.length>0&&(
+              <div style={{ marginTop:36, borderTop:'1px solid #0A1628', paddingTop:28 }}>
+                <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#1E2A3A', letterSpacing:'0.18em', marginBottom:16 }}>RELATED MARKETS</div>
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(180px, 1fr))', gap:12 }}>
+                  {marketsData.data.map(q=>{
+                    const up=(q.change??0)>=0;
+                    const fmtP=(n:number)=>n>=10000?n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+                    if(q.error||q.price===undefined) return(
+                      <div key={q.key} style={{ background:'#08101C', border:'1px solid #0F1E32', borderRadius:10, padding:'14px 16px' }}>
+                        <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#1E2A3A', letterSpacing:'0.14em', marginBottom:6 }}>{q.key}</div>
+                        <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:12, color:'#2A3A4A' }}>—</div>
+                      </div>
+                    );
+                    return(
+                      <div key={q.key} style={{ background:'#08101C', border:'1px solid #0F1E32', borderRadius:10, padding:'14px 16px', transition:'border-color 0.2s' }}>
+                        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:8 }}>
+                          <div>
+                            <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#C9A84C', letterSpacing:'0.14em', marginBottom:3 }}>{q.key}</div>
+                            <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:8, color:'#1E2A3A', letterSpacing:'0.1em' }}>{q.label}</div>
+                          </div>
+                          <span style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:8, color:q.state==='REGULAR'?'#00D97E':'#4A5568', letterSpacing:'0.1em' }}>{q.state==='REGULAR'?'OPEN':q.state==='PRE'?'PRE':'AH'}</span>
+                        </div>
+                        <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:18, fontWeight:700, color:up?'#00D97E':'#FF3B5C', letterSpacing:'-0.02em', marginBottom:4 }}>
+                          {q.key==='BTC'?'$':''}{fmtP(q.price!)}
+                        </div>
+                        <div style={{ display:'flex', gap:10, alignItems:'center' }}>
+                          <span style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:10, color:up?'#00D97E':'#FF3B5C' }}>{up?'+':''}{fmtP(q.change!)}</span>
+                          <span style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:10, color:up?'rgba(0,217,126,0.6)':'rgba(255,59,92,0.6)' }}>{up?'▲':'▼'}{Math.abs(q.changePct!).toFixed(2)}%</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             )}
           </div>
         </section>
