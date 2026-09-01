@@ -67,11 +67,14 @@ const LIVE_TRADES = [
 const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/45min';
 declare global { interface Window { Calendly?: { initPopupWidget: (o: { url: string }) => void } } }
 
-// Prop firm takes 10% of gross, remaining 90% is prop payout, QS1 takes 30% of payout, Client keeps 70% of payout (63% of gross)
+// Weekly performance per account tier. Prop firm takes 10% of gross; the remaining
+// 90% is the payout, of which QS1 takes 30% — the client keeps the rest.
+// Monthly = 4 weeks, 3-month = 12 weeks, 6-month = 24 weeks (conservative: a calendar
+// month averages ~4.3 weeks, so these under-count rather than over-promise).
 const ACCOUNTS = [
-  { size: '$50,000',  key: '50k',  fee: 3000,  monthlyGross: 5500,  propFirmCut: 550,  qs1Cut: 1485, clientNet: 3465,  threeMonthNet: 10395, sixMonthNet: 20790, feeROI: 693 },
-  { size: '$100,000', key: '100k', fee: 4000,  monthlyGross: 9500,  propFirmCut: 950,  qs1Cut: 2565, clientNet: 5985,  threeMonthNet: 17955, sixMonthNet: 35910, feeROI: 898 },
-  { size: '$150,000', key: '150k', fee: 6000,  monthlyGross: 13000, propFirmCut: 1300, qs1Cut: 3510, clientNet: 8190,  threeMonthNet: 24570, sixMonthNet: 49140, feeROI: 819 },
+  { size: '$50,000',  key: '50k',  fee: 3000, weeklyGross: 3000, weeklyNet: 1800, monthlyGross: 12000, propFirmCut: 1200, qs1Cut: 3600, clientNet: 7200,  threeMonthNet: 21600, sixMonthNet: 43200, feeROI: 1440 },
+  { size: '$100,000', key: '100k', fee: 4000, weeklyGross: 4000, weeklyNet: 2500, monthlyGross: 16000, propFirmCut: 1600, qs1Cut: 4400, clientNet: 10000, threeMonthNet: 30000, sixMonthNet: 60000, feeROI: 1500 },
+  { size: '$150,000', key: '150k', fee: 6000, weeklyGross: 6000, weeklyNet: 3700, monthlyGross: 24000, propFirmCut: 2400, qs1Cut: 6800, clientNet: 14800, threeMonthNet: 44400, sixMonthNet: 88800, feeROI: 1480 },
 ] as const;
 
 // ── Countdown Timer ─────────────────────────────────────────────────────────
@@ -341,7 +344,7 @@ function GrowthChart({ activeIndex }: { activeIndex: number }) {
 
   const VW=700, VH=260, padL=60, padR=24, padT=16, padB=40;
   const cw=VW-padL-padR, ch=VH-padT-padB;
-  const maxVal=48000, months=7;
+  const maxVal=96000, months=7;
   const datasets = ACCOUNTS.map(a => Array.from({length:7},(_,i)=>a.clientNet*i));
   const toX=(i:number)=>padL+(i/(months-1))*cw;
   const toY=(v:number)=>padT+ch-(v/maxVal)*ch;
@@ -360,7 +363,7 @@ function GrowthChart({ activeIndex }: { activeIndex: number }) {
     return { x:toX(full)+(toX(full+1)-toX(full))*part, y:toY(data[full])+(toY(data[full+1])-toY(data[full]))*part };
   };
 
-  const gridVals = [0,12000,24000,36000,48000];
+  const gridVals = [0,24000,48000,72000,96000];
   const mLabels = ['Start','Mo 1','Mo 2','Mo 3','Mo 4','Mo 5','Mo 6'];
 
   return (
@@ -506,7 +509,7 @@ function LifeChangeSection({ onOpen }:{ onOpen:()=>void }) {
   const [active, setActive] = useState(1);
   const acct = ACCOUNTS[active];
   const fmt = (n:number) => `$${n.toLocaleString()}`;
-  const weeklyNet = Math.round(acct.clientNet / 4);
+  const weeklyNet = acct.weeklyNet;
 
   const timeline = [
     { day:'Day 1',    title:'Discovery Call',              detail:'45-minute conversation. Zero commitment required.', color:'#C9A84C' },
@@ -544,9 +547,9 @@ function LifeChangeSection({ onOpen }:{ onOpen:()=>void }) {
           <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
             {/* Monthly */}
             <div style={{ padding:'28px 32px', background:'#0C1B36', border:'1px solid rgba(62,232,160,0.15)', borderRadius:14 }}>
-              <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#6B85A8', letterSpacing:'0.16em', marginBottom:10 }}>YOUR MONTHLY INCOME (70% OF PAYOUT)</div>
+              <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#6B85A8', letterSpacing:'0.16em', marginBottom:10 }}>YOUR MONTHLY INCOME (AFTER ALL FEES)</div>
               <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:52, color:'#3EE8A0', fontWeight:700, letterSpacing:'-0.02em', lineHeight:1 }}>{fmt(acct.clientNet)}</div>
-              <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#6E86A8', marginTop:8 }}>every month · hands-free</div>
+              <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#6E86A8', marginTop:8 }}>{fmt(acct.weeklyNet)} per week · hands-free</div>
             </div>
             {/* 3mo / 6mo */}
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
@@ -657,12 +660,12 @@ function PerformanceSection() {
           <div style={{ padding:'32px', background:'#0C1B36', border:'1px solid rgba(62,232,160,0.2)', borderRadius:14 }}>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#6B85A8', letterSpacing:'0.14em', textTransform:'uppercase', marginBottom:16 }}>Monthly Gross</div>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:26, color:'#3EE8A0', marginBottom:6 }}>{fmt(acct.monthlyGross)}</div>
-            <div style={{ fontSize:11, color:'#6E86A8' }}>estimated monthly trading profit</div>
+            <div style={{ fontSize:11, color:'#6E86A8' }}>{fmt(acct.weeklyGross)} per week gross</div>
           </div>
           <div style={{ padding:'32px', background:'#0C1B36', border:'1px solid #1B3055', borderRadius:14 }}>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#6B85A8', letterSpacing:'0.14em', textTransform:'uppercase', marginBottom:16 }}>Your Net / Month</div>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:26, color:'#F0F4FA', marginBottom:6 }}>{fmt(acct.clientNet)}</div>
-            <div style={{ fontSize:11, color:'#6E86A8' }}>70% of payout · paid every 3–5 trading days</div>
+            <div style={{ fontSize:11, color:'#6E86A8' }}>after all fees · paid every 3–5 trading days</div>
           </div>
           <div style={{ padding:'32px', background:'#0C1B36', border:'1px solid rgba(201,168,76,0.15)', borderRadius:14 }}>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#C9A84C', letterSpacing:'0.14em', textTransform:'uppercase', marginBottom:16 }}>6-Month Net</div>
@@ -676,9 +679,9 @@ function PerformanceSection() {
           <div style={{ padding:'32px', background:'#0C1B36', border:'1px solid #1B3055', borderRadius:14 }}>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#6B85A8', letterSpacing:'0.14em', textTransform:'uppercase', marginBottom:20 }}>Monthly Revenue Split</div>
             {[
-              { label:'Your Net (70% of payout)',  val:acct.clientNet,  color:'rgba(62,232,160,0.2)',  border:'rgba(62,232,160,0.2)',  text:'#3EE8A0', pct:70 },
-              { label:'QS1 Fee (30% of payout)', val:acct.qs1Cut,   color:'rgba(201,168,76,0.06)', border:'rgba(201,168,76,0.12)', text:'#C9A84C', pct:30 },
-              { label:'Prop Firm (10% of gross)', val:acct.propFirmCut, color:'rgba(255,255,255,0.02)',border:'#1B3055',            text:'#6B85A8', pct:10 },
+              { label:'Your Net (after all fees)', val:acct.clientNet,   color:'rgba(62,232,160,0.2)',  border:'rgba(62,232,160,0.2)',  text:'#3EE8A0' },
+              { label:'QS1 Fee',                   val:acct.qs1Cut,      color:'rgba(201,168,76,0.06)', border:'rgba(201,168,76,0.12)', text:'#C9A84C' },
+              { label:'Prop Firm (10% of gross)',  val:acct.propFirmCut, color:'rgba(255,255,255,0.02)',border:'#1B3055',              text:'#6B85A8' },
             ].map(r=>(
               <div key={r.label} style={{ marginBottom:14 }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:8 }}>
@@ -688,7 +691,7 @@ function PerformanceSection() {
                   <span style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:16, color:r.text }}>{fmt(r.val)}</span>
                 </div>
                 <div style={{ height:3, background:'#152845', borderRadius:2 }}>
-                  <div style={{ height:'100%', width:`${r.pct}%`, background:r.text, borderRadius:2, opacity:0.4 }}/>
+                  <div style={{ height:'100%', width:`${Math.round(r.val/acct.monthlyGross*100)}%`, background:r.text, borderRadius:2, opacity:0.4 }}/>
                 </div>
               </div>
             ))}
@@ -883,7 +886,7 @@ export default function QuantaraPage() {
             <div className="qs-a4 qs-stat-bar" style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:1, maxWidth:800, margin:'0 auto', background:'#152845', border:'1px solid #1B3055', borderRadius:12, overflow:'hidden' }}>
               {[
                 { val:goldData&&!goldData.error?`$${fmt(goldData.price)}`:'---', label:'GC Futures Live', color:goldData&&!goldData.error?(pos?'#3EE8A0':'#FF6B7A'):'#6E86A8' },
-                { val:'$49,140', label:'6-Month Net Peak', color:'#C9A84C' },
+                { val:'$88,800', label:'6-Month Net Peak', color:'#C9A84C' },
                 { val:'70%', label:'Your Payout Share' },
                 { val:'45 days', label:'Money-Back Guarantee', color:'#C9A84C' },
               ].map((s,i)=>(
@@ -1098,8 +1101,8 @@ export default function QuantaraPage() {
         <section style={{ padding:'72px 48px', background:'#08132A', borderTop:'1px solid #152845', borderBottom:'1px solid #152845' }}>
           <div style={{ maxWidth:1200, margin:'0 auto' }}>
             <div className="qs-stat-bar" style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:14 }}>
-              <StatCard prefix="$" value={49140} label="Peak 6-Month Net (Client)" />
-              <StatCard prefix="$" value={8190}  label="Max Monthly Net ($150K)" />
+              <StatCard prefix="$" value={88800} label="Peak 6-Month Net (Client)" />
+              <StatCard prefix="$" value={14800} label="Max Monthly Net ($150K)" />
               <StatCard value={70} suffix="%" label="Your Payout Share" />
               <StatCard value={100} suffix="%" label="Automated Execution" />
             </div>
