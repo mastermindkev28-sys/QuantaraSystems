@@ -502,12 +502,12 @@ function LifeChangeSection({ onOpen }:{ onOpen:()=>void }) {
   const weeklyNet = Math.round(acct.clientNet / 4);
 
   const timeline = [
-    { day:'Day 1',    title:'Discovery Call',   detail:'45-minute conversation. Zero commitment required.', color:'#C9A84C' },
-    { day:'Day 3',    title:'Enrolled',          detail:'Account configured. QS1 integration begins.', color:'#C9A84C' },
-    { day:'Day 8',    title:'First Trades',      detail:'QS1 deploys. First payout in 3–5 trading days.', color:'#00D97E' },
-    { day:'Day 30',   title:'Live Account',      detail:'Graduate to live Topstep account. No earning cap.', color:'#C9A84C' },
-    { day:'Month 3',  title:'Momentum',          detail:`${fmt(acct.threeMonthNet)} earned. System compounding.`, color:'#E8E0D0' },
-    { day:'Month 6',  title:'New Reality',       detail:`${fmt(acct.sixMonthNet)} total. Life looks different.`, color:'#C9A84C' },
+    { day:'Day 1',    title:'Discovery Call',              detail:'45-minute conversation. Zero commitment required.', color:'#C9A84C' },
+    { day:'Day 3–5',  title:'Funded Account Active',       detail:'Evaluation passed. Account configured. QS1 integration begins.', color:'#C9A84C' },
+    { day:'Day 7–10', title:'First Payout',                detail:'Payouts every 3–5 trading days. Fast processing.', color:'#00D97E' },
+    { day:'Day 30',   title:'Live Account',                detail:'Graduate to live Topstep account. No earning cap. Begin scaling.', color:'#C9A84C' },
+    { day:'Month 3',  title:'Momentum',                   detail:`${fmt(acct.threeMonthNet)} earned. System compounding.`, color:'#E8E0D0' },
+    { day:'Month 6',  title:'New Reality',                 detail:`${fmt(acct.sixMonthNet)} total. Life looks different.`, color:'#C9A84C' },
   ];
 
   return (
