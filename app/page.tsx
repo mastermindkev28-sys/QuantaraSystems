@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useId } from 'react';
 
 interface GoldPoint { t: number; p: number; }
 interface GoldData {
@@ -413,14 +413,38 @@ function GrowthChart({ activeIndex }: { activeIndex: number }) {
 }
 
 // ── QMark / SparkLine ────────────────────────────────────────────────────────
-function QMark({ size=50 }:{size?:number}) {
+// Quantara mark: a ring broken at two points, a tapered blade through it, an upright
+// stem, and a fan of lines converging into the blade. Drawn in the artwork's own
+// 1024-unit space and cropped by the viewBox.
+function QMark({ size=50, fan=true }:{size?:number; fan?:boolean}) {
+  const gid = `qg-${useId()}`;
+  const fanLines = Array.from({length:13},(_,i)=>{
+    const sx=297, sy=490+i*11.4, ex=477, ey=556;
+    const cx=sx+(ex-sx)*0.62, cy=sy+(ey-sy)*0.06;
+    return `M ${sx},${sy.toFixed(1)} Q ${cx.toFixed(1)},${cy.toFixed(1)} ${ex},${ey}`;
+  });
   return (
-    <svg width={size} height={size} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="qg" x1="20" y1="10" x2="180" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0%" stopColor="#F0F4FA"/><stop offset="45%" stopColor="#8FA6C4"/><stop offset="100%" stopColor="#6B85A8"/></linearGradient></defs>
-      <circle cx="100" cy="97" r="69" stroke="url(#qg)" strokeWidth="13"/>
-      <line x1="55" y1="156" x2="148" y2="68" stroke="url(#qg)" strokeWidth="13" strokeLinecap="round"/>
-      <line x1="140" y1="64" x2="194" y2="148" stroke="url(#qg)" strokeWidth="13" strokeLinecap="round"/>
-      <line x1="100" y1="30" x2="100" y2="118" stroke="url(#qg)" strokeWidth="5.5" strokeLinecap="round"/>
+    <svg width={size} height={size} viewBox="280 280 465 465" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id={gid} x1="320" y1="300" x2="700" y2="745" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stopColor="#F5F8FC"/>
+          <stop offset="34%"  stopColor="#B9C8DC"/>
+          <stop offset="68%"  stopColor="#8398B4"/>
+          <stop offset="100%" stopColor="#61789A"/>
+        </linearGradient>
+      </defs>
+      {/* ring — main sweep (lower-left, over the top, down to lower-right) */}
+      <path d="M 311,480 A 202,202 0 1 1 641,663" stroke={`url(#${gid})`} strokeWidth="26" fill="none"/>
+      {/* ring — detached lower segment */}
+      <path d="M 575,700 A 202,202 0 0 1 350,630" stroke={`url(#${gid})`} strokeWidth="26" fill="none"/>
+      {/* converging fan — omitted below ~48px, where the lines merge into a blur */}
+      {fan && size>=56 && fanLines.map((d,i)=>(
+        <path key={i} d={d} stroke={`url(#${gid})`} strokeWidth="4.2" fill="none" opacity={0.95}/>
+      ))}
+      {/* blade through the ring, tapered at both ends */}
+      <path d="M 454.4,539.8 L 587.3,625.5 L 708.5,727.9 L 697.5,742.1 L 566.7,652.5 L 449.6,546.2 Z" fill={`url(#${gid})`}/>
+      {/* upright stem */}
+      <path d="M 564,458 L 577,457 L 592,600 L 579,602 Z" fill={`url(#${gid})`}/>
     </svg>
   );
 }
@@ -863,7 +887,7 @@ export default function QuantaraPage() {
           <div style={{ position:'absolute', bottom:'18%', right:'6%', width:520, height:520, borderRadius:'50%', background:'radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 62%)', filter:'blur(55px)', pointerEvents:'none' }}/>
           <div style={{ position:'absolute', bottom:0, left:0, right:0, height:200, background:'linear-gradient(to top, #050C1C, transparent)', pointerEvents:'none' }}/>
           <div style={{ position:'relative', zIndex:2, textAlign:'center', maxWidth:900 }}>
-            <div className="qs-a0" style={{ display:'flex', justifyContent:'center', marginBottom:32 }}><QMark size={76}/></div>
+            <div className="qs-a0" style={{ display:'flex', justifyContent:'center', marginBottom:32 }}><QMark size={94}/></div>
             <div className="qs-a1" style={{ display:'flex', justifyContent:'center', marginBottom:28 }}>
               <span style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:10, color:'#3EE8A0', letterSpacing:'0.2em', background:'rgba(62,232,160,0.06)', border:'1px solid rgba(62,232,160,0.18)', padding:'5px 16px', borderRadius:100, display:'inline-flex', alignItems:'center', gap:8 }}>
                 <span className="qs-dot" style={{ display:'inline-block', width:5, height:5, borderRadius:'50%', background:'#3EE8A0', boxShadow:'0 0 6px #3EE8A0' }}/>
