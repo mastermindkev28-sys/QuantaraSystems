@@ -61,11 +61,11 @@ const LIVE_TRADES = [
 const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/45min';
 declare global { interface Window { Calendly?: { initPopupWidget: (o: { url: string }) => void } } }
 
-// Topstep XFA Consistency: Topstep 10%, QS1 30%, Client 60%
+// Topstep XFA Consistency: Topstep 10%, prop payout 90%, QS1 30% of payout, Client 70% of payout (63% of gross)
 const ACCOUNTS = [
-  { size: '$50,000',  key: '50k',  fee: 3000,  monthlyGross: 5500,  topstepCut: 550,  qs1Cut: 1650, clientNet: 3300,  threeMonthNet:  9900, sixMonthNet: 19800, feeROI: 660 },
-  { size: '$100,000', key: '100k', fee: 4000,  monthlyGross: 9500,  topstepCut: 950,  qs1Cut: 2850, clientNet: 5700,  threeMonthNet: 17100, sixMonthNet: 34200, feeROI: 855 },
-  { size: '$150,000', key: '150k', fee: 6000,  monthlyGross: 13000, topstepCut: 1300, qs1Cut: 3900, clientNet: 7800,  threeMonthNet: 23400, sixMonthNet: 46800, feeROI: 780 },
+  { size: '$50,000',  key: '50k',  fee: 3000,  monthlyGross: 5500,  topstepCut: 550,  qs1Cut: 1485, clientNet: 3465,  threeMonthNet: 10395, sixMonthNet: 20790, feeROI: 693 },
+  { size: '$100,000', key: '100k', fee: 4000,  monthlyGross: 9500,  topstepCut: 950,  qs1Cut: 2565, clientNet: 5985,  threeMonthNet: 17955, sixMonthNet: 35910, feeROI: 898 },
+  { size: '$150,000', key: '150k', fee: 6000,  monthlyGross: 13000, topstepCut: 1300, qs1Cut: 3510, clientNet: 8190,  threeMonthNet: 24570, sixMonthNet: 49140, feeROI: 819 },
 ] as const;
 
 // ── Countdown Timer ─────────────────────────────────────────────────────────
@@ -445,7 +445,7 @@ function TickerTape({ data }:{ data:GoldData|null }) {
     { label:'QS1 ENGINE', val:'ACTIVE', color:'#00D97E' },
     { label:'PROGRAM', val:'QS1 · GOLD FUTURES' },
     { label:'EXECUTION', val:'100% AUTOMATED' },
-    { label:'SPLIT', val:'CLIENT 60% · QS1 30% · TOPSTEP 10%' },
+    { label:'SPLIT', val:'CLIENT 70% of PAYOUT · QS1 30% · TOPSTEP 10%' },
     { label:'ACCOUNTS', val:'$50K · $100K · $150K' },
     { label:'GUARANTEE', val:'45 DAY MONEY-BACK', color:'#C9A84C' },
   ];
@@ -502,12 +502,12 @@ function LifeChangeSection({ onOpen }:{ onOpen:()=>void }) {
   const weeklyNet = Math.round(acct.clientNet / 4);
 
   const timeline = [
-    { day:'Day 1',    title:'Discovery Call',  detail:'45-minute conversation. Zero commitment required.', color:'#C9A84C' },
-    { day:'Day 3',    title:'Enrolled',         detail:'Account configured. QS1 integration begins.', color:'#C9A84C' },
-    { day:'Day 8',    title:'First Trades',     detail:'QS1 deploys on your funded account.', color:'#00D97E' },
-    { day:'Month 1',  title:'First Payout',     detail:`${fmt(Math.round(acct.clientNet/2))} lands in your account.`, color:'#00D97E' },
-    { day:'Month 3',  title:'Momentum',         detail:`${fmt(acct.threeMonthNet)} earned. System running strong.`, color:'#E8E0D0' },
-    { day:'Month 6',  title:'New Reality',      detail:`${fmt(acct.sixMonthNet)} total. Life looks different.`, color:'#C9A84C' },
+    { day:'Day 1',    title:'Discovery Call',   detail:'45-minute conversation. Zero commitment required.', color:'#C9A84C' },
+    { day:'Day 3',    title:'Enrolled',          detail:'Account configured. QS1 integration begins.', color:'#C9A84C' },
+    { day:'Day 8',    title:'First Trades',      detail:'QS1 deploys. First payout in 3–5 trading days.', color:'#00D97E' },
+    { day:'Day 30',   title:'Live Account',      detail:'Graduate to live Topstep account. No earning cap.', color:'#C9A84C' },
+    { day:'Month 3',  title:'Momentum',          detail:`${fmt(acct.threeMonthNet)} earned. System compounding.`, color:'#E8E0D0' },
+    { day:'Month 6',  title:'New Reality',       detail:`${fmt(acct.sixMonthNet)} total. Life looks different.`, color:'#C9A84C' },
   ];
 
   return (
@@ -537,7 +537,7 @@ function LifeChangeSection({ onOpen }:{ onOpen:()=>void }) {
           <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
             {/* Monthly */}
             <div style={{ padding:'28px 32px', background:'#0A1628', border:'1px solid rgba(0,217,126,0.15)', borderRadius:14 }}>
-              <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#4A5568', letterSpacing:'0.16em', marginBottom:10 }}>YOUR MONTHLY INCOME (60%)</div>
+              <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#4A5568', letterSpacing:'0.16em', marginBottom:10 }}>YOUR MONTHLY INCOME (70% OF PAYOUT)</div>
               <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:52, color:'#00D97E', fontWeight:700, letterSpacing:'-0.02em', lineHeight:1 }}>{fmt(acct.clientNet)}</div>
               <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#2A3A4A', marginTop:8 }}>every month · hands-free</div>
             </div>
@@ -636,7 +636,7 @@ function PerformanceSection() {
           <span style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:10, color:'#C9A84C', letterSpacing:'0.2em' }}>// PERFORMANCE PROJECTIONS</span>
           <h2 style={{ fontFamily:'"Playfair Display", Georgia, serif', fontSize:42, fontWeight:400, color:'#E8E0D0', marginTop:16, marginBottom:12, letterSpacing:'-0.01em' }}>What Your Account Can Generate</h2>
           <p style={{ color:'#4A5568', fontSize:14, lineHeight:1.85, maxWidth:560 }}>
-            Based on Topstep XFA Consistency payout policy. Topstep retains 10%. We retain 30%. You keep 60% of every dollar QS1 earns. Select your account size.
+            Based on Topstep XFA Consistency. Topstep retains 10% of gross profits. You receive 90% as your prop firm payout. We retain 30% of your payout — you keep 70%. Payouts every 3–5 trading days. After 30 days you graduate to a live account with no earning cap.
           </p>
         </div>
 
@@ -655,7 +655,7 @@ function PerformanceSection() {
           <div style={{ padding:'32px', background:'#0A1628', border:'1px solid #162036', borderRadius:14 }}>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#4A5568', letterSpacing:'0.14em', textTransform:'uppercase', marginBottom:16 }}>Your Net / Month</div>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:26, color:'#E8E0D0', marginBottom:6 }}>{fmt(acct.clientNet)}</div>
-            <div style={{ fontSize:11, color:'#2A3A4A' }}>60% after all fees</div>
+            <div style={{ fontSize:11, color:'#2A3A4A' }}>70% of payout · paid every 3–5 trading days</div>
           </div>
           <div style={{ padding:'32px', background:'#0A1628', border:'1px solid rgba(201,168,76,0.15)', borderRadius:14 }}>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#C9A84C', letterSpacing:'0.14em', textTransform:'uppercase', marginBottom:16 }}>6-Month Net</div>
@@ -669,9 +669,9 @@ function PerformanceSection() {
           <div style={{ padding:'32px', background:'#0A1628', border:'1px solid #162036', borderRadius:14 }}>
             <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:9, color:'#4A5568', letterSpacing:'0.14em', textTransform:'uppercase', marginBottom:20 }}>Monthly Revenue Split</div>
             {[
-              { label:'Your Net (60%)',   val:acct.clientNet,     color:'rgba(0,217,126,0.2)',  border:'rgba(0,217,126,0.2)',  text:'#00D97E', pct:60 },
-              { label:'QS1 Fee (30%)',    val:acct.qs1Cut,        color:'rgba(201,168,76,0.06)', border:'rgba(201,168,76,0.12)', text:'#C9A84C', pct:30 },
-              { label:'Topstep (10%)',    val:acct.topstepCut,    color:'rgba(255,255,255,0.02)',border:'#162036',              text:'#4A5568', pct:10 },
+              { label:'Your Net (70% of payout)',  val:acct.clientNet,  color:'rgba(0,217,126,0.2)',  border:'rgba(0,217,126,0.2)',  text:'#00D97E', pct:70 },
+              { label:'QS1 Fee (30% of payout)', val:acct.qs1Cut,   color:'rgba(201,168,76,0.06)', border:'rgba(201,168,76,0.12)', text:'#C9A84C', pct:30 },
+              { label:'Topstep (10% of gross)',   val:acct.topstepCut, color:'rgba(255,255,255,0.02)',border:'#162036',            text:'#4A5568', pct:10 },
             ].map(r=>(
               <div key={r.label} style={{ marginBottom:14 }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:8 }}>
@@ -728,7 +728,7 @@ function HowItWorks({ onOpen }:{ onOpen:()=>void }) {
     { n:'03', title:'Create Your Prop Firm Account', body:'Register with Topstep for your XFA Consistency funded account. Simple, straightforward setup with our team guiding you.' },
     { n:'04', title:'Receive Tradovate Credentials', body:'You receive trading credentials through the prop firm. These are execution-only credentials, separate from your account dashboard login.' },
     { n:'05', title:'Secure Integration', body:'Provide credentials to our team via encrypted intake. Your infrastructure is configured and securely connected within 24 hours.' },
-    { n:'06', title:'QS1 Goes to Work', body:'QS1 v3.2 deploys directly onto your account. Risk systems activate. From this point forward, every trade is fully autonomous. You sit back and receive payouts.' },
+    { n:'06', title:'QS1 Goes to Work', body:'QS1 v3.2 deploys on your account. Every trade is fully autonomous. Payouts every 3–5 trading days. After 30 days you graduate to a live account with no earning cap.' },
   ];
   return (
     <section id="qs-process" style={{ padding:'100px 48px', background:'#08101C' }}>
@@ -870,8 +870,8 @@ export default function QuantaraPage() {
             <div className="qs-a4 qs-stat-bar" style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:1, maxWidth:800, margin:'0 auto', background:'#0F1E32', border:'1px solid #162036', borderRadius:12, overflow:'hidden' }}>
               {[
                 { val:goldData&&!goldData.error?`$${fmt(goldData.price)}`:'---', label:'GC Futures Live', color:pos?'#00D97E':'#FF3B5C' },
-                { val:'$46,800', label:'6-Month Net Peak', color:'#C9A84C' },
-                { val:'60%', label:'Your Payout Share' },
+                { val:'$49,140', label:'6-Month Net Peak', color:'#C9A84C' },
+                { val:'70%', label:'Your Payout Share' },
                 { val:'45 days', label:'Money-Back Guarantee', color:'#C9A84C' },
               ].map((s,i)=>(
                 <div key={i} style={{ padding:'16px 12px', textAlign:'center', borderRight:i<3?'1px solid #0F1E32':'none', background:'#08101C' }}>
@@ -893,7 +893,7 @@ export default function QuantaraPage() {
         <section style={{ padding:'0', background:'#060D16', borderBottom:'1px solid #0F1E32' }}>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:0 }}>
             {[
-              { val:'2-3 DAYS', label:'TO FUNDED' },
+              { val:'3-5 DAYS', label:'BETWEEN PAYOUTS' },
               { val:'0 TRADES', label:'YOU PLACE' },
               { val:'80%+', label:'AVG WIN RATE' },
               { val:'45 DAYS', label:'MONEY-BACK GUARANTEE', gold:true },
@@ -922,7 +922,7 @@ export default function QuantaraPage() {
                 {[
                   { icon:'◷', title:'Fully Autonomous', body:'Zero screen time required. QS1 identifies setups, enters trades, manages risk, and exits positions completely on its own.' },
                   { icon:'◈', title:'Institutional Risk Controls', body:'Multi-layer risk management built to protect your funded account and keep you within Topstep drawdown limits at all times.' },
-                  { icon:'⊞', title:'You Keep 60%', body:'Topstep keeps 10% as the prop firm. We take 30% as your trading team. You pocket 60% of every dollar QS1 earns — delivered directly to you.' },
+                  { icon:'⊞', title:'You Keep 70% of Your Payout', body:'Topstep retains 10% of gross as the prop firm. Your remaining 90% is your payout. We take 30% of that — you keep 70%. Paid out every 3–5 trading days, with no cap after day 30.' },
                   { icon:'◎', title:'Built Around Your Success', body:'From onboarding to your first payout, our team is available to guide, support, and ensure your experience is seamless.' },
                 ].map(f=>(
                   <div key={f.title} className="qs-feature-card">
@@ -1017,9 +1017,9 @@ export default function QuantaraPage() {
         <section style={{ padding:'72px 48px', background:'#08101C', borderTop:'1px solid #0F1E32', borderBottom:'1px solid #0F1E32' }}>
           <div style={{ maxWidth:1200, margin:'0 auto' }}>
             <div className="qs-stat-bar" style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:14 }}>
-              <StatCard prefix="$" value={46800} label="Peak 6-Month Net (Client)" />
-              <StatCard prefix="$" value={7800}  label="Max Monthly Net ($150K)" />
-              <StatCard value={60} suffix="%" label="Your Payout Share" />
+              <StatCard prefix="$" value={49140} label="Peak 6-Month Net (Client)" />
+              <StatCard prefix="$" value={8190}  label="Max Monthly Net ($150K)" />
+              <StatCard value={70} suffix="%" label="Your Payout Share" />
               <StatCard value={100} suffix="%" label="Automated Execution" />
             </div>
           </div>
