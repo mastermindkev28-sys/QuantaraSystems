@@ -944,6 +944,39 @@ export default function QuantaraPage() {
           </div>
         </section>
 
+        {/* Consistency Manifesto */}
+        <section style={{ padding:'80px 48px', background:'#030912', borderTop:'1px solid #0A1628' }}>
+          <div style={{ maxWidth:900, margin:'0 auto' }}>
+            <div style={{ display:'flex', gap:32, alignItems:'flex-start' }}>
+              <div style={{ width:3, minWidth:3, alignSelf:'stretch', background:'linear-gradient(180deg, #C9A84C 0%, rgba(201,168,76,0.15) 100%)', borderRadius:2, flexShrink:0 }}/>
+              <div>
+                <span style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:10, color:'#C9A84C', letterSpacing:'0.2em', display:'block', marginBottom:20 }}>// OUR PHILOSOPHY</span>
+                <h2 style={{ fontFamily:'"Playfair Display", Georgia, serif', fontSize:'clamp(28px,4vw,42px)', fontWeight:400, color:'#E8E0D0', lineHeight:1.2, marginBottom:24, letterSpacing:'-0.01em' }}>
+                  We're not here to promise you<br/><em style={{ color:'#C9A84C' }}>overnight riches.</em>
+                </h2>
+                <p style={{ color:'#7A8899', fontSize:16, lineHeight:1.9, marginBottom:16, fontWeight:300, maxWidth:720 }}>
+                  Every other program will show you one massive win and tell you that's the standard. We won't. Because that's not how real, lasting wealth is built — and we'd rather be honest with you than sell you a fantasy.
+                </p>
+                <p style={{ color:'#7A8899', fontSize:16, lineHeight:1.9, fontWeight:300, maxWidth:720 }}>
+                  Consistency is the name of the game. A steady, repeatable edge — executed day after day — compounds far beyond a handful of lucky trades. That's what QS1 is engineered for. Not a spike. A system.
+                </p>
+                <div style={{ marginTop:36, display:'flex', gap:12, flexWrap:'wrap' }}>
+                  {[
+                    { label:'Repeatable Edge', sub:'Same process, every session' },
+                    { label:'Controlled Risk', sub:'Drawdown protection built in' },
+                    { label:'Compounding Returns', sub:'Consistency beats volatility' },
+                  ].map(pill=>(
+                    <div key={pill.label} style={{ background:'rgba(201,168,76,0.06)', border:'1px solid rgba(201,168,76,0.14)', borderRadius:10, padding:'12px 18px' }}>
+                      <div style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:10, color:'#C9A84C', letterSpacing:'0.12em', marginBottom:4 }}>{pill.label}</div>
+                      <div style={{ fontSize:12, color:'#2A3A4A', fontWeight:300 }}>{pill.sub}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Live Market Feed */}
         <section id="qs-markets" style={{ padding:'80px 48px', background:'#060D16', borderTop:'1px solid #0F1E32', borderBottom:'1px solid #0F1E32' }}>
           <div style={{ maxWidth:1200, margin:'0 auto' }}>
