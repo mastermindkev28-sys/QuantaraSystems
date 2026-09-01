@@ -61,11 +61,11 @@ const LIVE_TRADES = [
 const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/45min';
 declare global { interface Window { Calendly?: { initPopupWidget: (o: { url: string }) => void } } }
 
-// Topstep XFA Consistency: Topstep 10%, prop payout 90%, QS1 30% of payout, Client 70% of payout (63% of gross)
+// Prop firm takes 10% of gross, remaining 90% is prop payout, QS1 takes 30% of payout, Client keeps 70% of payout (63% of gross)
 const ACCOUNTS = [
-  { size: '$50,000',  key: '50k',  fee: 3000,  monthlyGross: 5500,  topstepCut: 550,  qs1Cut: 1485, clientNet: 3465,  threeMonthNet: 10395, sixMonthNet: 20790, feeROI: 693 },
-  { size: '$100,000', key: '100k', fee: 4000,  monthlyGross: 9500,  topstepCut: 950,  qs1Cut: 2565, clientNet: 5985,  threeMonthNet: 17955, sixMonthNet: 35910, feeROI: 898 },
-  { size: '$150,000', key: '150k', fee: 6000,  monthlyGross: 13000, topstepCut: 1300, qs1Cut: 3510, clientNet: 8190,  threeMonthNet: 24570, sixMonthNet: 49140, feeROI: 819 },
+  { size: '$50,000',  key: '50k',  fee: 3000,  monthlyGross: 5500,  propFirmCut: 550,  qs1Cut: 1485, clientNet: 3465,  threeMonthNet: 10395, sixMonthNet: 20790, feeROI: 693 },
+  { size: '$100,000', key: '100k', fee: 4000,  monthlyGross: 9500,  propFirmCut: 950,  qs1Cut: 2565, clientNet: 5985,  threeMonthNet: 17955, sixMonthNet: 35910, feeROI: 898 },
+  { size: '$150,000', key: '150k', fee: 6000,  monthlyGross: 13000, propFirmCut: 1300, qs1Cut: 3510, clientNet: 8190,  threeMonthNet: 24570, sixMonthNet: 49140, feeROI: 819 },
 ] as const;
 
 // ── Countdown Timer ─────────────────────────────────────────────────────────
@@ -445,7 +445,7 @@ function TickerTape({ data }:{ data:GoldData|null }) {
     { label:'QS1 ENGINE', val:'ACTIVE', color:'#00D97E' },
     { label:'PROGRAM', val:'QS1 · GOLD FUTURES' },
     { label:'EXECUTION', val:'100% AUTOMATED' },
-    { label:'SPLIT', val:'CLIENT 70% of PAYOUT · QS1 30% · TOPSTEP 10%' },
+    { label:'SPLIT', val:'CLIENT 70% of PAYOUT · QS1 30% · PROP FIRM 10%' },
     { label:'ACCOUNTS', val:'$50K · $100K · $150K' },
     { label:'GUARANTEE', val:'45 DAY MONEY-BACK', color:'#C9A84C' },
   ];
@@ -505,7 +505,7 @@ function LifeChangeSection({ onOpen }:{ onOpen:()=>void }) {
     { day:'Day 1',    title:'Discovery Call',              detail:'45-minute conversation. Zero commitment required.', color:'#C9A84C' },
     { day:'Day 3–5',  title:'Funded Account Active',       detail:'Evaluation passed. Account configured. QS1 integration begins.', color:'#C9A84C' },
     { day:'Day 7–10', title:'First Payout',                detail:'Payouts every 3–5 trading days. Fast processing.', color:'#00D97E' },
-    { day:'Day 30',   title:'Live Account',                detail:'Graduate to live Topstep account. No earning cap. Begin scaling.', color:'#C9A84C' },
+    { day:'Day 30',   title:'Live Account',                detail:'Graduate to live funded account. No earning cap. Begin scaling.', color:'#C9A84C' },
     { day:'Month 3',  title:'Momentum',                   detail:`${fmt(acct.threeMonthNet)} earned. System compounding.`, color:'#E8E0D0' },
     { day:'Month 6',  title:'New Reality',                 detail:`${fmt(acct.sixMonthNet)} total. Life looks different.`, color:'#C9A84C' },
   ];
@@ -636,7 +636,7 @@ function PerformanceSection() {
           <span style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:10, color:'#C9A84C', letterSpacing:'0.2em' }}>// PERFORMANCE PROJECTIONS</span>
           <h2 style={{ fontFamily:'"Playfair Display", Georgia, serif', fontSize:42, fontWeight:400, color:'#E8E0D0', marginTop:16, marginBottom:12, letterSpacing:'-0.01em' }}>What Your Account Can Generate</h2>
           <p style={{ color:'#4A5568', fontSize:14, lineHeight:1.85, maxWidth:560 }}>
-            Based on Topstep XFA Consistency. Topstep retains 10% of gross profits. You receive 90% as your prop firm payout. We retain 30% of your payout — you keep 70%. Payouts every 3–5 trading days. After 30 days you graduate to a live account with no earning cap.
+            The prop firm retains 10% of gross profits. You receive 90% as your prop firm payout. We retain 30% of your payout — you keep 70%. Payouts every 3–5 trading days. After 30 days you graduate to a live account with no earning cap.
           </p>
         </div>
 
@@ -671,7 +671,7 @@ function PerformanceSection() {
             {[
               { label:'Your Net (70% of payout)',  val:acct.clientNet,  color:'rgba(0,217,126,0.2)',  border:'rgba(0,217,126,0.2)',  text:'#00D97E', pct:70 },
               { label:'QS1 Fee (30% of payout)', val:acct.qs1Cut,   color:'rgba(201,168,76,0.06)', border:'rgba(201,168,76,0.12)', text:'#C9A84C', pct:30 },
-              { label:'Topstep (10% of gross)',   val:acct.topstepCut, color:'rgba(255,255,255,0.02)',border:'#162036',            text:'#4A5568', pct:10 },
+              { label:'Prop Firm (10% of gross)', val:acct.propFirmCut, color:'rgba(255,255,255,0.02)',border:'#162036',            text:'#4A5568', pct:10 },
             ].map(r=>(
               <div key={r.label} style={{ marginBottom:14 }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:8 }}>
@@ -725,7 +725,7 @@ function HowItWorks({ onOpen }:{ onOpen:()=>void }) {
   const steps=[
     { n:'01', title:'Book Your Discovery Call', body:'Start with a 45-minute conversation with our team. We will walk you through the program, answer every question, and make sure QS1 is the right fit for your goals.' },
     { n:'02', title:'Select Your Account Size', body:'Choose your funded account tier ($50K, $100K, or $150K) and complete your enrollment. Our team guides you through every step.' },
-    { n:'03', title:'Create Your Prop Firm Account', body:'Register with Topstep for your XFA Consistency funded account. Simple, straightforward setup with our team guiding you.' },
+    { n:'03', title:'Create Your Prop Firm Account', body:'We guide you through setting up your funded prop firm account. Simple, straightforward process with our team supporting you every step.' },
     { n:'04', title:'Receive Tradovate Credentials', body:'You receive trading credentials through the prop firm. These are execution-only credentials, separate from your account dashboard login.' },
     { n:'05', title:'Secure Integration', body:'Provide credentials to our team via encrypted intake. Your infrastructure is configured and securely connected within 24 hours.' },
     { n:'06', title:'QS1 Goes to Work', body:'QS1 v3.2 deploys on your account. Every trade is fully autonomous. Payouts every 3–5 trading days. After 30 days you graduate to a live account with no earning cap.' },
@@ -751,7 +751,7 @@ function HowItWorks({ onOpen }:{ onOpen:()=>void }) {
           <span style={{ fontFamily:'"JetBrains Mono", monospace', fontSize:10, color:'#00B4D0', letterSpacing:'0.2em' }}>// PAYOUT PROCEDURE</span>
           <h3 style={{ fontFamily:'"Playfair Display", Georgia, serif', fontSize:24, color:'#E8E0D0', marginTop:12, marginBottom:24 }}>Collecting Your Earnings</h3>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:14 }}>
-            {[{ n:'1', title:'Log In', body:'Access your Topstep dashboard using your registered credentials.' },{ n:'2', title:'Complete KYC', body:'Complete identity verification required by Topstep.' },{ n:'3', title:'Add Banking', body:'Input your banking details for direct deposit payout processing.' },{ n:'4', title:'Request Payout', body:'Submit directly through the Topstep dashboard. Funds arrive fast.' }].map(s=>(
+            {[{ n:'1', title:'Log In', body:'Access your prop firm dashboard using your registered credentials.' },{ n:'2', title:'Complete KYC', body:'Complete identity verification required by the prop firm.' },{ n:'3', title:'Add Banking', body:'Input your banking details for direct deposit payout processing.' },{ n:'4', title:'Request Payout', body:'Submit directly through the prop firm dashboard. Funds arrive fast.' }].map(s=>(
               <div key={s.n} style={{ padding:'18px', background:'#060D16', borderRadius:10, border:'1px solid #162036' }}>
                 <div style={{ fontFamily:'"JetBrains Mono", monospace', width:26, height:26, borderRadius:'50%', background:'rgba(201,168,76,0.08)', border:'1px solid rgba(201,168,76,0.2)', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:14, fontSize:11, color:'#C9A84C' }}>{s.n}</div>
                 <div style={{ fontSize:13, color:'#7A8899', marginBottom:8 }}>{s.title}</div>
@@ -921,8 +921,8 @@ export default function QuantaraPage() {
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
                 {[
                   { icon:'◷', title:'Fully Autonomous', body:'Zero screen time required. QS1 identifies setups, enters trades, manages risk, and exits positions completely on its own.' },
-                  { icon:'◈', title:'Institutional Risk Controls', body:'Multi-layer risk management built to protect your funded account and keep you within Topstep drawdown limits at all times.' },
-                  { icon:'⊞', title:'You Keep 70% of Your Payout', body:'Topstep retains 10% of gross as the prop firm. Your remaining 90% is your payout. We take 30% of that — you keep 70%. Paid out every 3–5 trading days, with no cap after day 30.' },
+                  { icon:'◈', title:'Institutional Risk Controls', body:'Multi-layer risk management built to protect your funded account and keep you within prop firm drawdown limits at all times.' },
+                  { icon:'⊞', title:'You Keep 70% of Your Payout', body:'The prop firm retains 10% of gross profits. Your remaining 90% is your payout. We take 30% of that — you keep 70%. Paid out every 3–5 trading days, with no cap after day 30.' },
                   { icon:'◎', title:'Built Around Your Success', body:'From onboarding to your first payout, our team is available to guide, support, and ensure your experience is seamless.' },
                 ].map(f=>(
                   <div key={f.title} className="qs-feature-card">
