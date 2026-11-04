@@ -1,22 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
+import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
-import { THEME, THEMES } from "./content";
 
-const sans = Geist({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
-const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
-// High-contrast serif for headlines: the editorial voice of the brand.
-const serif = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-  display: "swap",
-});
+// One sober typeface family: Inter Tight for headlines, Inter for reading text and figures.
+const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const display = Inter_Tight({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--font-display", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.quantarasystems.io"),
-  title: "Quantara Systems — Autonomous execution for gold futures",
+  title: "Quantara Systems — Systematic execution for gold futures",
   description:
     "QS1 is an autonomous execution engine for gold futures. It reads the market, classifies conditions, checks risk and places every order by rule, every session.",
   openGraph: {
@@ -29,20 +21,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#04070E",
+  themeColor: "#0B1E3A",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme={THEME} className={`${sans.variable} ${mono.variable} ${serif.variable}`} suppressHydrationWarning>
-      <head>
-        {/* Preview another theme with ?theme=<name>. Runs before paint, so there's no flash. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{var t=new URLSearchParams(location.search).get("theme");if(${JSON.stringify(THEMES)}.indexOf(t)>-1)document.documentElement.dataset.theme=t}catch(e){}`,
-          }}
-        />
-      </head>
+    <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body>{children}</body>
     </html>
   );

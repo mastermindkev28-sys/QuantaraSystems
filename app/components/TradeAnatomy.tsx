@@ -4,15 +4,29 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { ANATOMY } from '../content';
 import { Replay } from './Icons';
 
-// A hand-drawn illustrative price path. Up on screen = higher price. Drawn on a
-// compact grid, then stretched vertically by Y() to fill the chart area.
+// An illustrative price path: a deterministic random walk pinned to the points that
+// matter (entry, breakeven move, target), drawn with straight segments like a real
+// price chart. Up on screen = higher price.
 const Y = (y: number) => Math.round(56 + (y - 92) * 2.45);
-const RAW: [number, number][] = [
-  [20, 214], [44, 222], [68, 206], [92, 216], [116, 200], [140, 208], [164, 192], [190, 198],
-  [215, 184], [240, 192], [265, 176], [290, 170], [315, 178], [340, 160], [365, 152], [390, 160],
-  [415, 142], [440, 134], [465, 142], [490, 124], [515, 116], [540, 122], [565, 100], [590, 108], [620, 112],
+const ANCHORS: [number, number][] = [
+  [20, 214], [70, 206], [120, 202], [165, 194], [215, 184], [260, 178], [300, 172],
+  [345, 160], [380, 156], [415, 142], [460, 138], [505, 118], [540, 120], [565, 100], [620, 112],
 ];
-const PTS = RAW.map(([x, y]) => [x, Y(y)] as [number, number]);
+const PINNED = new Set([215, 415, 565]);
+const PTS: [number, number][] = (() => {
+  let seed = 7;
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647) - 0.5;
+  const out: [number, number][] = [];
+  for (let x = 20; x <= 620; x += 5) {
+    const i = ANCHORS.findIndex(([ax]) => ax >= x);
+    const [x1, y1] = ANCHORS[Math.max(0, i)];
+    const [x0, y0] = ANCHORS[Math.max(0, i - 1)];
+    const base = x1 === x0 ? y1 : y0 + ((x - x0) / (x1 - x0)) * (y1 - y0);
+    const noise = PINNED.has(x) || x === 20 || x === 620 ? 0 : rnd() * 9;
+    out.push([x, Y(base + noise)]);
+  }
+  return out;
+})();
 const ENTRY = { x: 215, y: Y(184) };
 const STOP_Y = Y(228);
 const TARGET_Y = Y(100);
@@ -23,15 +37,7 @@ const EXIT = { x: 565, y: Y(100) };
 const REVEAL_X = [116, 190, 215, 215, 215, 240, 415, 565, 620];
 const STEP_MS = 1150;
 
-const smooth = (pts: [number, number][]) =>
-  pts.reduce((d, [x, y], i, a) => {
-    if (i === 0) return `M${x},${y}`;
-    const [px, py] = a[i - 1];
-    const cx = (px + x) / 2;
-    return `${d} C${cx},${py} ${cx},${y} ${x},${y}`;
-  }, '');
-
-const PATH = smooth(PTS);
+const PATH = PTS.map(([x, y], i) => `${i ? 'L' : 'M'}${x},${y}`).join(' ');
 
 export default function TradeAnatomy() {
   const steps = ANATOMY.steps;
@@ -120,7 +126,7 @@ export default function TradeAnatomy() {
           {/* Price */}
           <g clipPath="url(#ta-clip)">
             <path d={`${PATH} L620,420 L20,420 Z`} fill="url(#ta-fill)" />
-            <path d={PATH} fill="none" strokeWidth="1.8" style={{ stroke: 'var(--price)' }} />
+            <path d={PATH} fill="none" strokeWidth="1.4" strokeLinejoin="round" style={{ stroke: 'var(--price)' }} />
           </g>
 
           {/* Entry marker */}
