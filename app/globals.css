@@ -13,6 +13,7 @@
   --stone: #f5f4f0;
   --ink: var(--navy);
   --nav-bg: #ffffff;
+  --logo-filter: invert(1) brightness(0.35);
 
   --bg: #ffffff;
   --bg-2: var(--stone);
@@ -1719,6 +1720,7 @@ button {
   --surface-2: #101e34;
   --well: #0b1626;
   --nav-bg: #08111f;
+  --logo-filter: none;
   --tint: 210, 222, 240;
   --line: rgba(var(--tint), 0.1);
   --line-2: rgba(var(--tint), 0.18);
@@ -1761,6 +1763,7 @@ button {
     --surface-2: #101e34;
     --well: #0b1626;
     --nav-bg: #08111f;
+    --logo-filter: none;
     --tint: 210, 222, 240;
     --line: rgba(var(--tint), 0.1);
     --line-2: rgba(var(--tint), 0.18);
@@ -2140,11 +2143,39 @@ button {
   text-align: center;
 }
 
-.platforms__item img {
+.platforms__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.82;
+  transition: opacity 0.25s;
+}
+
+.platforms__item:hover .platforms__logo {
+  opacity: 1;
+}
+
+/* Logo files are white on transparent; the light scheme inverts them to ink */
+.platforms__logo img {
+  display: block;
+  width: auto;
+  height: 26px;
   max-width: 100%;
-  max-height: 32px;
-  opacity: 0.8;
-  filter: grayscale(1);
+  filter: var(--logo-filter);
+}
+
+.platforms__logo .logo-lucid { height: 38px; }
+.platforms__logo .logo-tradovate { height: 32px; }
+.platforms__logo .logo-topstep { height: 22px; }
+.platforms__logo .logo-tradingview { height: 24px; }
+.platforms__logo .logo-ninjatrader { height: 26px; }
+
+.platforms__name {
+  font-family: var(--font-display), sans-serif;
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
 .wordmark {

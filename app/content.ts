@@ -50,9 +50,9 @@ export const FOOTER_NAV = [
 
 export const OVERVIEW_PDF = '/quantara-qs1-overview.pdf';
 
-// Firms and platforms QS1 works with. Text wordmarks are shown until an official
-// logo file is placed at public/logos/<slug>.svg (taken from each company's own
-// brand or press kit, and used according to its brand guidelines).
+// Firms and platforms QS1 works with. Logos live in public/logos/<slug>.png as
+// white artwork on a transparent background; a text wordmark shows if a file is
+// missing. `withName` sets the company name beside a symbol-only logo.
 export const PLATFORMS = {
   eyebrow: 'Compatibility',
   title: 'Works with the firms and platforms traders already use.',
@@ -69,7 +69,7 @@ export const PLATFORMS = {
       label: 'Execution and analysis platforms',
       items: [
         { slug: 'tradovate', name: 'Tradovate' },
-        { slug: 'ninjatrader', name: 'NinjaTrader' },
+        { slug: 'ninjatrader', name: 'NinjaTrader', withName: true },
         { slug: 'tradingview', name: 'TradingView' },
       ],
     },
