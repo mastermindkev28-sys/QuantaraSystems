@@ -84,7 +84,7 @@ export const PLATFORMS = {
 // Current photos were supplied by Quantara Systems.
 export const PHOTOS = {
   hero: { src: '/photos/hero.jpg', alt: 'Rows of fine gold bullion bars' },
-  approach: { src: '/photos/approach.jpg', alt: 'Candlestick price chart on a trading screen' },
+  approach: { src: '/photos/approach.jpg', alt: 'Candlestick chart of COMEX gold futures on a trading screen' },
   risk: { src: '/photos/risk.jpg', alt: 'Server racks in a data center' },
   engagement: { src: '/photos/engagement.jpg', alt: 'Market data charts on a monitor' },
 };
