@@ -6,15 +6,85 @@
 // automated, rules-based futures engine, but only you know QS1's exact internals.
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Color scheme. 'light' always; 'auto' follows each visitor's device setting;
+// 'dark' always. Any page can be previewed in dark with ?scheme=dark.
+export const COLOR_SCHEME: 'light' | 'auto' | 'dark' = 'light';
+
 export const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/45min';
 
 export const NAV = [
-  { label: 'Approach', href: '#engine' },
-  { label: 'Execution', href: '#execution' },
-  { label: 'Risk management', href: '#risk' },
-  { label: 'Engagement', href: '#access' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Approach', href: '/approach' },
+  { label: 'Risk management', href: '/risk' },
+  { label: 'Engagement', href: '/engagement' },
+  { label: 'Insights', href: '/insights' },
 ];
+
+export const FOOTER_NAV = [
+  {
+    title: 'Firm',
+    links: [
+      { label: 'Approach', href: '/approach' },
+      { label: 'Risk management', href: '/risk' },
+      { label: 'Engagement', href: '/engagement' },
+      { label: 'Insights', href: '/insights' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { label: 'QS1 overview (PDF)', href: '/quantara-qs1-overview.pdf' },
+      { label: 'Frequently asked questions', href: '/engagement#faq' },
+      { label: 'Request a consultation', href: '/consultation' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Risk disclosure', href: '/legal/risk-disclosure' },
+      { label: 'Privacy policy', href: '/legal/privacy' },
+      { label: 'Terms of use', href: '/legal/terms' },
+    ],
+  },
+];
+
+export const OVERVIEW_PDF = '/quantara-qs1-overview.pdf';
+
+// Firms and platforms QS1 works with. Text wordmarks are shown until an official
+// logo file is placed at public/logos/<slug>.svg (taken from each company's own
+// brand or press kit, and used according to its brand guidelines).
+export const PLATFORMS = {
+  eyebrow: 'Compatibility',
+  title: 'Operates with established firms and platforms.',
+  groups: [
+    {
+      label: 'Proprietary trading firms',
+      items: [
+        { slug: 'topstep', name: 'Topstep' },
+        { slug: 'lucid', name: 'Lucid Trading' },
+        { slug: 'tpt', name: 'Take Profit Trader' },
+      ],
+    },
+    {
+      label: 'Execution and analysis platforms',
+      items: [
+        { slug: 'tradovate', name: 'Tradovate' },
+        { slug: 'ninjatrader', name: 'NinjaTrader' },
+        { slug: 'tradingview', name: 'TradingView' },
+      ],
+    },
+  ],
+  note:
+    'Names and logos are trademarks of their respective owners and are shown only to indicate compatibility. Quantara Systems is not affiliated with, endorsed by or sponsored by any of these companies.',
+};
+
+// Photography. Drop an image at the path below and it replaces the fallback
+// automatically. Every photo is toned to the brand navy so the set stays consistent.
+export const PHOTOS = {
+  hero: { src: '/photos/hero.jpg', alt: 'Gold bullion bars on a dark surface' },
+  approach: { src: '/photos/approach.jpg', alt: 'Trading workstation with market data on screen' },
+  risk: { src: '/photos/risk.jpg', alt: 'Rows of servers in a data center' },
+  engagement: { src: '/photos/engagement.jpg', alt: 'Glass office tower seen from below' },
+};
 
 export const HERO = {
   label: 'QS1 · Systematic execution',
