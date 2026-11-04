@@ -68,13 +68,13 @@ const PATH_A = 'M0,170 C30,160 50,182 80,172 S130,150 160,158 S205,176 230,150 S
 function Signal() {
   return (
     <svg className="viz viz--svg" viewBox="0 0 400 240" preserveAspectRatio="none" aria-hidden="true">
-      <rect x="196" y="20" width="70" height="200" fill="rgba(143,184,255,0.06)" stroke="rgba(143,184,255,0.25)" strokeDasharray="3 4" />
-      <text x="202" y="36" className="viz__label" fill="#8fb8ff">QUALIFYING WINDOW</text>
-      <path d={PATH_A} pathLength={1} className="draw" fill="none" stroke="#b9c8dc" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+      <rect x="196" y="20" width="70" height="200" strokeDasharray="3 4" style={{ fill: 'rgba(var(--signal-rgb),0.06)', stroke: 'rgba(var(--signal-rgb),0.25)' }} />
+      <text x="202" y="36" className="viz__label" style={{ fill: 'var(--signal)' }}>QUALIFYING WINDOW</text>
+      <path d={PATH_A} pathLength={1} className="draw" fill="none" strokeWidth="1.6" vectorEffect="non-scaling-stroke" style={{ stroke: 'var(--silver-2)' }} />
       <g className="pop" style={{ animationDelay: '1.1s' }}>
-        <circle cx="232" cy="149" r="5" fill="#eef2f8" />
-        <circle cx="232" cy="149" r="12" fill="none" stroke="rgba(238,242,248,0.35)" />
-        <text x="246" y="172" className="viz__label" fill="#eef2f8">SETUP QUALIFIED · 6 / 6 CONDITIONS</text>
+        <circle cx="232" cy="149" r="5" style={{ fill: 'var(--text)' }} />
+        <circle cx="232" cy="149" r="12" fill="none" style={{ stroke: 'rgba(var(--text-rgb),0.35)' }} />
+        <text x="246" y="172" className="viz__label" style={{ fill: 'var(--text)' }}>SETUP QUALIFIED · 6 / 6 CONDITIONS</text>
       </g>
     </svg>
   );
@@ -106,20 +106,20 @@ function Execute() {
   return (
     <svg className="viz viz--svg" viewBox="0 0 400 240" preserveAspectRatio="none" aria-hidden="true">
       <g className="pop" style={{ animationDelay: '0.2s' }}>
-        <line x1="150" x2="380" y1="60" y2="60" stroke="#b9c8dc" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
-        <text x="380" y="50" textAnchor="end" className="viz__label" fill="#b9c8dc">TARGET · LIMIT</text>
+        <line x1="150" x2="380" y1="60" y2="60" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" style={{ stroke: 'var(--silver-2)' }} />
+        <text x="380" y="50" textAnchor="end" className="viz__label" style={{ fill: 'var(--silver-2)' }}>TARGET · LIMIT</text>
       </g>
       <g className="pop" style={{ animationDelay: '0.05s' }}>
-        <line x1="150" x2="380" y1="140" y2="140" stroke="#eef2f8" vectorEffect="non-scaling-stroke" />
-        <text x="380" y="130" textAnchor="end" className="viz__label" fill="#eef2f8">ENTRY · FILLED</text>
+        <line x1="150" x2="380" y1="140" y2="140" vectorEffect="non-scaling-stroke" style={{ stroke: 'var(--text)' }} />
+        <text x="380" y="130" textAnchor="end" className="viz__label" style={{ fill: 'var(--text)' }}>ENTRY · FILLED</text>
       </g>
       <g className="pop" style={{ animationDelay: '0.35s' }}>
-        <line x1="150" x2="380" y1="196" y2="196" stroke="#f08a94" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
-        <text x="380" y="214" textAnchor="end" className="viz__label" fill="#f08a94">STOP · ATTACHED</text>
+        <line x1="150" x2="380" y1="196" y2="196" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" style={{ stroke: 'var(--down)' }} />
+        <text x="380" y="214" textAnchor="end" className="viz__label" style={{ fill: 'var(--down)' }}>STOP · ATTACHED</text>
       </g>
-      <path d="M0,176 C40,170 70,186 100,166 S135,146 150,140" pathLength={1} className="draw" fill="none" stroke="#b9c8dc" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
-      <circle cx="150" cy="140" r="5" fill="#eef2f8" className="pop" style={{ animationDelay: '0.9s' }} />
-      <text x="20" y="36" className="viz__label" fill="#6f7f98">ONE BRACKET · THREE ORDERS · SENT TOGETHER</text>
+      <path d="M0,176 C40,170 70,186 100,166 S135,146 150,140" pathLength={1} className="draw" fill="none" strokeWidth="1.6" vectorEffect="non-scaling-stroke" style={{ stroke: 'var(--silver-2)' }} />
+      <circle cx="150" cy="140" r="5" className="pop" style={{ fill: 'var(--text)', animationDelay: '0.9s' }} />
+      <text x="20" y="36" className="viz__label" style={{ fill: 'var(--text-3)' }}>ONE BRACKET · THREE ORDERS · SENT TOGETHER</text>
     </svg>
   );
 }
@@ -127,10 +127,10 @@ function Execute() {
 function Manage() {
   return (
     <svg className="viz viz--svg" viewBox="0 0 400 240" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0,190 C40,182 60,170 90,176 S140,150 170,140 S220,120 250,112 S300,96 330,80 S370,60 400,56" pathLength={1} className="draw" fill="none" stroke="#b9c8dc" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
-      <path d="M0,214 H120 V196 H200 V168 H280 V140 H360 V116 H400" pathLength={1} className="draw draw--slow" fill="none" stroke="#f08a94" strokeWidth="1.2" strokeDasharray="0" vectorEffect="non-scaling-stroke" />
-      <text x="20" y="36" className="viz__label" fill="#6f7f98">STOP RAISED BY RULE AS PRICE ADVANCES</text>
-      <text x="396" y="106" textAnchor="end" className="viz__label" fill="#f08a94">PROTECTIVE STOP</text>
+      <path d="M0,190 C40,182 60,170 90,176 S140,150 170,140 S220,120 250,112 S300,96 330,80 S370,60 400,56" pathLength={1} className="draw" fill="none" strokeWidth="1.6" vectorEffect="non-scaling-stroke" style={{ stroke: 'var(--silver-2)' }} />
+      <path d="M0,214 H120 V196 H200 V168 H280 V140 H360 V116 H400" pathLength={1} className="draw draw--slow" fill="none" strokeWidth="1.2" strokeDasharray="0" vectorEffect="non-scaling-stroke" style={{ stroke: 'var(--down)' }} />
+      <text x="20" y="36" className="viz__label" style={{ fill: 'var(--text-3)' }}>STOP RAISED BY RULE AS PRICE ADVANCES</text>
+      <text x="396" y="106" textAnchor="end" className="viz__label" style={{ fill: 'var(--down)' }}>PROTECTIVE STOP</text>
     </svg>
   );
 }

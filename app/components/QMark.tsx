@@ -36,10 +36,10 @@ export default function QMark({
     >
       <defs>
         <linearGradient id={gid} x1="320" y1="300" x2="700" y2="745" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#F5F8FC" />
-          <stop offset="34%" stopColor="#B9C8DC" />
-          <stop offset="68%" stopColor="#8398B4" />
-          <stop offset="100%" stopColor="#61789A" />
+          <stop offset="0%" style={{ stopColor: 'var(--mark-1)' }} />
+          <stop offset="34%" style={{ stopColor: 'var(--mark-2)' }} />
+          <stop offset="68%" style={{ stopColor: 'var(--mark-3)' }} />
+          <stop offset="100%" style={{ stopColor: 'var(--mark-4)' }} />
         </linearGradient>
       </defs>
       <path d="M 311,480 A 202,202 0 1 1 641,663" stroke={`url(#${gid})`} strokeWidth={stroke} fill="none" />

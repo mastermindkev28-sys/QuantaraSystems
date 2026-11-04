@@ -88,59 +88,59 @@ export default function TradeAnatomy() {
               <rect x="0" y="0" width="640" height="420" style={{ transform: `scaleX(${revealX / 640})`, transformOrigin: '0 0', transition: 'transform 1s cubic-bezier(.22,1,.36,1)' }} />
             </clipPath>
             <linearGradient id="ta-fill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#b9c8dc" stopOpacity="0.16" />
-              <stop offset="100%" stopColor="#b9c8dc" stopOpacity="0" />
+              <stop offset="0%" stopOpacity="0.16" style={{ stopColor: 'var(--silver-2)' }} />
+              <stop offset="100%" stopOpacity="0" style={{ stopColor: 'var(--silver-2)' }} />
             </linearGradient>
           </defs>
 
           {[60, 140, 220, 300, 380].map(y => (
-            <line key={y} x1="0" x2="640" y1={y} y2={y} stroke="rgba(185,200,220,0.06)" />
+            <line key={y} x1="0" x2="640" y1={y} y2={y} style={{ stroke: 'rgba(var(--tint),0.06)' }} />
           ))}
 
           {/* Regime band */}
-          <rect x="116" y="0" width="524" height="420" fill="rgba(143,184,255,0.035)" style={{ opacity: at(1) ? 1 : 0, transition: 'opacity .6s' }} />
-          <text x="124" y="20" className="viz__label" fill="#8fb8ff" style={{ opacity: at(1) ? 0.8 : 0, transition: 'opacity .6s' }}>REGIME · TRENDING</text>
+          <rect x="116" y="0" width="524" height="420" style={{ fill: 'rgba(var(--signal-rgb),0.035)', opacity: at(1) ? 1 : 0, transition: 'opacity .6s' }} />
+          <text x="124" y="20" className="viz__label" style={{ fill: 'var(--signal)', opacity: at(1) ? 0.8 : 0, transition: 'opacity .6s' }}>REGIME · TRENDING</text>
 
           {/* Bracket lines */}
           <g style={{ opacity: at(4) ? 1 : 0, transition: 'opacity .6s' }}>
-            <line x1={ENTRY.x} x2="640" y1={TARGET_Y} y2={TARGET_Y} stroke="#b9c8dc" strokeDasharray="4 5" />
-            <text x="632" y={TARGET_Y - 8} textAnchor="end" className="viz__label" fill="#b9c8dc">TARGET</text>
-            <line x1={ENTRY.x} x2="640" y1={ENTRY.y} y2={ENTRY.y} stroke="rgba(238,242,248,0.45)" />
-            <text x="632" y={ENTRY.y - 8} textAnchor="end" className="viz__label" fill="#eef2f8">ENTRY</text>
-            <line x1={ENTRY.x} x2={at(6) ? BE_X : 640} y1={STOP_Y} y2={STOP_Y} stroke="#f08a94" strokeDasharray="4 5" style={{ transition: 'all .6s' }} />
-            <text x={at(6) ? BE_X - 8 : 632} y={STOP_Y + 18} textAnchor="end" className="viz__label" fill="#f08a94">STOP</text>
+            <line x1={ENTRY.x} x2="640" y1={TARGET_Y} y2={TARGET_Y} strokeDasharray="4 5" style={{ stroke: 'var(--silver-2)' }} />
+            <text x="632" y={TARGET_Y - 8} textAnchor="end" className="viz__label" style={{ fill: 'var(--silver-2)' }}>TARGET</text>
+            <line x1={ENTRY.x} x2="640" y1={ENTRY.y} y2={ENTRY.y} style={{ stroke: 'rgba(var(--text-rgb),0.45)' }} />
+            <text x="632" y={ENTRY.y - 8} textAnchor="end" className="viz__label" style={{ fill: 'var(--text)' }}>ENTRY</text>
+            <line x1={ENTRY.x} x2={at(6) ? BE_X : 640} y1={STOP_Y} y2={STOP_Y} strokeDasharray="4 5" style={{ stroke: 'var(--down)', transition: 'all .6s' }} />
+            <text x={at(6) ? BE_X - 8 : 632} y={STOP_Y + 18} textAnchor="end" className="viz__label" style={{ fill: 'var(--down)' }}>STOP</text>
           </g>
           {/* Stop moved to entry */}
           <g style={{ opacity: at(6) ? 1 : 0, transition: 'opacity .6s' }}>
-            <line x1={BE_X} x2={BE_X} y1={STOP_Y} y2={ENTRY.y} stroke="#f08a94" strokeDasharray="2 4" />
-            <line x1={BE_X} x2="640" y1={ENTRY.y + 1} y2={ENTRY.y + 1} stroke="#f08a94" strokeDasharray="4 5" />
-            <text x={BE_X + 8} y={ENTRY.y + 18} className="viz__label" fill="#f08a94">STOP → ENTRY</text>
+            <line x1={BE_X} x2={BE_X} y1={STOP_Y} y2={ENTRY.y} strokeDasharray="2 4" style={{ stroke: 'var(--down)' }} />
+            <line x1={BE_X} x2="640" y1={ENTRY.y + 1} y2={ENTRY.y + 1} strokeDasharray="4 5" style={{ stroke: 'var(--down)' }} />
+            <text x={BE_X + 8} y={ENTRY.y + 18} className="viz__label" style={{ fill: 'var(--down)' }}>STOP → ENTRY</text>
           </g>
 
           {/* Price */}
           <g clipPath="url(#ta-clip)">
             <path d={`${PATH} L620,420 L20,420 Z`} fill="url(#ta-fill)" />
-            <path d={PATH} fill="none" stroke="#dbe4ef" strokeWidth="1.8" />
+            <path d={PATH} fill="none" strokeWidth="1.8" style={{ stroke: 'var(--price)' }} />
           </g>
 
           {/* Entry marker */}
           <g style={{ opacity: at(2) ? 1 : 0, transition: 'opacity .5s' }}>
-            <circle cx={ENTRY.x} cy={ENTRY.y} r={at(5) ? 5 : 4} fill={at(5) ? '#eef2f8' : 'none'} stroke="#eef2f8" strokeWidth="1.5" />
-            <circle cx={ENTRY.x} cy={ENTRY.y} r="13" fill="none" stroke="rgba(238,242,248,0.25)" />
-            <text x={ENTRY.x - 10} y={ENTRY.y + 30} textAnchor="middle" className="viz__label" fill="#a9b6ca">{at(5) ? 'FILLED' : 'SIGNAL'}</text>
+            <circle cx={ENTRY.x} cy={ENTRY.y} r={at(5) ? 5 : 4} strokeWidth="1.5" style={{ fill: at(5) ? 'var(--text)' : 'none', stroke: 'var(--text)' }} />
+            <circle cx={ENTRY.x} cy={ENTRY.y} r="13" fill="none" style={{ stroke: 'rgba(var(--text-rgb),0.25)' }} />
+            <text x={ENTRY.x - 10} y={ENTRY.y + 30} textAnchor="middle" className="viz__label" style={{ fill: 'var(--text-2)' }}>{at(5) ? 'FILLED' : 'SIGNAL'}</text>
           </g>
           {/* Exit marker */}
           <g style={{ opacity: at(7) ? 1 : 0, transition: 'opacity .5s' }}>
-            <circle cx={EXIT.x} cy={EXIT.y} r="5" fill="#6fd6ad" />
-            <circle cx={EXIT.x} cy={EXIT.y} r="13" fill="none" stroke="rgba(111,214,173,0.35)" />
-            <text x={EXIT.x} y={EXIT.y - 20} textAnchor="middle" className="viz__label" fill="#6fd6ad">EXIT</text>
+            <circle cx={EXIT.x} cy={EXIT.y} r="5" style={{ fill: 'var(--up)' }} />
+            <circle cx={EXIT.x} cy={EXIT.y} r="13" fill="none" style={{ stroke: 'rgba(var(--up-rgb),0.35)' }} />
+            <text x={EXIT.x} y={EXIT.y - 20} textAnchor="middle" className="viz__label" style={{ fill: 'var(--up)' }}>EXIT</text>
           </g>
         </svg>
         <div className="legend">
-          <span><i style={{ background: '#dbe4ef' }} />Price</span>
-          <span><i style={{ background: '#b9c8dc' }} />Target</span>
-          <span><i style={{ background: '#f08a94' }} />Protective stop</span>
-          <span><i style={{ background: '#8fb8ff' }} />Tradeable regime</span>
+          <span><i style={{ background: 'var(--price)' }} />Price</span>
+          <span><i style={{ background: 'var(--silver-2)' }} />Target</span>
+          <span><i style={{ background: 'var(--down)' }} />Protective stop</span>
+          <span><i style={{ background: 'var(--signal)' }} />Tradeable regime</span>
         </div>
       </div>
 
