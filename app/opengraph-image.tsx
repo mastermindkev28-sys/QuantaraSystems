@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 
 // Branded preview image for links shared on LinkedIn, iMessage, email and so on.
@@ -9,6 +11,7 @@ const MARK = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="280 280 465 465" 
 const src = `data:image/svg+xml;base64,${Buffer.from(MARK).toString('base64')}`;
 
 export default function Image() {
+  const logo = `data:image/png;base64,${readFileSync(join(process.cwd(), 'public/brand/quantara-mark-silver.png')).toString('base64')}`;
   return new ImageResponse(
     (
       <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#0b1e3a', padding: '72px 80px', color: '#ffffff', fontFamily: 'sans-serif', position: 'relative' }}>
@@ -16,7 +19,7 @@ export default function Image() {
         <img src={src} width={620} height={620} alt="" style={{ position: 'absolute', right: -120, bottom: -180, opacity: 0.08 }} />
         <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={src} width={52} height={52} alt="" />
+          <img src={logo} width={64} height={64} alt="" />
           <div style={{ display: 'flex', fontSize: 26, letterSpacing: 6, fontWeight: 600 }}>
             QUANTARA<span style={{ marginLeft: 12, opacity: 0.6, fontWeight: 400 }}>SYSTEMS</span>
           </div>

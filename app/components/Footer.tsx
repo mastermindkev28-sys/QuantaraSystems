@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { DISCLOSURE, FOOTER_NAV } from '../content';
-import QMark from './QMark';
+import Logo from './Logo';
 
 export default function Footer() {
   return (
@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="footer__top">
           <div style={{ display: 'grid', gap: 16, alignContent: 'start' }}>
             <Link href="/" className="brand">
-              <QMark id="footer" size={28} />
+              <Logo size={36} />
               <span className="brand__word">Quantara <span>Systems</span></span>
             </Link>
             <p className="body muted" style={{ maxWidth: 360, fontSize: 15 }}>

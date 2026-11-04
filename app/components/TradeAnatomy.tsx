@@ -165,7 +165,7 @@ export default function TradeAnatomy() {
           ))}
         </ol>
         <div className="log__foot">
-          <span>{steps.length} decisions · 0 made by emotion</span>
+          <span>{steps.length} decisions · all made by rule</span>
           <button className="replay" onClick={play} disabled={playing} style={{ opacity: playing ? 0.5 : 1 }}>
             <Replay /> Replay
           </button>

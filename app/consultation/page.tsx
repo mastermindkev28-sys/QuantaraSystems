@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 const EXPECT = [
   'A private, 45-minute video call with a member of our team',
   'A walk-through of how QS1 executes and controls risk',
-  'An honest discussion of whether QS1 suits your situation',
-  'No obligation, and no pressure to proceed',
+  'Answers to every question you bring about process, risk and cost',
+  'A clear answer on whether QS1 fits, with no obligation to proceed',
 ];
 
 export default function ConsultationPage() {

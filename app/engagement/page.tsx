@@ -16,8 +16,8 @@ export default function EngagementPage() {
     <>
       <PageHero
         eyebrow="Engagement"
-        title="Considered, from the first conversation."
-        lede="Every engagement begins with a private consultation. Accounts are configured individually and onboarded in limited numbers, so each receives proper oversight."
+        title="A clear path from first call to live trading."
+        lede="Every engagement starts with a private consultation. We configure each account individually and onboard a limited number each month, so every account gets full oversight."
       />
 
       <section className="section">

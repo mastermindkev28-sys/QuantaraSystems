@@ -7,8 +7,9 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 // Color scheme. 'light' always; 'auto' follows each visitor's device setting;
-// 'dark' always. Any page can be previewed in dark with ?scheme=dark.
-export const COLOR_SCHEME: 'light' | 'auto' | 'dark' = 'light';
+// 'dark' always. Any page can be previewed in another scheme with ?scheme=light
+// (or dark, or auto).
+export const COLOR_SCHEME: 'light' | 'auto' | 'dark' = 'dark';
 
 export const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/45min';
 
@@ -54,7 +55,7 @@ export const OVERVIEW_PDF = '/quantara-qs1-overview.pdf';
 // brand or press kit, and used according to its brand guidelines).
 export const PLATFORMS = {
   eyebrow: 'Compatibility',
-  title: 'Operates with established firms and platforms.',
+  title: 'Works with the firms and platforms traders already use.',
   groups: [
     {
       label: 'Proprietary trading firms',
@@ -87,12 +88,12 @@ export const PHOTOS = {
 };
 
 export const HERO = {
-  label: 'QS1 · Systematic execution',
+  label: 'QS1 · Automated gold futures execution',
   title: 'Discipline, engineered.',
   lede:
-    'QS1 is an autonomous execution system for COMEX gold futures. It analyzes market conditions, enforces pre-trade risk limits and executes every order by rule, removing the largest single source of error in active trading: human discretion.',
+    'QS1 is an automated execution system for COMEX gold futures. It reads market conditions, sizes each position from a fixed risk budget, checks every order against hard limits and places the trade by rule. The same process runs every session, whether you are watching or not.',
   primary: 'Request a consultation',
-  secondary: 'Our approach',
+  secondary: 'See how it works',
   facts: [
     { k: 'Market', v: 'COMEX gold futures' },
     { k: 'Execution', v: 'Fully automated, rules-based' },
@@ -106,59 +107,58 @@ export const NAV_CTA = 'Request a consultation';
 
 export const PROBLEM = {
   eyebrow: 'The problem',
-  titleA: 'Most trading losses are behavioral,',
-  titleB: 'not analytical.',
+  titleA: 'Most traders lose money on execution.',
+  titleB: 'The strategy is usually sound.',
   lede:
-    'A sound strategy is rarely what fails. What fails is its execution: the entry taken late, the target moved out of greed, the stop widened after a loss. These are not gaps in knowledge. They are the predictable limits of human judgment under pressure.',
+    'Late entries. Targets moved out of greed. Stops widened after a loss. Valid setups skipped after a losing streak. Each mistake is small on its own. Over hundreds of trades, they decide the result. QS1 is built to close that gap.',
   flaws: [
     {
-      k: '01 · Fatigue',
+      k: '01 · Coverage',
       big: '23',
-      unit: 'hrs / day',
-      title: 'The market never sleeps. You do.',
-      body: "Gold futures trade nearly 23 hours a day, five days a week. The best setups don't wait for your schedule, your commute or your sleep.",
+      unit: 'hours a day',
+      title: 'Gold trades almost around the clock.',
+      body: 'COMEX gold futures trade nearly 23 hours a day, five days a week. A person can give full attention to a fraction of that. QS1 covers every session it is set to trade.',
     },
     {
       k: '02 · Emotion',
       big: '1',
-      unit: 'bad trade',
-      title: 'One loss rewrites the next decision.',
-      body: 'After a loss, the brain stops trading the plan and starts trading the feeling. Discipline fades exactly when it matters most.',
+      unit: 'losing trade',
+      title: 'One loss changes the next decision.',
+      body: 'After a loss, most traders either size up to win it back or freeze on the next valid setup. Both cost money. QS1 evaluates every trade the same way, whatever happened before it.',
     },
     {
-      k: '03 · Hesitation',
-      big: '∞',
-      unit: 'second-guesses',
-      title: 'Hesitation is a position too.',
-      body: "Every pause, every “let me wait for one more candle”, is a decision made by fear rather than by the plan.",
+      k: '03 · Process',
+      big: '6',
+      unit: 'stages per order',
+      title: 'QS1 runs one process on every order.',
+      body: 'Data, market conditions, setup, risk, execution and management, in that order, every time. The process is written in code, so it runs the same way on the first trade and the five-hundredth.',
     },
   ],
-  statementA: 'QS1 is built on a single premise:',
-  statementB:
-    'if the rules are sound, nothing should stand between them and the market.',
-  statementC: 'Not fatigue, not emotion, not a difficult day.',
+  statementA: 'QS1 is built on one rule:',
+  statementB: 'once a process is defined, it runs exactly as written, on every order, in every session.',
+  statementC: '',
 };
 
 export type StageKey = 'ingest' | 'classify' | 'signal' | 'risk' | 'execute' | 'manage';
 
 export const ENGINE = {
-  eyebrow: 'Our approach',
+  eyebrow: 'How it works',
   exhibit: 'Exhibit 1 · The QS1 execution process',
-  titleA: 'A six-stage process,',
-  titleB: 'applied to every order.',
+  titleA: 'Six stages.',
+  titleB: 'Every order goes through all of them.',
   lede:
-    'Every order QS1 places passes through the same sequence of stages, in the same order, without exception. Select a stage to see what it does.',
+    'Each order QS1 places goes through the same six stages, in the same order. Select a stage to see what it does.',
   stages: [
     {
       key: 'ingest' as StageKey,
       name: 'Ingest',
       sub: 'Market data',
-      title: 'Reading the market as it moves.',
+      title: 'Read the market as it moves.',
       body:
-        'QS1 consumes a live feed of gold futures prices the moment they print. Every update is time-stamped, cleaned and aligned, so each later stage works from one consistent picture of the market.',
+        'QS1 takes in a live feed of gold futures prices as they print. Each update is time-stamped and cleaned, so every later stage works from the same picture of the market.',
       points: [
         'Live price data streamed directly into the engine',
-        'Bad or delayed prints filtered before they can influence a decision',
+        'Bad or delayed prints filtered out before they reach a decision',
         'One synchronized view of the market shared by every stage',
       ],
       tags: ['Live feed', 'Time-stamped', 'Normalized'],
@@ -166,13 +166,13 @@ export const ENGINE = {
     {
       key: 'classify' as StageKey,
       name: 'Classify',
-      sub: 'Regime detection',
-      title: 'Deciding whether to trade at all.',
+      sub: 'Market conditions',
+      title: 'Trade only in the right conditions.',
       body:
-        'Many losses come from trading the wrong conditions. Before looking for a setup, QS1 classifies the market as trending, ranging, volatile or thin, and stands aside when conditions fall outside what it was built for.',
+        'Many losing trades happen in conditions a strategy was designed to avoid. QS1 first classifies the market as trending, ranging, volatile or thin, and trades only when conditions match its design. The rest of the time it stands aside.',
       points: [
         'Volatility and market structure measured continuously',
-        'Trading switched off when conditions are unfavorable',
+        'Trading paused when conditions fall outside the design range',
         'Scheduled high-impact news windows avoided',
       ],
       tags: ['Volatility', 'Structure', 'News filter'],
@@ -181,27 +181,27 @@ export const ENGINE = {
       key: 'signal' as StageKey,
       name: 'Evaluate',
       sub: 'Setup qualification',
-      title: 'Rules, not opinions.',
+      title: 'Fixed rules decide every entry.',
       body:
-        "Inside an approved regime, QS1 checks each potential setup against fixed, predefined criteria. A trade is either fully qualified or it isn't. There's no “close enough” and no gut feel.",
+        'Within approved conditions, QS1 scores each potential setup against fixed entry criteria. A setup that meets every criterion is taken. Anything short of that is passed over. The same inputs always produce the same decision.',
       points: [
-        'Entries defined in code, not decided in the moment',
+        'Entry rules defined in code before the session starts',
         'Each setup scored against strict qualifying conditions',
-        'The same inputs always produce the same decision',
+        'Identical inputs produce identical decisions',
       ],
-      tags: ['Deterministic', 'Rules-based', 'No discretion'],
+      tags: ['Deterministic', 'Rules-based', 'Fully automated'],
     },
     {
       key: 'risk' as StageKey,
       name: 'Verify',
       sub: 'Pre-trade risk',
-      title: 'Every order must earn its way out.',
+      title: 'Every order is checked before it is sent.',
       body:
-        "Before any order is sent, it's checked against position limits, the daily loss limit and the account's drawdown rules. If a single check fails, the order never leaves the engine.",
+        "Each order is checked against position limits, the daily loss limit and the account's drawdown rules. If any check fails, the engine cancels the order before it reaches the market.",
       points: [
-        'Position size calculated from risk, not conviction',
+        'Position size calculated from a fixed risk budget',
         'Daily loss and drawdown limits enforced automatically',
-        'A hard block, not a warning: failed checks cancel the order',
+        'A failed check cancels the order outright',
       ],
       tags: ['Position limits', 'Daily loss limit', 'Drawdown rules'],
     },
@@ -209,9 +209,9 @@ export const ENGINE = {
       key: 'execute' as StageKey,
       name: 'Execute',
       sub: 'Order routing',
-      title: 'Entry, stop and target, together.',
+      title: 'Entry, stop and target go out together.',
       body:
-        "Approved orders are routed straight to the execution platform's API as bracket orders. The protective stop and profit target are attached the instant the position opens, so a trade is never left unprotected.",
+        "Approved orders go straight to the execution platform's API as bracket orders. The protective stop and profit target are attached the moment the position opens, so every position is protected from its first second.",
       points: [
         'Direct API connection to the execution platform',
         'Stop-loss and target attached on entry',
@@ -223,15 +223,15 @@ export const ENGINE = {
       key: 'manage' as StageKey,
       name: 'Manage',
       sub: 'Position management',
-      title: 'Managing the trade to the end.',
+      title: 'Each trade is managed through to exit.',
       body:
-        'Once in a position, QS1 manages it by rule: tightening protection as price moves, exiting on time-based conditions and flattening before the session closes. Every event is logged for review.',
+        'Once a position is open, QS1 manages it by rule: it tightens protection as price moves, exits on time-based conditions and closes positions before the session ends. Every event is logged for review.',
       points: [
         'Stops tightened by rule as the trade develops',
-        'Time-based exits and end-of-session flattening',
+        'Time-based exits and end-of-session close-out',
         'Every order, fill and adjustment recorded',
       ],
-      tags: ['Trailing logic', 'Session flatten', 'Full audit log'],
+      tags: ['Trailing logic', 'Session close-out', 'Full audit log'],
     },
   ],
 };
@@ -239,10 +239,10 @@ export const ENGINE = {
 export const ANATOMY = {
   eyebrow: 'Execution',
   exhibit: 'Exhibit 2 · Anatomy of a single trade',
-  titleA: 'Nine decisions.',
-  titleB: 'None of them discretionary.',
+  titleA: 'One trade, nine decisions.',
+  titleB: 'Every one made by rule.',
   lede:
-    'An illustrative walk-through of one long position, from the first data point to the final record. Each step is taken by rule, in sequence, in less time than it takes to read this sentence.',
+    'Here is one illustrative long trade, from the first data point to the final record. Each step follows a written rule and happens in a fixed sequence.',
   steps: [
     { t: '09:41:06.218', tag: 'DATA',   text: 'Price update received · feed healthy' },
     { t: '09:41:06.219', tag: 'REGIME', text: 'Trending · volatility in range · tradeable' },
@@ -261,161 +261,161 @@ export const ANATOMY = {
 export const RISK = {
   eyebrow: 'Risk management',
   exhibit: 'Exhibit 3 · Risk architecture',
-  titleA: 'Four independent layers',
-  titleB: 'of risk control.',
+  titleA: 'Four layers of risk control.',
+  titleB: 'Each one can stop trading on its own.',
   lede:
-    'Risk control in QS1 is structural rather than optional. Four independent layers surround every order, and each one can halt trading on its own.',
+    'Risk control is built into the engine. Four independent layers surround every order, and if any one of them is triggered, trading stops.',
   layers: [
     {
       k: 'L1',
       name: 'Trade',
       title: 'Every position has a hard stop',
-      body: 'No order is placed without a protective stop attached. The maximum loss is defined before entry, not after.',
+      body: 'Each order goes out with a protective stop attached. The maximum loss on the trade is set before entry.',
     },
     {
       k: 'L2',
       name: 'Session',
-      title: 'Daily limits end the day early',
-      body: 'A daily loss limit and a cap on trades stop the engine for the session once reached. A bad day stays a bad day, not a bad month.',
+      title: 'Daily limits end the session',
+      body: 'A daily loss limit and a cap on the number of trades stop the engine for the rest of the session once either is reached. A bad day stays contained to that day.',
     },
     {
       k: 'L3',
       name: 'Account',
-      title: 'Drawdown rules respected by design',
-      body: "Sizing and limits are configured around the account's drawdown rules, keeping a buffer between the account and its limits.",
+      title: 'Drawdown rules built into sizing',
+      body: "Position sizes and limits are set inside the account's drawdown rules, with a buffer between the account and those limits.",
     },
     {
       k: 'L4',
       name: 'System',
       title: 'A kill switch above everything',
-      body: 'Connectivity watchdogs, news blackouts and manual override let the engine stand down instantly if anything looks wrong.',
+      body: 'Connectivity monitoring, news blackouts and a manual override let our team stand the engine down instantly.',
     },
   ],
 };
 
 export const COMPARE = {
   eyebrow: 'Comparison',
-  titleA: 'Discretionary and',
-  titleB: 'systematic execution.',
-  you: 'Discretionary',
+  titleA: 'Manual trading',
+  titleB: 'compared with QS1.',
+  you: 'Manual trading',
   qs: 'QS1',
   rows: [
-    { k: 'Reaction', you: 'After you notice, think and click', qs: 'The moment conditions are met' },
-    { k: 'Hours covered', you: "When you're awake and at the screen", qs: "Every session it's configured to trade" },
-    { k: 'After a loss', you: 'Fear, frustration, the urge to win it back', qs: 'Next trade judged exactly like the last' },
+    { k: 'Reaction', you: 'After you notice, decide and click', qs: 'As soon as conditions are met' },
+    { k: 'Hours covered', you: "While you're awake and at the screen", qs: 'Every session it is set to trade' },
+    { k: 'After a loss', you: 'Pressure to win it back', qs: 'Next trade evaluated on its own merits' },
     { k: 'Rule adherence', you: 'Most of the time', qs: 'Every time, enforced in code' },
-    { k: 'Stop-losses', you: 'Sometimes moved, sometimes skipped', qs: 'Attached on entry, never removed' },
-    { k: 'Record keeping', you: 'If you remember to journal', qs: 'Every event logged automatically' },
+    { k: 'Stop-losses', you: 'Sometimes moved or skipped', qs: 'Attached on entry and kept in place' },
+    { k: 'Record keeping', you: 'Whatever you remember to journal', qs: 'Every event logged automatically' },
   ],
 };
 
 export const INFRA = {
   eyebrow: 'Infrastructure',
-  titleA: 'Automated,',
-  titleB: 'never unattended.',
+  titleA: 'Automated execution,',
+  titleB: 'monitored by people.',
   lede:
-    'A system is only as good as what keeps it running. QS1 runs on always-on infrastructure and is watched by people who know exactly what normal looks like.',
+    'QS1 runs on always-on servers, and our team watches it every session. Here is what keeps it running.',
   cards: [
     {
       icon: 'cloud',
       title: 'Always-on hosting',
-      body: 'QS1 runs on dedicated servers, not a home computer. No home internet, power cuts or sleeping laptops in the chain.',
+      body: 'QS1 runs on dedicated servers. Execution runs independently of your home internet, power supply or computer.',
     },
     {
       icon: 'pulse',
       title: 'Continuous monitoring',
-      body: 'Connectivity, fills and account state are checked continuously, with alerts the moment anything deviates from normal.',
+      body: 'Connectivity, fills and account state are checked continuously, and alerts fire the moment anything moves outside normal ranges.',
     },
     {
       icon: 'lock',
       title: 'Execution-only access',
-      body: "QS1 connects with trading credentials only. It can place and manage orders. It can't withdraw funds or change account details.",
+      body: 'QS1 connects with trading credentials only. It can place and manage orders. Withdrawals and account changes stay with you.',
     },
     {
       icon: 'eye',
       title: 'Human oversight',
-      body: 'Our team reviews system behavior every session and can pause the engine instantly if conditions demand it.',
+      body: 'Our team reviews system behavior every session and can pause the engine instantly when conditions call for it.',
     },
   ],
 };
 
 export const PROCESS = {
   eyebrow: 'Engagement',
-  titleA: 'From consultation',
-  titleB: 'to live execution.',
+  titleA: 'Four steps',
+  titleB: 'from consultation to live trading.',
   steps: [
     {
       k: '01',
       title: 'Private consultation',
-      body: 'A 45-minute conversation about your goals and experience, and whether QS1 is the right fit. No obligation.',
+      body: 'A 45-minute call about your goals, your experience and whether QS1 fits. No obligation.',
     },
     {
       k: '02',
       title: 'Account setup',
-      body: "We guide you through opening a funded futures account that meets QS1's requirements, step by step.",
+      body: "We guide you step by step through opening a funded futures account that meets QS1's requirements.",
     },
     {
       k: '03',
       title: 'Secure connection',
-      body: 'You share execution-only credentials through an encrypted intake. Your account is configured and connected.',
+      body: 'You share execution-only credentials through an encrypted intake. We configure and connect your account.',
     },
     {
       k: '04',
       title: 'QS1 goes live',
-      body: 'The engine begins trading your account by rule, with our team monitoring every session.',
+      body: 'The engine starts trading your account by rule, and our team monitors every session.',
     },
   ],
 };
 
 export const ACCESS = {
   eyebrow: 'Capacity',
-  title: 'Capacity is deliberately limited.',
+  title: 'We onboard a limited number of accounts each month.',
   body:
-    'Every account is configured and monitored individually. To preserve that standard, we onboard a limited number of new accounts each month. The consultation is where both sides determine whether QS1 is appropriate.',
-  criteriaTitle: 'QS1 is suited to individuals who',
+    'Every account is configured and monitored individually, so we cap new accounts each month to hold that standard. On the consultation, we both decide whether QS1 is the right fit.',
+  criteriaTitle: 'QS1 is built for people who',
   criteria: [
-    'Want market exposure without living at the screen',
-    'Understand that every trading system has losing days',
-    'Value process and discipline over quick wins',
-    'Are ready to let rules, not emotions, make the decisions',
+    'Want exposure to gold futures without watching screens',
+    'Accept that every trading system has losing days',
+    'Value a repeatable process over quick wins',
+    'Are ready to let written rules make the decisions',
   ],
   guaranteeStrong: '45-day money-back guarantee.',
-  guarantee: "If QS1 isn't right for you within 45 days of enrolling, your enrollment fee is refunded in full.",
+  guarantee: 'If QS1 is the wrong fit within 45 days of enrolling, we refund your enrollment fee in full.',
   cta: 'Apply for a consultation',
 };
 
 export const FAQ = [
   {
     q: 'Do I need trading experience?',
-    a: "No. QS1 makes every trading decision and places every order. It helps to understand the basics of how a futures account works, and we walk you through that on the call.",
+    a: 'No. QS1 makes every trading decision and places every order. We walk you through how a futures account works on the call.',
   },
   {
-    q: 'Will I need to watch the screen?',
-    a: "No. QS1 runs without input from you. You can view your account whenever you like, but nothing depends on you being there.",
+    q: 'Do I need to watch the screen?',
+    a: 'No. QS1 runs on its own. You can check your account whenever you like.',
   },
   {
     q: 'What does QS1 trade?',
-    a: "Gold futures on CME's COMEX exchange. Focusing on a single market lets the engine be built and tuned around how that market actually behaves.",
+    a: "Gold futures on CME's COMEX exchange. Trading one market lets us build and tune the engine around how gold actually trades.",
   },
   {
     q: 'Does QS1 have losing trades?',
-    a: "Yes. Every trading system does, and anyone who says otherwise isn't being straight with you. QS1 is designed to keep losses small and defined, with a stop on every trade and hard daily limits, so no single day can do serious damage.",
+    a: 'Yes. Every trading system has losing trades. QS1 defines the loss on each trade in advance with a stop, and daily limits cap how much any single day can lose.',
   },
   {
-    q: 'Can QS1 access my money?',
-    a: "No. QS1 connects with execution-only trading credentials. It can place and manage orders, but it can't withdraw funds or change your account details.",
+    q: 'Can QS1 move or withdraw my money?',
+    a: 'QS1 uses execution-only trading credentials. It can place and manage orders. Withdrawals and account changes stay with you.',
   },
   {
     q: 'How do I get started?',
-    a: "Request a consultation. It takes 45 minutes, there's no obligation, and you'll leave knowing whether QS1 is right for you.",
+    a: 'Request a consultation. It takes 45 minutes, and you leave knowing whether QS1 fits your situation.',
   },
 ];
 
 export const FINAL = {
-  titleA: 'The market reopens tomorrow.',
-  titleB: 'The only question is how you meet it.',
+  titleA: 'Put a disciplined process',
+  titleB: 'between your capital and the market.',
   body:
-    'Continue to rely on judgment under pressure, or place a disciplined system between your strategy and the market. It begins with a private, 45-minute consultation.',
+    'Book a private 45-minute consultation. We will walk you through how QS1 trades, how it controls risk and whether it fits your goals.',
   cta: 'Request your consultation',
   fine: ['45-day money-back guarantee', 'No obligation', 'Limited onboarding each month'],
 };
