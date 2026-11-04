@@ -1,21 +1,39 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import "./globals.css";
+
+const sans = Geist({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Quantara Systems",
+  metadataBase: new URL("https://www.quantarasystems.io"),
+  title: "Quantara Systems — Autonomous execution for gold futures",
   description:
-    "Quantitative market systems. Structured approaches to market data for qualified participants seeking systematic exposure to modeled market dynamics.",
+    "QS1 is an autonomous execution engine for gold futures. It reads the market, classifies conditions, checks risk and places every order by rule, every session.",
+  openGraph: {
+    title: "Quantara Systems",
+    description: "Autonomous execution for gold futures. Engineered to remove the human bottleneck.",
+    url: "https://www.quantarasystems.io",
+    siteName: "Quantara Systems",
+    type: "website",
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  themeColor: "#04070E",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body style={{ margin: 0, padding: 0, background: "#050C1C" }}>
-        {children}
-      </body>
+    <html lang="en" className={`${sans.variable} ${mono.variable} ${serif.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
