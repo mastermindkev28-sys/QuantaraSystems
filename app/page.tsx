@@ -4,7 +4,7 @@ import {
 } from './content';
 import BookButton from './components/BookButton';
 import EnginePipeline from './components/EnginePipeline';
-import HeroConsole from './components/HeroConsole';
+import HeroBar from './components/HeroBar';
 import { Check, INFRA_ICONS, Plus } from './components/Icons';
 import MarketStrip from './components/MarketStrip';
 import Nav from './components/Nav';
@@ -13,11 +13,14 @@ import RevealObserver from './components/RevealObserver';
 import RiskRings from './components/RiskRings';
 import TradeAnatomy from './components/TradeAnatomy';
 
-function Head({ eyebrow, a, b, lede, split }: { eyebrow: string; a: string; b: string; lede?: string; split?: boolean }) {
+function Head({ n, eyebrow, a, b, lede, split }: { n?: string; eyebrow: string; a: string; b: string; lede?: string; split?: boolean }) {
   return (
     <div className={`section-head${split ? ' section-head--split' : ''}`}>
-      <div style={{ display: 'grid', gap: 24 }}>
-        <span className="eyebrow reveal">{eyebrow}</span>
+      <div style={{ display: 'grid', gap: 28 }}>
+        <span className="eyebrow reveal">
+          {n && <span className="numeral">{n}.</span>}
+          {eyebrow}
+        </span>
         <h2 className="h2 reveal" data-delay="1">
           {a} <span className="serif silver">{b}</span>
         </h2>
@@ -39,31 +42,30 @@ export default function Page() {
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section className="hero">
           <div className="hero__glow" />
-          <div className="hero__grid" />
-          <div className="wrap hero__layout">
-            <div className="hero__copy">
-              <span className="chip hero-in" style={{ animationDelay: '0.05s' }}>
-                <span className="live-dot" />
-                {HERO.chip}
-              </span>
-              <h1 className="display hero-in" style={{ animationDelay: '0.15s' }}>
-                {HERO.titleA}{' '}
-                <span className="serif silver">{HERO.titleB}</span>
-              </h1>
-              <p className="lede hero-in" style={{ animationDelay: '0.3s' }}>{HERO.lede}</p>
-              <div className="hero__ctas hero-in" style={{ animationDelay: '0.45s' }}>
-                <BookButton>{HERO.primary}</BookButton>
-                <a href="#engine" className="btn btn--ghost">{HERO.secondary}</a>
-              </div>
-              <div className="hero__trust hero-in" style={{ animationDelay: '0.6s' }}>
-                {HERO.trust.map(t => (
-                  <span key={t}><Check />{t}</span>
-                ))}
-              </div>
+          <svg className="hero__rings" viewBox="-500 -500 1000 1000" aria-hidden="true">
+            <g>
+              {[180, 260, 340, 420, 496].map((r, i) => (
+                <circle key={r} r={r} fill="none" style={{ stroke: `rgba(var(--tint), ${0.11 - i * 0.015})` }} strokeDasharray={i % 2 ? '1 9' : undefined} />
+              ))}
+            </g>
+          </svg>
+          <div className="wrap hero__inner">
+            <span className="emblem hero-in" style={{ animationDelay: '0.05s' }}>
+              <QMark id="hero" size={52} />
+            </span>
+            <span className="eyebrow eyebrow--centered hero-in" style={{ animationDelay: '0.15s' }}>{HERO.eyebrow}</span>
+            <h1 className="display hero-in" style={{ animationDelay: '0.25s' }}>
+              {HERO.titleA}{' '}
+              <span className="serif silver">{HERO.titleB}</span>
+            </h1>
+            <p className="lede hero-in" style={{ animationDelay: '0.4s' }}>{HERO.lede}</p>
+            <div className="hero__ctas hero-in" style={{ animationDelay: '0.55s' }}>
+              <BookButton>{HERO.primary}</BookButton>
+              <a href="#engine" className="btn btn--ghost">{HERO.secondary}</a>
             </div>
-            <div className="hero-in" style={{ animationDelay: '0.35s' }}>
-              <HeroConsole />
-            </div>
+          </div>
+          <div className="wrap hero-in" style={{ animationDelay: '0.75s' }}>
+            <HeroBar />
           </div>
         </section>
 
@@ -72,7 +74,7 @@ export default function Page() {
         {/* ── The problem ──────────────────────────────────────────────────── */}
         <section className="section" id="why">
           <div className="wrap">
-            <Head eyebrow={PROBLEM.eyebrow} a={PROBLEM.titleA} b={PROBLEM.titleB} lede={PROBLEM.lede} split />
+            <Head n="I" eyebrow={PROBLEM.eyebrow} a={PROBLEM.titleA} b={PROBLEM.titleB} lede={PROBLEM.lede} split />
             <div className="problem__grid reveal">
               {PROBLEM.flaws.map(f => (
                 <article key={f.k} className="flaw">
@@ -85,7 +87,8 @@ export default function Page() {
                 </article>
               ))}
             </div>
-            <p className="statement reveal">
+            <div className="ornament reveal" style={{ marginTop: 'clamp(80px, 10vw, 140px)' }}><QMark id="orn" size={22} /></div>
+            <p className="statement reveal" style={{ marginTop: 40 }}>
               {PROBLEM.statementA} <strong>{PROBLEM.statementB}</strong> {PROBLEM.statementC}
             </p>
           </div>
@@ -96,7 +99,7 @@ export default function Page() {
         {/* ── Engine ───────────────────────────────────────────────────────── */}
         <section className="section engine" id="engine">
           <div className="wrap">
-            <Head eyebrow={ENGINE.eyebrow} a={ENGINE.titleA} b={ENGINE.titleB} lede={ENGINE.lede} split />
+            <Head n="II" eyebrow={ENGINE.eyebrow} a={ENGINE.titleA} b={ENGINE.titleB} lede={ENGINE.lede} split />
             <div className="reveal">
               <EnginePipeline />
             </div>
@@ -106,7 +109,7 @@ export default function Page() {
         {/* ── Anatomy of a trade ───────────────────────────────────────────── */}
         <section className="section" id="execution" style={{ paddingTop: 0 }}>
           <div className="wrap">
-            <Head eyebrow={ANATOMY.eyebrow} a={ANATOMY.titleA} b={ANATOMY.titleB} lede={ANATOMY.lede} split />
+            <Head n="III" eyebrow={ANATOMY.eyebrow} a={ANATOMY.titleA} b={ANATOMY.titleB} lede={ANATOMY.lede} split />
             <div className="reveal">
               <TradeAnatomy />
             </div>
@@ -119,7 +122,7 @@ export default function Page() {
         {/* ── Risk ─────────────────────────────────────────────────────────── */}
         <section className="section" id="risk">
           <div className="wrap">
-            <Head eyebrow={RISK.eyebrow} a={RISK.titleA} b={RISK.titleB} lede={RISK.lede} split />
+            <Head n="IV" eyebrow={RISK.eyebrow} a={RISK.titleA} b={RISK.titleB} lede={RISK.lede} split />
             <div className="reveal">
               <RiskRings />
             </div>
@@ -129,7 +132,7 @@ export default function Page() {
         {/* ── Comparison ───────────────────────────────────────────────────── */}
         <section className="section" style={{ paddingTop: 0 }}>
           <div className="wrap">
-            <Head eyebrow={COMPARE.eyebrow} a={COMPARE.titleA} b={COMPARE.titleB} />
+            <Head n="V" eyebrow={COMPARE.eyebrow} a={COMPARE.titleA} b={COMPARE.titleB} />
             <div className="panel compare reveal">
               <div className="compare__row compare__row--head">
                 <div className="compare__cell" />
@@ -152,7 +155,7 @@ export default function Page() {
         {/* ── Infrastructure ───────────────────────────────────────────────── */}
         <section className="section">
           <div className="wrap">
-            <Head eyebrow={INFRA.eyebrow} a={INFRA.titleA} b={INFRA.titleB} lede={INFRA.lede} split />
+            <Head n="VI" eyebrow={INFRA.eyebrow} a={INFRA.titleA} b={INFRA.titleB} lede={INFRA.lede} split />
             <div className="infra">
               {INFRA.cards.map((c, i) => {
                 const Icon = INFRA_ICONS[c.icon as keyof typeof INFRA_ICONS];
@@ -171,7 +174,7 @@ export default function Page() {
         {/* ── Process + access ─────────────────────────────────────────────── */}
         <section className="section" id="access" style={{ paddingTop: 0 }}>
           <div className="wrap">
-            <Head eyebrow={PROCESS.eyebrow} a={PROCESS.titleA} b={PROCESS.titleB} />
+            <Head n="VII" eyebrow={PROCESS.eyebrow} a={PROCESS.titleA} b={PROCESS.titleB} />
             <ol className="steps">
               {PROCESS.steps.map((s, i) => (
                 <li key={s.k} className="step reveal" data-delay={String(i + 1)}>
@@ -213,7 +216,7 @@ export default function Page() {
         {/* ── FAQ ──────────────────────────────────────────────────────────── */}
         <section className="section" id="faq">
           <div className="wrap" style={{ display: 'grid', gap: 48 }}>
-            <Head eyebrow="Questions" a="Asked" b="before every call." />
+            <Head n="VIII" eyebrow="Questions" a="Asked" b="before every call." />
             <div className="faq reveal">
               {FAQ.map(f => (
                 <details key={f.q}>

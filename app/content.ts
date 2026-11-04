@@ -23,24 +23,16 @@ export const NAV = [
 ];
 
 export const HERO = {
-  chip: 'QS1 · Autonomous execution · Gold futures',
+  eyebrow: 'QS1 · Autonomous execution for gold futures',
   titleA: 'Engineered to trade',
   titleB: 'the way you know you should.',
   lede:
     'QS1 is an autonomous execution engine for gold futures. It reads the market, decides whether conditions are worth trading, checks every order against hard risk limits, and executes by rule, every session it runs. No hesitation. No second-guessing. No revenge trades.',
-  primary: 'Book a strategy call',
-  secondary: 'See how it works',
-  trust: ['Fully automated execution', 'Hard risk limits on every order', 'Monitored by our team'],
+  primary: 'Request a consultation',
+  secondary: 'Explore the engine',
 };
 
-export const CONSOLE_STAGES = [
-  'Ingest market data',
-  'Classify regime',
-  'Evaluate setup',
-  'Pre-trade risk checks',
-  'Route bracket order',
-  'Manage position',
-];
+export const NAV_CTA = 'Request access';
 
 export const PROBLEM = {
   eyebrow: 'The human bottleneck',
@@ -281,7 +273,7 @@ export const PROCESS = {
   steps: [
     {
       k: '01',
-      title: 'Strategy call',
+      title: 'Private consultation',
       body: 'A 45-minute conversation about your goals and experience, and whether QS1 is the right fit. No obligation.',
     },
     {
@@ -316,7 +308,7 @@ export const ACCESS = {
   ],
   guaranteeStrong: '45-day money-back guarantee.',
   guarantee: "If QS1 isn't right for you within 45 days of enrolling, your enrollment fee is refunded in full.",
-  cta: 'Apply for a strategy call',
+  cta: 'Apply for a consultation',
 };
 
 export const FAQ = [
@@ -342,7 +334,7 @@ export const FAQ = [
   },
   {
     q: 'How do I get started?',
-    a: "Book a strategy call. It takes 45 minutes, there's no obligation, and you'll leave knowing whether QS1 is right for you.",
+    a: "Request a consultation. It takes 45 minutes, there's no obligation, and you'll leave knowing whether QS1 is right for you.",
   },
 ];
 
@@ -351,7 +343,7 @@ export const FINAL = {
   titleB: "Decide how you'll meet it.",
   body:
     'Keep trading on willpower, or put a system between your plan and the market. It starts with one 45-minute conversation.',
-  cta: 'Book your strategy call',
+  cta: 'Request your consultation',
   fine: ['45-day money-back guarantee', 'No obligation', 'Limited onboarding each month'],
 };
 
