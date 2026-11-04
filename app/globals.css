@@ -1706,8 +1706,9 @@ button {
 }
 
 /* ── Dark scheme ────────────────────────────────────────────────────────────── */
-/* Applies when COLOR_SCHEME is 'dark', or 'auto' on a device set to dark. Navy
-   fields sit slightly above the page so they still read as distinct panels. */
+/* The site is dark-only: <html data-scheme="dark"> is always set, so these tokens
+   override the base set above. Navy fields sit slightly above the page so they
+   still read as distinct panels. */
 :root[data-scheme="dark"] {
   --navy: #10264a;
   --navy-2: #143058;
@@ -1750,49 +1751,6 @@ button {
   color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root[data-scheme="auto"] {
-    --navy: #10264a;
-    --navy-2: #143058;
-    --navy-3: #1b3a68;
-    --ink: #e3e9f2;
-    --stone: #0c1729;
-    --bg: #08111f;
-    --bg-2: #0c1729;
-    --surface: #0e1a2e;
-    --surface-2: #101e34;
-    --well: #0b1626;
-    --nav-bg: #08111f;
-    --logo-filter: none;
-    --tint: 210, 222, 240;
-    --line: rgba(var(--tint), 0.1);
-    --line-2: rgba(var(--tint), 0.18);
-    --line-3: rgba(var(--tint), 0.32);
-    --rule: var(--ink);
-    --text: #eef2f7;
-    --text-rgb: 238, 242, 247;
-    --text-2: #b4bfce;
-    --text-3: #8592a6;
-    --text-4: #5e6b80;
-    --silver-2: #9aacc6;
-    --silver-3: #6e7f99;
-    --silver-4: #34445c;
-    --mark-1: #ffffff;
-    --mark-2: #d8e0ea;
-    --mark-3: #aab8cb;
-    --mark-4: #8296b2;
-    --price: #e3e9f2;
-    --signal: #8fb4f0;
-    --signal-rgb: 143, 180, 240;
-    --up: #5cc99b;
-    --up-rgb: 92, 201, 155;
-    --down: #f08a94;
-    --btn-bg: #eef2f7;
-    --btn-bg-hover: #ffffff;
-    --btn-fg: #0b1e3a;
-    color-scheme: dark;
-  }
-}
 
 /* ── Utilities ──────────────────────────────────────────────────────────────── */
 .skip {
@@ -2128,7 +2086,7 @@ button {
 .platforms__list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--cols, 3), 1fr);
   border-top: 1px solid var(--line-2);
   border-left: 1px solid var(--line);
 }

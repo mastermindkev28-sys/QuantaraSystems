@@ -15,7 +15,7 @@ export default function Platforms() {
         {PLATFORMS.groups.map(g => (
           <div key={g.label} className="platforms__group reveal">
             <p className="platforms__label">{g.label}</p>
-            <ul className="platforms__list">
+            <ul className="platforms__list" style={{ ['--cols' as string]: g.items.length }}>
               {g.items.map((i: { slug: string; name: string; withName?: boolean }) => {
                 const file = ['png', 'svg'].map(ext => `/logos/${i.slug}.${ext}`)
                   .find(f => fs.existsSync(path.join(process.cwd(), 'public', f)));
