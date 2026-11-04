@@ -79,11 +79,13 @@ export const PLATFORMS = {
 };
 
 // Photography. Drop an image at the path below and it replaces the fallback
-// automatically. Every photo is toned to the brand navy so the set stays consistent.
+// automatically. Every photo is toned to the brand navy so the set stays consistent;
+// tone 'mono' renders a photo fully in navy, for images whose own colors clash.
+// Current photos are from Unsplash (free under the Unsplash License).
 export const PHOTOS = {
   hero: { src: '/photos/hero.jpg', alt: 'Gold bullion bars on a dark surface' },
   approach: { src: '/photos/approach.jpg', alt: 'Trading workstation with market data on screen' },
-  risk: { src: '/photos/risk.jpg', alt: 'Rows of servers in a data center' },
+  risk: { src: '/photos/risk.jpg', alt: 'Server cooling fans in a data center', tone: 'mono' as const },
   engagement: { src: '/photos/engagement.jpg', alt: 'Glass office tower seen from below' },
 };
 
