@@ -41,6 +41,7 @@ const PATH = PTS.map(([x, y], i) => `${i ? 'L' : 'M'}${x},${y}`).join(' ');
 
 export default function TradeAnatomy() {
   const steps = ANATOMY.steps;
+  const tk = ANATOMY.ticket;
   const [step, setStep] = useState(-1);
   const [playing, setPlaying] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -85,7 +86,7 @@ export default function TradeAnatomy() {
     <div className="anatomy" ref={root}>
       <div className="panel chart">
         <div className="chart__head mono">
-          <span>GC · Illustrative trade · 1m</span>
+          <span>{tk.symbol} · {tk.name} · 1m</span>
           <span>{step >= steps.length - 1 ? 'Complete' : step >= 0 ? steps[step].tag : 'Waiting'}</span>
         </div>
         <svg viewBox="0 0 640 420" role="img" aria-label="Illustrative chart of a single long trade from entry to target">
@@ -104,23 +105,23 @@ export default function TradeAnatomy() {
           ))}
 
           {/* Regime band */}
-          <rect x="116" y="0" width="524" height="420" style={{ fill: 'rgba(var(--signal-rgb),0.035)', opacity: at(1) ? 1 : 0, transition: 'opacity .6s' }} />
-          <text x="124" y="20" className="viz__label" style={{ fill: 'var(--signal)', opacity: at(1) ? 0.8 : 0, transition: 'opacity .6s' }}>REGIME · TRENDING</text>
+          <rect x="116" y="0" width="524" height="420" style={{ fill: 'rgba(var(--cyan-rgb),0.04)', opacity: at(1) ? 1 : 0, transition: 'opacity .6s' }} />
+          <text x="124" y="20" className="viz__label" style={{ fill: 'var(--cyan)', opacity: at(1) ? 0.8 : 0, transition: 'opacity .6s' }}>REGIME · TRENDING</text>
 
           {/* Bracket lines */}
           <g style={{ opacity: at(4) ? 1 : 0, transition: 'opacity .6s' }}>
-            <line x1={ENTRY.x} x2="640" y1={TARGET_Y} y2={TARGET_Y} strokeDasharray="4 5" style={{ stroke: 'var(--silver-2)' }} />
-            <text x="632" y={TARGET_Y - 8} textAnchor="end" className="viz__label" style={{ fill: 'var(--silver-2)' }}>TARGET</text>
+            <line x1={ENTRY.x} x2="640" y1={TARGET_Y} y2={TARGET_Y} strokeDasharray="4 5" style={{ stroke: 'var(--steel)' }} />
+            <text x="632" y={TARGET_Y - 8} textAnchor="end" className="viz__label" style={{ fill: 'var(--steel)' }}>TARGET {tk.target}</text>
             <line x1={ENTRY.x} x2="640" y1={ENTRY.y} y2={ENTRY.y} style={{ stroke: 'rgba(var(--text-rgb),0.45)' }} />
-            <text x="632" y={ENTRY.y - 8} textAnchor="end" className="viz__label" style={{ fill: 'var(--text)' }}>ENTRY</text>
+            <text x="632" y={ENTRY.y - 8} textAnchor="end" className="viz__label" style={{ fill: 'var(--text)' }}>ENTRY {tk.entry}</text>
             <line x1={ENTRY.x} x2={at(6) ? BE_X : 640} y1={STOP_Y} y2={STOP_Y} strokeDasharray="4 5" style={{ stroke: 'var(--down)', transition: 'all .6s' }} />
-            <text x={at(6) ? BE_X - 8 : 632} y={STOP_Y + 18} textAnchor="end" className="viz__label" style={{ fill: 'var(--down)' }}>STOP</text>
+            <text x={at(6) ? BE_X - 8 : 632} y={STOP_Y + 18} textAnchor="end" className="viz__label" style={{ fill: 'var(--down)' }}>STOP {tk.stop}</text>
           </g>
           {/* Stop moved to entry */}
           <g style={{ opacity: at(6) ? 1 : 0, transition: 'opacity .6s' }}>
             <line x1={BE_X} x2={BE_X} y1={STOP_Y} y2={ENTRY.y} strokeDasharray="2 4" style={{ stroke: 'var(--down)' }} />
             <line x1={BE_X} x2="640" y1={ENTRY.y + 1} y2={ENTRY.y + 1} strokeDasharray="4 5" style={{ stroke: 'var(--down)' }} />
-            <text x={BE_X + 8} y={ENTRY.y + 18} className="viz__label" style={{ fill: 'var(--down)' }}>STOP → ENTRY</text>
+            <text x={BE_X + 8} y={ENTRY.y + 18} className="viz__label" style={{ fill: 'var(--down)' }}>STOP → {tk.breakeven}</text>
           </g>
 
           {/* Price */}
@@ -139,33 +140,46 @@ export default function TradeAnatomy() {
           <g style={{ opacity: at(7) ? 1 : 0, transition: 'opacity .5s' }}>
             <circle cx={EXIT.x} cy={EXIT.y} r="5" style={{ fill: 'var(--up)' }} />
             <circle cx={EXIT.x} cy={EXIT.y} r="13" fill="none" style={{ stroke: 'rgba(var(--up-rgb),0.35)' }} />
-            <text x={EXIT.x} y={EXIT.y - 20} textAnchor="middle" className="viz__label" style={{ fill: 'var(--up)' }}>EXIT</text>
+            <text x={EXIT.x - 18} y={EXIT.y + 4} textAnchor="end" className="viz__label" style={{ fill: 'var(--up)' }}>EXIT</text>
           </g>
         </svg>
+        <dl className="ticket mono" aria-label="Trade ticket">
+          <div><dt>Side</dt><dd>{tk.side} {tk.qty}</dd></div>
+          <div><dt>Entry</dt><dd>{tk.entry}</dd></div>
+          <div><dt>Stop</dt><dd className="down">{at(6) ? tk.breakeven : tk.stop}</dd></div>
+          <div><dt>Target</dt><dd>{tk.target}</dd></div>
+          <div className="ticket__status"><dt>Status</dt><dd>{step >= 0 ? steps[step].status : 'Waiting'}</dd></div>
+        </dl>
         <div className="legend">
           <span><i style={{ background: 'var(--price)' }} />Price</span>
-          <span><i style={{ background: 'var(--silver-2)' }} />Target</span>
+          <span><i style={{ background: 'var(--steel)' }} />Target</span>
           <span><i style={{ background: 'var(--down)' }} />Protective stop</span>
-          <span><i style={{ background: 'var(--signal)' }} />Tradeable regime</span>
+          <span><i style={{ background: 'var(--cyan)' }} />Tradeable regime</span>
         </div>
       </div>
 
       <div className="panel log">
         <div className="log__head mono">
           <span>Engine log</span>
-          <span className="console__status"><span className="live-dot" />{step >= 0 ? `${step + 1} / ${steps.length}` : 'Ready'}</span>
+          <span className="console__status">{step >= 0 ? `Event ${step + 1} / ${steps.length}` : 'Ready'}</span>
         </div>
         <ol className="log__lines mono" aria-live="polite">
           {steps.map((l, i) => (
-            <li key={l.t + l.tag} className={`logline${i <= step ? ' is-shown' : ''}${i === step ? ' is-current' : ''}`}>
-              <span className="logline__t">{l.t}</span>
-              <span className="logline__tag">{l.tag}</span>
-              <span>{l.text}</span>
+            <li key={l.t + l.tag}>
+              <button
+                className={`logline${i <= step ? ' is-shown' : ''}${i === step ? ' is-current' : ''}`}
+                onClick={() => { setPlaying(false); setStep(i); }}
+                aria-current={i === step ? 'step' : undefined}
+              >
+                <span className="logline__t">{l.t}</span>
+                <span className="logline__tag">{l.tag}</span>
+                <span>{l.text}</span>
+              </button>
             </li>
           ))}
         </ol>
         <div className="log__foot">
-          <span>{steps.length} decisions · all made by rule</span>
+          <span>{steps.length} decisions · select an event to inspect it</span>
           <button className="replay" onClick={play} disabled={playing} style={{ opacity: playing ? 0.5 : 1 }}>
             <Replay /> Replay
           </button>

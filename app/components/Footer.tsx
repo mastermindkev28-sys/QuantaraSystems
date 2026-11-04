@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { DISCLOSURE, FOOTER_NAV } from '../content';
+import { COMPANY, DISCLOSURE, FOOTER_NAV } from '../content';
 import Logo from './Logo';
 
 export default function Footer() {
@@ -13,8 +13,9 @@ export default function Footer() {
               <span className="brand__word">Quantara <span>Systems</span></span>
             </Link>
             <p className="body muted" style={{ maxWidth: 360, fontSize: 15 }}>
-              Systematic execution for COMEX gold futures.
+              {COMPANY.tagline}
             </p>
+            <p className="muted" style={{ fontSize: 13 }}>{COMPANY.line}</p>
           </div>
           <nav className="footer__cols" aria-label="Footer">
             {FOOTER_NAV.map(col => (

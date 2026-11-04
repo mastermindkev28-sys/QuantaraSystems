@@ -7,11 +7,13 @@ export default function Sparkline({
   id,
   positive = true,
   height = 64,
+  color: override,
 }: {
   points?: Point[];
   id: string;
   positive?: boolean;
   height?: number;
+  color?: string;
 }) {
   const W = 480, H = height, pad = 4;
   const prices =
@@ -24,7 +26,7 @@ export default function Sparkline({
   const y = (p: number) => H - pad - ((p - min) / range) * (H - pad * 2);
   const line = prices.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p).toFixed(1)}`).join(' ');
   const area = `${line} L${W},${H} L0,${H} Z`;
-  const color = !live ? 'var(--text-4)' : positive ? 'var(--up)' : 'var(--down)';
+  const color = !live ? 'var(--text-4)' : override ?? (positive ? 'var(--up)' : 'var(--down)');
   return (
     <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" width="100%" height={H} aria-hidden="true" style={{ display: 'block' }}>
       <defs>
