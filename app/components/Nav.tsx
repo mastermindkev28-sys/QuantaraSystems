@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { NAV } from '../content';
+import { NAV, NAV_CTA } from '../content';
 import BookButton from './BookButton';
 import QMark from './QMark';
 
@@ -37,11 +37,11 @@ export default function Nav() {
               <a key={l.href} href={l.href}>{l.label}</a>
             ))}
           </nav>
-          <BookButton size="sm" arrow={false}>Book a call</BookButton>
+          <BookButton size="sm" arrow={false}>{NAV_CTA}</BookButton>
         </div>
       </header>
       <div className={`mobile-cta${showCta ? ' is-shown' : ''}`} aria-hidden={!showCta}>
-        <BookButton>Book a strategy call</BookButton>
+        <BookButton>Request a consultation</BookButton>
       </div>
     </>
   );
