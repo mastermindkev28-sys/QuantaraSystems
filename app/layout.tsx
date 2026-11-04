@@ -3,7 +3,6 @@ import { Inter, Inter_Tight } from "next/font/google";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import RevealObserver from "./components/RevealObserver";
-import { COLOR_SCHEME } from "./content";
 import "./globals.css";
 
 // One sober typeface family: Inter Tight for headlines, Inter for reading text and figures.
@@ -28,21 +27,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: COLOR_SCHEME === "light" ? "#ffffff" : "#08111f" },
-  ],
+  themeColor: "#08111f",
+  colorScheme: "dark",
 };
-
-// Lets a reviewer preview dark mode with ?scheme=dark before it's switched on.
-const PREVIEW = `try{var s=new URLSearchParams(location.search).get("scheme");if(s==="dark"||s==="light"||s==="auto")document.documentElement.dataset.scheme=s}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scheme={COLOR_SCHEME} className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: PREVIEW }} />
-      </head>
+    <html lang="en" data-scheme="dark" className={`${sans.variable} ${display.variable}`}>
       <body>
         <a href="#main" className="skip">Skip to content</a>
         <RevealObserver />

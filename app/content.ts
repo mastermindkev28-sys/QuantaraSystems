@@ -6,11 +6,6 @@
 // automated, rules-based futures engine, but only you know QS1's exact internals.
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Color scheme. 'light' always; 'auto' follows each visitor's device setting;
-// 'dark' always. Any page can be previewed in another scheme with ?scheme=light
-// (or dark, or auto).
-export const COLOR_SCHEME: 'light' | 'auto' | 'dark' = 'dark';
-
 export const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/45min';
 
 export const NAV = [
@@ -62,7 +57,6 @@ export const PLATFORMS = {
       items: [
         { slug: 'topstep', name: 'Topstep' },
         { slug: 'lucid', name: 'Lucid Trading' },
-        { slug: 'tpt', name: 'Take Profit Trader' },
       ],
     },
     {
