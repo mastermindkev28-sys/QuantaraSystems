@@ -17,7 +17,7 @@ export default function RiskPage() {
       <PageHero
         eyebrow="Risk management"
         title="Limits that hold under pressure."
-        lede="Risk control in QS1 is structural. It is enforced before an order is sent, monitored while a position is open, and backed by people who can stand the system down."
+        lede="QS1 enforces risk limits before an order is sent, monitors them while a position is open, and gives our team the ability to stand the system down at any time."
       />
 
       <section className="section">

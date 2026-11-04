@@ -9,7 +9,7 @@ import TradeAnatomy from '../components/TradeAnatomy';
 
 export const metadata: Metadata = {
   title: 'Approach',
-  description: 'How QS1 executes: a six-stage process from market data to position management, applied to every order without discretion.',
+  description: 'How QS1 executes: a six-stage process from market data to position management, applied by rule to every order.',
 };
 
 export default function ApproachPage() {
@@ -17,8 +17,8 @@ export default function ApproachPage() {
     <>
       <PageHero
         eyebrow="Approach"
-        title="A process, not a prediction."
-        lede="QS1 does not rely on forecasting skill. It relies on carrying out a defined process the same way every time, from the first data point to the final record."
+        title="One process, run the same way every time."
+        lede="QS1 runs a defined process from the first data point to the final record, and runs it identically on every order. Here is each stage, a single trade from start to finish, and how it compares with trading by hand."
       />
 
       <section className="section">

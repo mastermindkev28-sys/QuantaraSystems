@@ -64,14 +64,14 @@ export default function Home() {
       </section>
 
       <div className="wrap reveal">
-        <Photo {...PHOTOS.hero} ratio="21 / 8" caption="QS1 trades a single market: COMEX gold futures." />
+        <Photo {...PHOTOS.hero} ratio="21 / 8" caption="QS1 trades one market: COMEX gold futures." />
       </div>
 
       {/* ── 02 Approach (summary) ────────────────────────────────────────── */}
       <section className="section">
         <div className="wrap">
           <Head idx="02" eyebrow={ENGINE.eyebrow} a={ENGINE.titleA} b={ENGINE.titleB}
-            lede="Every order passes through the same six stages, in the same order, without exception." />
+            lede="Every order goes through the same six stages, in the same order, on every trade." />
           <ol className="summary-grid">
             {ENGINE.stages.map((s, i) => (
               <li key={s.key} className="summary draw-in reveal" data-delay={String((i % 3) + 1)}>

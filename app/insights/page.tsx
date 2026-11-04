@@ -16,7 +16,7 @@ export default function InsightsPage() {
       <PageHero
         eyebrow="Insights"
         title="Notes on execution and risk."
-        lede="Short research notes on the ideas behind QS1. Written for readers who want to understand how systematic execution works, not to be sold on it."
+        lede="Short research notes on how systematic execution works and why we built QS1 the way we did."
       />
       <section className="section">
         <div className="wrap">

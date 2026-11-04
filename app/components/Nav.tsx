@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { NAV, NAV_CTA } from '../content';
 import BookButton from './BookButton';
-import QMark from './QMark';
+import Logo from './Logo';
 
 export default function Nav() {
   const pathname = usePathname();
@@ -34,7 +34,7 @@ export default function Nav() {
       <header className={`nav${scrolled ? ' is-scrolled' : ''}${open ? ' is-open' : ''}`}>
         <div className="wrap nav__inner">
           <Link href="/" className="brand" aria-label="Quantara Systems home">
-            <QMark id="nav" size={30} />
+            <Logo size={38} priority />
             <span className="brand__word">
               Quantara <span>Systems</span>
             </span>

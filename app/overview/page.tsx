@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { ENGINE, HERO, PLATFORMS, PROCESS, PROBLEM, RISK } from '../content';
-import QMark from '../components/QMark';
+import Logo from '../components/Logo';
 
 // The printable one-page overview. Rendered to public/quantara-qs1-overview.pdf by
 // `npm run overview:pdf`; viewable here for proofing.
@@ -15,7 +15,7 @@ export default function OverviewPage() {
       <article className="doc">
         <header className="doc__head on-dark">
           <div className="doc__brand">
-            <QMark id="doc" size={34} fan={false} />
+            <Logo size={40} priority />
             <span className="brand__word">Quantara <span>Systems</span></span>
           </div>
           <div>
@@ -40,7 +40,7 @@ export default function OverviewPage() {
             <h2 className="doc__h">02 · The process</h2>
             <ol className="doc__list">
               {ENGINE.stages.map((s, i) => (
-                <li key={s.key}><span>{String(i + 1).padStart(2, '0')}</span><div><b>{s.name}</b> — {s.title}</div></li>
+                <li key={s.key}><span>{String(i + 1).padStart(2, '0')}</span><div><b>{s.name}.</b> {s.title}</div></li>
               ))}
             </ol>
           </div>
@@ -48,13 +48,13 @@ export default function OverviewPage() {
             <h2 className="doc__h">03 · Risk architecture</h2>
             <ol className="doc__list">
               {RISK.layers.map(l => (
-                <li key={l.k}><span>{l.k}</span><div><b>{l.name}</b> — {l.title}.</div></li>
+                <li key={l.k}><span>{l.k}</span><div><b>{l.name}.</b> {l.title}.</div></li>
               ))}
             </ol>
             <h2 className="doc__h">04 · Engagement</h2>
             <ol className="doc__list">
               {PROCESS.steps.map(s => (
-                <li key={s.k}><span>{s.k}</span><div><b>{s.title}</b> — {s.body}</div></li>
+                <li key={s.k}><span>{s.k}</span><div><b>{s.title}.</b> {s.body}</div></li>
               ))}
             </ol>
           </div>
