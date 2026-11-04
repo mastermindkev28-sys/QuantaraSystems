@@ -2006,6 +2006,16 @@ button {
   pointer-events: none;
 }
 
+/* Fully navy treatment for photos whose own colors fight the palette */
+.photo--mono .photo__frame img {
+  filter: grayscale(1) contrast(1.1) brightness(0.9);
+}
+
+.photo--mono .photo__frame::after {
+  background: linear-gradient(180deg, rgba(16, 38, 74, 0.55), rgba(11, 30, 58, 0.7));
+  mix-blend-mode: multiply;
+}
+
 .photo__fallback {
   position: absolute;
   inset: 0;
