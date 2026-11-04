@@ -81,12 +81,12 @@ export const PLATFORMS = {
 // Photography. Drop an image at the path below and it replaces the fallback
 // automatically. Every photo is toned to the brand navy so the set stays consistent;
 // tone 'mono' renders a photo fully in navy, for images whose own colors clash.
-// Current photos are from Unsplash (free under the Unsplash License).
+// Current photos were supplied by Quantara Systems.
 export const PHOTOS = {
-  hero: { src: '/photos/hero.jpg', alt: 'Gold bullion bars on a dark surface' },
-  approach: { src: '/photos/approach.jpg', alt: 'Trading workstation with market data on screen' },
-  risk: { src: '/photos/risk.jpg', alt: 'Server cooling fans in a data center', tone: 'mono' as const },
-  engagement: { src: '/photos/engagement.jpg', alt: 'Glass office tower seen from below' },
+  hero: { src: '/photos/hero.jpg', alt: 'Rows of fine gold bullion bars' },
+  approach: { src: '/photos/approach.jpg', alt: 'Candlestick price chart on a trading screen' },
+  risk: { src: '/photos/risk.jpg', alt: 'Server racks in a data center' },
+  engagement: { src: '/photos/engagement.jpg', alt: 'Market data charts on a monitor' },
 };
 
 export const HERO = {
