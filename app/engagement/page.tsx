@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
-import { FAQ, PHOTOS, PROCESS } from '../content';
+import { FAQ, PROCESS } from '../content';
 import CapacityPanel from '../components/CapacityPanel';
 import FinalCta from '../components/FinalCta';
 import { Plus } from '../components/Icons';
-import Photo from '../components/Photo';
 import { Head, PageHero } from '../components/Section';
 
 export const metadata: Metadata = {
@@ -16,8 +15,8 @@ export default function EngagementPage() {
     <>
       <PageHero
         eyebrow="Engagement"
-        title="A clear path from first call to live trading."
-        lede="Every engagement starts with a private consultation. We configure each account individually and onboard a limited number each month, so every account gets full oversight."
+        title="From private walkthrough to live execution."
+        lede="Every engagement starts with a private walkthrough of the QS1 framework. From there, we configure and connect your account and monitor it every session."
       />
 
       <section className="section">
@@ -35,9 +34,6 @@ export default function EngagementPage() {
         </div>
       </section>
 
-      <div className="wrap reveal">
-        <Photo {...PHOTOS.engagement} ratio="21 / 8" />
-      </div>
 
       <section className="section">
         <div className="wrap">

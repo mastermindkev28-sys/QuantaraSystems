@@ -3,9 +3,89 @@
 import { useEffect, useState } from 'react';
 import { RISK } from '../content';
 
-// Each layer of protection drawn as a ring around the order, echoing the Q mark.
-const RADII = [92, 150, 208, 266];
-const CYCLE_MS = 3800;
+// Risk controls, one illustrative panel per layer. Values are illustrative and
+// show how each control works; they are not account data.
+
+const CYCLE_MS = 4200;
+
+function TradeLayer() {
+  const rows = [
+    { k: 'Target', v: '4,030.4', d: '+12.0 pts', c: 'var(--steel)', pos: 8 },
+    { k: 'Entry', v: '4,018.4', d: '', c: 'var(--text)', pos: 58 },
+    { k: 'Stop', v: '4,012.4', d: '−6.0 pts', c: 'var(--down)', pos: 84 },
+  ];
+  return (
+    <div className="rv rv--trade">
+      <div className="rv__ladder" aria-hidden="true">
+        <span className="rv__zone rv__zone--reward" />
+        <span className="rv__zone rv__zone--risk" />
+        {rows.map(r => (
+          <span key={r.k} className="rv__level" style={{ top: `${r.pos}%`, ['--c' as string]: r.c }}>
+            <b>{r.k}</b><span>{r.v}</span><em>{r.d}</em>
+          </span>
+        ))}
+      </div>
+      <dl className="rv__facts mono">
+        <div><dt>Orders sent</dt><dd>Entry · stop · target together</dd></div>
+        <div><dt>Risk to reward</dt><dd>1 : 2.0</dd></div>
+        <div><dt>Maximum loss</dt><dd>Fixed before entry</dd></div>
+      </dl>
+    </div>
+  );
+}
+
+function Meter({ label, used, of, unit }: { label: string; used: number; of: number; unit: string }) {
+  const pct = Math.round((used / of) * 100);
+  return (
+    <div className="rv__meter">
+      <div className="rv__meter-top mono"><span>{label}</span><span>{used} / {of} {unit}</span></div>
+      <div className="rv__track"><i style={{ width: `${pct}%` }} /></div>
+    </div>
+  );
+}
+
+function SessionLayer() {
+  return (
+    <div className="rv">
+      <Meter label="Daily loss limit used" used={32} of={100} unit="%" />
+      <Meter label="Trades this session" used={3} of={6} unit="cap" />
+      <p className="rv__note">When either limit is reached, new entries stop until the next session.</p>
+    </div>
+  );
+}
+
+function AccountLayer() {
+  return (
+    <div className="rv">
+      <div className="rv__dd" aria-hidden="true">
+        <span className="rv__dd-limit">Drawdown limit</span>
+        <span className="rv__dd-buffer">Buffer kept by sizing</span>
+        <span className="rv__dd-equity">Account equity</span>
+      </div>
+      <p className="rv__note">Position size is set so that a full stop-out keeps the account inside its buffer.</p>
+    </div>
+  );
+}
+
+function SystemLayer() {
+  const rows = [
+    ['Market data feed', 'Connected'],
+    ['Platform API', 'Connected'],
+    ['Scheduled-event window', 'Clear'],
+    ['Manual override', 'Available'],
+  ];
+  return (
+    <div className="rv">
+      <ul className="rv__status mono">
+        {rows.map(([k, v]) => (
+          <li key={k}><span>{k}</span><span className="rv__ok"><i />{v}</span></li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const VIZ = [TradeLayer, SessionLayer, AccountLayer, SystemLayer];
 
 export default function RiskRings() {
   const layers = RISK.layers;
@@ -18,67 +98,36 @@ export default function RiskRings() {
     return () => clearTimeout(t);
   }, [active, hold, layers.length]);
 
+  const Viz = VIZ[active];
   return (
-    <div className="risk">
-      <div className="rings">
-        <svg viewBox="-300 -300 600 600" role="img" aria-label="Four concentric layers of risk protection around each order">
-          <defs>
-            <linearGradient id="rr-g" x1="-300" y1="-300" x2="300" y2="300" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" style={{ stopColor: 'var(--mark-1)' }} />
-              <stop offset="45%" style={{ stopColor: 'var(--mark-2)' }} />
-              <stop offset="100%" style={{ stopColor: 'var(--mark-4)' }} />
-            </linearGradient>
-            <radialGradient id="rr-core">
-              <stop offset="0%" style={{ stopColor: 'rgba(var(--tint),0.18)' }} />
-              <stop offset="100%" style={{ stopColor: 'rgba(var(--tint),0)' }} />
-            </radialGradient>
-            {RADII.map((r, i) => (
-              <path key={r} id={`rr-arc-${i}`} d={`M ${-r},0 A ${r},${r} 0 0 1 ${r},0`} />
-            ))}
-          </defs>
-
-          <circle r="300" fill="url(#rr-core)" opacity="0.35" />
-          {RADII.map((r, i) => {
-            const on = i === active;
-            const inside = i < active;
-            return (
-              <g key={r}>
-                {on && <circle r={r} style={{ fill: 'rgba(var(--tint),0.025)' }} />}
-                <circle
-                  r={r}
-                  fill="none"
-                  style={{ stroke: on ? 'url(#rr-g)' : inside ? 'rgba(var(--tint),0.32)' : 'rgba(var(--tint),0.14)' }}
-                  strokeWidth={on ? 2 : 1}
-                  strokeDasharray={on ? undefined : '2 7'}
-                />
-                <text className="mono" fontSize="14" letterSpacing="2.4" dy="-8" style={{ fill: on ? 'var(--text)' : 'var(--text-3)', transition: 'fill .4s' }}>
-                  <textPath href={`#rr-arc-${i}`} startOffset="50%" textAnchor="middle">
-                    {layers[i].k} · {layers[i].name.toUpperCase()}
-                  </textPath>
-                </text>
-              </g>
-            );
-          })}
-          <circle r="40" style={{ fill: 'var(--surface)', stroke: 'rgba(var(--tint),0.28)' }} />
-          <text y="5" textAnchor="middle" className="mono" fontSize="12" letterSpacing="2" style={{ fill: 'var(--text)' }}>ORDER</text>
-        </svg>
+    <div className="risk" onMouseLeave={() => setHold(false)}>
+      <div className="panel rv-panel">
+        <div className="detail__head mono">
+          <span>{layers[active].k} · {layers[active].name} controls</span>
+          <span className="console__status">Illustrative</span>
+        </div>
+        <div className="rv-panel__body fade-swap" key={active}>
+          <Viz />
+        </div>
       </div>
 
-      <div className="layers" onMouseLeave={() => setHold(false)}>
+      <div className="layers" role="tablist" aria-label="Risk layers">
         {layers.map((l, i) => (
-          <div
+          <button
             key={l.k}
+            role="tab"
+            aria-selected={i === active}
             className={`layer${i === active ? ' is-active' : ''}`}
+            onClick={() => { setHold(true); setActive(i); }}
             onMouseEnter={() => { setHold(true); setActive(i); }}
             onFocus={() => { setHold(true); setActive(i); }}
-            tabIndex={0}
           >
-            <div className="layer__k mono">{l.k} · {l.name}</div>
-            <div>
-              <div className="layer__t">{l.title}</div>
-              <p className="body">{l.body}</p>
-            </div>
-          </div>
+            <span className="layer__k mono">{l.k} · {l.name}</span>
+            <span>
+              <span className="layer__t">{l.title}</span>
+              <span className="body layer__b">{l.body}</span>
+            </span>
+          </button>
         ))}
       </div>
     </div>

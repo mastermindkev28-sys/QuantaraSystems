@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ENGINE, HERO, PLATFORMS, PROCESS, PROBLEM, RISK } from '../content';
+import { COMPANY, ENGINE, HERO, PLATFORMS, PROCESS, PROBLEM, RISK } from '../content';
 import Logo from '../components/Logo';
 
 // The printable one-page overview. Rendered to public/quantara-qs1-overview.pdf by
@@ -69,7 +69,7 @@ export default function OverviewPage() {
 
         <footer className="doc__foot">
           <div className="doc__cta">
-            <p><b>Request a private consultation</b></p>
+            <p><b>Request a private walkthrough</b></p>
             <p>quantarasystems.io/consultation</p>
           </div>
           <p className="doc__legal">

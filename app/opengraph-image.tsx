@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 
 // Branded preview image for links shared on LinkedIn, iMessage, email and so on.
-export const alt = 'Quantara Systems — Systematic execution for COMEX gold futures';
+export const alt = 'Quantara Systems — A process, not a prediction.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -25,9 +25,9 @@ export default function Image() {
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-          <div style={{ display: 'flex', fontSize: 22, letterSpacing: 3, opacity: 0.6 }}>QS1 · SYSTEMATIC EXECUTION</div>
-          <div style={{ display: 'flex', fontSize: 104, letterSpacing: -4, lineHeight: 1, fontWeight: 300 }}>Discipline, engineered.</div>
-          <div style={{ display: 'flex', fontSize: 28, opacity: 0.75 }}>Autonomous execution for COMEX gold futures.</div>
+          <div style={{ display: 'flex', fontSize: 22, letterSpacing: 3, opacity: 0.6 }}>QS1 · QUANTARA SYSTEMS</div>
+          <div style={{ display: 'flex', fontSize: 104, letterSpacing: -4, lineHeight: 1, fontWeight: 300 }}>A process, not a prediction.</div>
+          <div style={{ display: 'flex', fontSize: 28, opacity: 0.75 }}>Systematic execution technology for futures markets.</div>
         </div>
         <div style={{ display: 'flex', height: 2, background: '#ffffff', opacity: 0.9, width: 160 }} />
       </div>

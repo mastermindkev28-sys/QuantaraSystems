@@ -14,7 +14,7 @@ const KEYS = [
   { key: 'BTC', label: 'Bitcoin' },
 ];
 
-export default function MarketStrip() {
+export default function MarketStrip({ exclude = [] }: { exclude?: string[] }) {
   const markets = useMarkets();
   // Computed after mount so server and browser markup match.
   const [gold, setGold] = useState<{ open: boolean; label: string } | null>(null);
@@ -26,10 +26,10 @@ export default function MarketStrip() {
   }, []);
 
   return (
-    <section className="strip" aria-label="Markets">
+    <section className="strip" aria-label="Reference markets">
       <div className="wrap">
         <div className="strip__row">
-          {KEYS.map(({ key, label }) => {
+          {KEYS.filter(k => !exclude.includes(k.key)).map(({ key, label }) => {
             const q = markets?.data.find(d => d.key === key);
             const ok = q && !q.error && typeof q.price === 'number';
             const up = (q?.change ?? 0) >= 0;

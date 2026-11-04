@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ENGINE } from '../content';
-import { useMarkets } from '../lib/useMarkets';
 import StageViz from './StageViz';
 
 const DWELL_S = 7;
+// Illustrative price level used by the stage demonstrations (matches the other demos).
+const ILLUSTRATIVE_BASE = 4018.4;
 
 export default function EnginePipeline() {
   const stages = ENGINE.stages;
@@ -15,9 +16,6 @@ export default function EnginePipeline() {
   const [reduced, setReduced] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const list = useRef<HTMLDivElement>(null);
-  const markets = useMarkets();
-  const gc = markets?.data.find(q => q.key === 'GC');
-  const base = gc && !gc.error ? gc.price : undefined;
 
   useEffect(() => {
     setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -80,8 +78,18 @@ export default function EnginePipeline() {
       <div className="panel detail" id="engine-detail" role="tabpanel">
         <div className="detail__head mono">
           <span>Stage {String(active + 1).padStart(2, '0')} / {String(stages.length).padStart(2, '0')}<span className="hide-sm"> · {s.sub}</span></span>
-          <span className="console__status"><span className="live-dot" />Illustrative</span>
+          <span className="console__status">Illustrative</span>
         </div>
+        <ol className="rail" aria-label="Position in the lifecycle">
+          {stages.map((st, i) => (
+            <li key={st.key} className={i < active ? 'is-done' : i === active ? 'is-active' : ''}>
+              <button onClick={() => setActive(i)} aria-label={`Stage ${i + 1}: ${st.name}`}>
+                <span className="rail__dot" />
+                <span className="rail__label mono">{st.name}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
         <div className="detail__body fade-swap" key={s.key}>
           <div>
             <span className="eyebrow">{s.name}</span>
@@ -92,7 +100,7 @@ export default function EnginePipeline() {
             </ul>
           </div>
           <div className="detail__viz">
-            <StageViz stage={s.key} base={base} />
+            <StageViz stage={s.key} base={ILLUSTRATIVE_BASE} />
           </div>
         </div>
         <div className="detail__foot">
