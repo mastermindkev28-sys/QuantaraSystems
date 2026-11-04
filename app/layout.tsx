@@ -1,33 +1,55 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
+import Footer from "./components/Footer";
+import Nav from "./components/Nav";
+import RevealObserver from "./components/RevealObserver";
+import { COLOR_SCHEME } from "./content";
 import "./globals.css";
 
 // One sober typeface family: Inter Tight for headlines, Inter for reading text and figures.
 const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
-const display = Inter_Tight({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--font-display", display: "swap" });
+const display = Inter_Tight({ subsets: ["latin"], weight: ["200", "300", "400", "500"], variable: "--font-display", display: "swap" });
+
+const DESCRIPTION =
+  "QS1 is an autonomous execution system for COMEX gold futures: market-regime analysis, pre-trade risk controls and rules-based execution, without discretion.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.quantarasystems.io"),
-  title: "Quantara Systems — Systematic execution for gold futures",
-  description:
-    "QS1 is an autonomous execution engine for gold futures. It reads the market, classifies conditions, checks risk and places every order by rule, every session.",
+  title: { default: "Quantara Systems — Systematic execution for gold futures", template: "%s — Quantara Systems" },
+  description: DESCRIPTION,
   openGraph: {
     title: "Quantara Systems",
-    description: "Autonomous execution for gold futures. Engineered to remove the human bottleneck.",
+    description: DESCRIPTION,
     url: "https://www.quantarasystems.io",
     siteName: "Quantara Systems",
     type: "website",
   },
+  twitter: { card: "summary_large_image", title: "Quantara Systems", description: DESCRIPTION },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B1E3A",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: COLOR_SCHEME === "light" ? "#ffffff" : "#08111f" },
+  ],
 };
+
+// Lets a reviewer preview dark mode with ?scheme=dark before it's switched on.
+const PREVIEW = `try{var s=new URLSearchParams(location.search).get("scheme");if(s==="dark"||s==="light"||s==="auto")document.documentElement.dataset.scheme=s}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable}`}>
-      <body>{children}</body>
+    <html lang="en" data-scheme={COLOR_SCHEME} className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: PREVIEW }} />
+      </head>
+      <body>
+        <a href="#main" className="skip">Skip to content</a>
+        <RevealObserver />
+        <Nav />
+        <main id="main">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
