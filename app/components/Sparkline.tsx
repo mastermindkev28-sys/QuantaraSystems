@@ -24,17 +24,17 @@ export default function Sparkline({
   const y = (p: number) => H - pad - ((p - min) / range) * (H - pad * 2);
   const line = prices.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p).toFixed(1)}`).join(' ');
   const area = `${line} L${W},${H} L0,${H} Z`;
-  const color = !live ? '#4a5870' : positive ? '#6fd6ad' : '#f08a94';
+  const color = !live ? 'var(--text-4)' : positive ? 'var(--up)' : 'var(--down)';
   return (
     <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" width="100%" height={H} aria-hidden="true" style={{ display: 'block' }}>
       <defs>
         <linearGradient id={`sp-${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity={live ? 0.22 : 0.08} />
-          <stop offset="100%" stopColor={color} stopOpacity={0} />
+          <stop offset="0%" style={{ stopColor: color, stopOpacity: live ? 0.22 : 0.08 }} />
+          <stop offset="100%" style={{ stopColor: color, stopOpacity: 0 }} />
         </linearGradient>
       </defs>
       <path d={area} fill={`url(#sp-${id})`} />
-      <path d={line} fill="none" stroke={color} strokeWidth="1.5" vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
+      <path d={line} fill="none" style={{ stroke: color }} strokeWidth="1.5" vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
     </svg>
   );
 }

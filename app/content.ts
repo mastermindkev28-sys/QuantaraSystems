@@ -6,6 +6,12 @@
 // automated, rules-based futures engine, but only you know QS1's exact internals.
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Site theme: 'obsidian' | 'ivory' | 'sapphire' | 'petrol'. Any page can also be
+// previewed in another theme by adding ?theme=<name> to the URL.
+export const THEMES = ['obsidian', 'ivory', 'sapphire', 'petrol'] as const;
+export type Theme = (typeof THEMES)[number];
+export const THEME: Theme = 'obsidian';
+
 export const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/45min';
 
 export const NAV = [

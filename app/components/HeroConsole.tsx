@@ -45,14 +45,14 @@ export default function HeroConsole() {
         <svg viewBox="-300 -300 600 600" width="100%" height="100%" aria-hidden="true">
           <defs>
             <linearGradient id="ring-g" x1="-300" y1="-300" x2="300" y2="300" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#F5F8FC" stopOpacity="0.5" />
-              <stop offset="60%" stopColor="#8398B4" stopOpacity="0.15" />
-              <stop offset="100%" stopColor="#61789A" stopOpacity="0" />
+              <stop offset="0%" stopOpacity="0.5" style={{ stopColor: 'var(--mark-1)' }} />
+              <stop offset="60%" stopOpacity="0.15" style={{ stopColor: 'var(--mark-3)' }} />
+              <stop offset="100%" stopOpacity="0" style={{ stopColor: 'var(--mark-4)' }} />
             </linearGradient>
           </defs>
           <g className="console__ring">
             <circle r="280" fill="none" stroke="url(#ring-g)" strokeWidth="1" />
-            <circle r="236" fill="none" stroke="rgba(185,200,220,0.08)" strokeWidth="1" strokeDasharray="2 10" />
+            <circle r="236" fill="none" strokeWidth="1" strokeDasharray="2 10" style={{ stroke: 'rgba(var(--tint),0.08)' }} />
           </g>
         </svg>
       </div>
