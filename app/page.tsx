@@ -4,8 +4,7 @@ import {
 } from './content';
 import BookButton from './components/BookButton';
 import EnginePipeline from './components/EnginePipeline';
-import HeroBar from './components/HeroBar';
-import { Check, INFRA_ICONS, Plus } from './components/Icons';
+import { Arrow, Check, INFRA_ICONS, Plus } from './components/Icons';
 import MarketStrip from './components/MarketStrip';
 import Nav from './components/Nav';
 import QMark from './components/QMark';
@@ -13,19 +12,29 @@ import RevealObserver from './components/RevealObserver';
 import RiskRings from './components/RiskRings';
 import TradeAnatomy from './components/TradeAnatomy';
 
-function Head({ n, eyebrow, a, b, lede, split }: { n?: string; eyebrow: string; a: string; b: string; lede?: string; split?: boolean }) {
+// Section header: index and label on the left, a two-tone statement on the right.
+function Head({ idx, eyebrow, a, b, lede }: { idx: string; eyebrow: string; a: string; b: string; lede?: string }) {
   return (
-    <div className={`section-head${split ? ' section-head--split' : ''}`}>
-      <div style={{ display: 'grid', gap: 28 }}>
-        <span className="eyebrow reveal">
-          {n && <span className="numeral">{n}.</span>}
-          {eyebrow}
-        </span>
+    <header className="section-head">
+      <span className="eyebrow reveal">
+        <span className="idx">{idx}</span>
+        {eyebrow}
+      </span>
+      <div className="section-head__main">
         <h2 className="h2 reveal" data-delay="1">
-          {a} <span className="serif silver">{b}</span>
+          {a} <span className="soft">{b}</span>
         </h2>
+        {lede && <p className="lede reveal" data-delay="2">{lede}</p>}
       </div>
-      {lede && <p className="lede reveal" data-delay="2">{lede}</p>}
+    </header>
+  );
+}
+
+function Exhibit({ title, note }: { title: string; note: string }) {
+  return (
+    <div className="exhibit reveal">
+      <span>{title}</span>
+      <span>{note}</span>
     </div>
   );
 }
@@ -40,46 +49,40 @@ export default function Page() {
 
       <main id="top">
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
-        <section className="hero">
-          <div className="hero__glow" />
-          <svg className="hero__rings" viewBox="-500 -500 1000 1000" aria-hidden="true">
-            <g>
-              {[180, 260, 340, 420, 496].map((r, i) => (
-                <circle key={r} r={r} fill="none" style={{ stroke: `rgba(var(--tint), ${0.11 - i * 0.015})` }} strokeDasharray={i % 2 ? '1 9' : undefined} />
-              ))}
-            </g>
-          </svg>
-          <div className="wrap hero__inner">
-            <span className="emblem hero-in" style={{ animationDelay: '0.05s' }}>
-              <QMark id="hero" size={52} />
-            </span>
-            <span className="eyebrow eyebrow--centered hero-in" style={{ animationDelay: '0.15s' }}>{HERO.eyebrow}</span>
-            <h1 className="display hero-in" style={{ animationDelay: '0.25s' }}>
-              {HERO.titleA}{' '}
-              <span className="serif silver">{HERO.titleB}</span>
-            </h1>
-            <p className="lede hero-in" style={{ animationDelay: '0.4s' }}>{HERO.lede}</p>
-            <div className="hero__ctas hero-in" style={{ animationDelay: '0.55s' }}>
-              <BookButton>{HERO.primary}</BookButton>
-              <a href="#engine" className="btn btn--ghost">{HERO.secondary}</a>
+        <section className="hero on-dark">
+          <QMark id="hero-mark" size="100%" className="hero__mark" stroke={14} fan={false} />
+          <div className="wrap hero__layout">
+            <div className="hero__copy">
+              <span className="eyebrow">{HERO.label}</span>
+              <h1 className="display">{HERO.title}</h1>
+              <p className="lede">{HERO.lede}</p>
+              <div className="hero__ctas">
+                <BookButton>{HERO.primary}</BookButton>
+                <a href="#engine" className="btn btn--ghost">{HERO.secondary}</a>
+              </div>
             </div>
-          </div>
-          <div className="wrap hero-in" style={{ animationDelay: '0.75s' }}>
-            <HeroBar />
+            <dl className="facts">
+              {HERO.facts.map(f => (
+                <div key={f.k}>
+                  <dt>{f.k}</dt>
+                  <dd>{f.v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
 
         <MarketStrip />
 
-        {/* ── The problem ──────────────────────────────────────────────────── */}
+        {/* ── 01 The problem ───────────────────────────────────────────────── */}
         <section className="section" id="why">
           <div className="wrap">
-            <Head n="I" eyebrow={PROBLEM.eyebrow} a={PROBLEM.titleA} b={PROBLEM.titleB} lede={PROBLEM.lede} split />
-            <div className="problem__grid reveal">
-              {PROBLEM.flaws.map(f => (
-                <article key={f.k} className="flaw">
-                  <span className="flaw__k mono">{f.k}</span>
-                  <div className="flaw__big silver">
+            <Head idx="01" eyebrow={PROBLEM.eyebrow} a={PROBLEM.titleA} b={PROBLEM.titleB} lede={PROBLEM.lede} />
+            <div className="problem__grid">
+              {PROBLEM.flaws.map((f, i) => (
+                <article key={f.k} className="flaw reveal" data-delay={String(i + 1)}>
+                  <span className="flaw__k">{f.k}</span>
+                  <div className="flaw__big">
                     {f.big}<small>{f.unit}</small>
                   </div>
                   <h3 className="h3">{f.title}</h3>
@@ -87,29 +90,28 @@ export default function Page() {
                 </article>
               ))}
             </div>
-            <div className="ornament reveal" style={{ marginTop: 'clamp(80px, 10vw, 140px)' }}><QMark id="orn" size={22} /></div>
-            <p className="statement reveal" style={{ marginTop: 40 }}>
+            <p className="statement reveal">
               {PROBLEM.statementA} <strong>{PROBLEM.statementB}</strong> {PROBLEM.statementC}
             </p>
           </div>
         </section>
 
-        <div className="rule" />
-
-        {/* ── Engine ───────────────────────────────────────────────────────── */}
-        <section className="section engine" id="engine">
+        {/* ── 02 Approach ──────────────────────────────────────────────────── */}
+        <section className="section section--stone" id="engine">
           <div className="wrap">
-            <Head n="II" eyebrow={ENGINE.eyebrow} a={ENGINE.titleA} b={ENGINE.titleB} lede={ENGINE.lede} split />
+            <Head idx="02" eyebrow={ENGINE.eyebrow} a={ENGINE.titleA} b={ENGINE.titleB} lede={ENGINE.lede} />
+            <Exhibit title={ENGINE.exhibit} note="Select a stage" />
             <div className="reveal">
               <EnginePipeline />
             </div>
           </div>
         </section>
 
-        {/* ── Anatomy of a trade ───────────────────────────────────────────── */}
-        <section className="section" id="execution" style={{ paddingTop: 0 }}>
+        {/* ── 03 Execution ─────────────────────────────────────────────────── */}
+        <section className="section" id="execution">
           <div className="wrap">
-            <Head n="III" eyebrow={ANATOMY.eyebrow} a={ANATOMY.titleA} b={ANATOMY.titleB} lede={ANATOMY.lede} split />
+            <Head idx="03" eyebrow={ANATOMY.eyebrow} a={ANATOMY.titleA} b={ANATOMY.titleB} lede={ANATOMY.lede} />
+            <Exhibit title={ANATOMY.exhibit} note="Illustrative" />
             <div className="reveal">
               <TradeAnatomy />
             </div>
@@ -117,51 +119,48 @@ export default function Page() {
           </div>
         </section>
 
-        <div className="rule" />
-
-        {/* ── Risk ─────────────────────────────────────────────────────────── */}
-        <section className="section" id="risk">
+        {/* ── 04 Risk ──────────────────────────────────────────────────────── */}
+        <section className="section section--stone" id="risk">
           <div className="wrap">
-            <Head n="IV" eyebrow={RISK.eyebrow} a={RISK.titleA} b={RISK.titleB} lede={RISK.lede} split />
+            <Head idx="04" eyebrow={RISK.eyebrow} a={RISK.titleA} b={RISK.titleB} lede={RISK.lede} />
+            <Exhibit title={RISK.exhibit} note="Hover a layer for detail" />
             <div className="reveal">
               <RiskRings />
             </div>
           </div>
         </section>
 
-        {/* ── Comparison ───────────────────────────────────────────────────── */}
-        <section className="section" style={{ paddingTop: 0 }}>
+        {/* ── 05 Comparison ────────────────────────────────────────────────── */}
+        <section className="section">
           <div className="wrap">
-            <Head n="V" eyebrow={COMPARE.eyebrow} a={COMPARE.titleA} b={COMPARE.titleB} />
-            <div className="panel compare reveal">
-              <div className="compare__row compare__row--head">
-                <div className="compare__cell" />
-                <div className="compare__cell compare__cell--you">{COMPARE.you}</div>
-                <div className="compare__cell compare__cell--qs">{COMPARE.qs}</div>
+            <Head idx="05" eyebrow={COMPARE.eyebrow} a={COMPARE.titleA} b={COMPARE.titleB} />
+            <div className="compare reveal" role="table" aria-label="Discretionary and systematic execution compared">
+              <div className="compare__row compare__row--head" role="row">
+                <div className="compare__cell" role="columnheader" />
+                <div className="compare__cell compare__cell--you" role="columnheader">{COMPARE.you}</div>
+                <div className="compare__cell compare__cell--qs" role="columnheader">{COMPARE.qs}</div>
               </div>
               {COMPARE.rows.map(r => (
-                <div key={r.k} className="compare__row">
-                  <div className="compare__cell compare__cell--k">{r.k}</div>
-                  <div className="compare__cell compare__cell--you"><span>{COMPARE.you}</span>{r.you}</div>
-                  <div className="compare__cell compare__cell--qs"><span>{COMPARE.qs}</span>{r.qs}</div>
+                <div key={r.k} className="compare__row" role="row">
+                  <div className="compare__cell compare__cell--k" role="rowheader">{r.k}</div>
+                  <div className="compare__cell compare__cell--you" role="cell"><span>{COMPARE.you}</span>{r.you}</div>
+                  <div className="compare__cell compare__cell--qs" role="cell"><span>{COMPARE.qs}</span>{r.qs}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <div className="rule" />
-
-        {/* ── Infrastructure ───────────────────────────────────────────────── */}
-        <section className="section">
+        {/* ── 06 Infrastructure ────────────────────────────────────────────── */}
+        <section className="section section--stone">
           <div className="wrap">
-            <Head n="VI" eyebrow={INFRA.eyebrow} a={INFRA.titleA} b={INFRA.titleB} lede={INFRA.lede} split />
+            <Head idx="06" eyebrow={INFRA.eyebrow} a={INFRA.titleA} b={INFRA.titleB} lede={INFRA.lede} />
             <div className="infra">
               {INFRA.cards.map((c, i) => {
                 const Icon = INFRA_ICONS[c.icon as keyof typeof INFRA_ICONS];
                 return (
-                  <article key={c.title} className="panel infra__card reveal" data-delay={String(i + 1)}>
-                    <span className="infra__icon"><Icon /></span>
+                  <article key={c.title} className="infra__card reveal" data-delay={String(i + 1)}>
+                    <span className="infra__icon"><Icon size={24} /></span>
                     <h3 className="h3">{c.title}</h3>
                     <p className="body">{c.body}</p>
                   </article>
@@ -171,23 +170,22 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ── Process + access ─────────────────────────────────────────────── */}
-        <section className="section" id="access" style={{ paddingTop: 0 }}>
+        {/* ── 07 Engagement ────────────────────────────────────────────────── */}
+        <section className="section" id="access">
           <div className="wrap">
-            <Head n="VII" eyebrow={PROCESS.eyebrow} a={PROCESS.titleA} b={PROCESS.titleB} />
+            <Head idx="07" eyebrow={PROCESS.eyebrow} a={PROCESS.titleA} b={PROCESS.titleB} />
             <ol className="steps">
               {PROCESS.steps.map((s, i) => (
                 <li key={s.k} className="step reveal" data-delay={String(i + 1)}>
-                  <span className="step__k mono">{s.k}</span>
+                  <span className="step__k">{s.k}</span>
                   <h3 className="h3">{s.title}</h3>
                   <p className="body">{s.body}</p>
                 </li>
               ))}
             </ol>
 
-            <div className="panel access reveal" style={{ marginTop: 'clamp(56px, 7vw, 96px)' }}>
-              <QMark id="access" size="100%" className="access__mark" stroke={20} />
-              <div style={{ position: 'relative', display: 'grid', gap: 24, justifyItems: 'start' }}>
+            <div className="access on-dark reveal" style={{ marginTop: 'clamp(64px, 8vw, 112px)' }}>
+              <div style={{ display: 'grid', gap: 24, justifyItems: 'start', alignContent: 'start' }}>
                 <span className="eyebrow">{ACCESS.eyebrow}</span>
                 <h2 className="h2">{ACCESS.title}</h2>
                 <p className="lede">{ACCESS.body}</p>
@@ -197,10 +195,8 @@ export default function Page() {
                 </div>
                 <BookButton>{ACCESS.cta}</BookButton>
               </div>
-              <div style={{ position: 'relative' }}>
-                <p className="mono muted" style={{ fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>
-                  {ACCESS.criteriaTitle}
-                </p>
+              <div>
+                <p className="eyebrow" style={{ marginBottom: 16 }}>{ACCESS.criteriaTitle}</p>
                 <ul className="criteria">
                   {ACCESS.criteria.map(c => (
                     <li key={c}><Check size={18} />{c}</li>
@@ -211,12 +207,10 @@ export default function Page() {
           </div>
         </section>
 
-        <div className="rule" />
-
-        {/* ── FAQ ──────────────────────────────────────────────────────────── */}
-        <section className="section" id="faq">
-          <div className="wrap" style={{ display: 'grid', gap: 48 }}>
-            <Head n="VIII" eyebrow="Questions" a="Asked" b="before every call." />
+        {/* ── 08 FAQ ───────────────────────────────────────────────────────── */}
+        <section className="section section--stone" id="faq">
+          <div className="wrap">
+            <Head idx="08" eyebrow="Questions" a="Frequently" b="asked questions." />
             <div className="faq reveal">
               {FAQ.map(f => (
                 <details key={f.q}>
@@ -231,21 +225,20 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ── Final CTA ────────────────────────────────────────────────────── */}
-        <section className="section final">
-          <QMark id="final" size="100%" className="final__mark" stroke={18} />
+        {/* ── Final call to action ─────────────────────────────────────────── */}
+        <section className="section final on-dark">
+          <QMark id="final-mark" size="100%" className="final__mark" stroke={14} fan={false} />
           <div className="wrap final__inner">
-            <h2 className="display reveal" style={{ fontSize: 'clamp(40px, 6.4vw, 92px)', maxWidth: 1100 }}>
-              {FINAL.titleA}{' '}
-              <span className="serif silver">{FINAL.titleB}</span>
+            <span className="eyebrow reveal">Consultation</span>
+            <h2 className="display reveal" style={{ fontSize: 'clamp(40px, 5.6vw, 84px)', maxWidth: 1000 }}>
+              {FINAL.titleA} <span style={{ color: 'var(--text-3)' }}>{FINAL.titleB}</span>
             </h2>
-            <p className="lede reveal" data-delay="1" style={{ marginInline: 'auto' }}>{FINAL.body}</p>
-            <div className="reveal" data-delay="2">
+            <p className="lede reveal">{FINAL.body}</p>
+            <div className="reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
               <BookButton>{FINAL.cta}</BookButton>
+              <a href="#faq" className="btn btn--ghost">Read the FAQ<Arrow /></a>
             </div>
-            <p className="mono muted reveal" data-delay="3" style={{ fontSize: 12, letterSpacing: '0.08em' }}>
-              {FINAL.fine.join('  ·  ')}
-            </p>
+            <p className="muted reveal" style={{ fontSize: 14 }}>{FINAL.fine.join('  ·  ')}</p>
           </div>
         </section>
       </main>
@@ -258,15 +251,15 @@ export default function Page() {
                 <QMark id="footer" size={28} />
                 <span className="brand__word">Quantara <span>Systems</span></span>
               </a>
-              <p className="body muted" style={{ maxWidth: 380, fontSize: 14 }}>
-                Autonomous execution for gold futures. Engineered to remove the human bottleneck.
+              <p className="body muted" style={{ maxWidth: 400, fontSize: 15 }}>
+                Systematic execution for COMEX gold futures.
               </p>
             </div>
             <nav className="footer__links" aria-label="Footer">
               {NAV.map(l => <a key={l.href} href={l.href}>{l.label}</a>)}
             </nav>
           </div>
-          <p className="disclosure"><strong>Risk disclosure.</strong> {DISCLOSURE}</p>
+          <p className="disclosure"><strong>Important information.</strong> {DISCLOSURE}</p>
           <div className="footer__base">
             <span>&copy; {new Date().getFullYear()} Quantara Systems. All rights reserved.</span>
             <span>quantarasystems.io</span>

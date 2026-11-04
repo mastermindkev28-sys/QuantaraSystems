@@ -6,40 +6,40 @@
 // automated, rules-based futures engine, but only you know QS1's exact internals.
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Site theme: 'obsidian' | 'ivory' | 'sapphire' | 'petrol'. Any page can also be
-// previewed in another theme by adding ?theme=<name> to the URL.
-export const THEMES = ['obsidian', 'ivory', 'sapphire', 'petrol'] as const;
-export type Theme = (typeof THEMES)[number];
-export const THEME: Theme = 'obsidian';
-
 export const CALENDLY_URL = 'https://calendly.com/quantarasystems-sales/45min';
 
 export const NAV = [
-  { label: 'Engine', href: '#engine' },
+  { label: 'Approach', href: '#engine' },
   { label: 'Execution', href: '#execution' },
-  { label: 'Risk', href: '#risk' },
-  { label: 'Access', href: '#access' },
+  { label: 'Risk management', href: '#risk' },
+  { label: 'Engagement', href: '#access' },
   { label: 'FAQ', href: '#faq' },
 ];
 
 export const HERO = {
-  eyebrow: 'QS1 · Autonomous execution for gold futures',
-  titleA: 'Engineered to trade',
-  titleB: 'the way you know you should.',
+  label: 'QS1 · Systematic execution',
+  title: 'Discipline, engineered.',
   lede:
-    'QS1 is an autonomous execution engine for gold futures. It reads the market, decides whether conditions are worth trading, checks every order against hard risk limits, and executes by rule, every session it runs. No hesitation. No second-guessing. No revenge trades.',
+    'QS1 is an autonomous execution system for COMEX gold futures. It analyzes market conditions, enforces pre-trade risk limits and executes every order by rule, removing the largest single source of error in active trading: human discretion.',
   primary: 'Request a consultation',
-  secondary: 'Explore the engine',
+  secondary: 'Our approach',
+  facts: [
+    { k: 'Market', v: 'COMEX gold futures' },
+    { k: 'Execution', v: 'Fully automated, rules-based' },
+    { k: 'Risk controls', v: 'Four independent layers' },
+    { k: 'Oversight', v: 'Monitored every session' },
+    { k: 'Access', v: 'By consultation, limited capacity' },
+  ],
 };
 
-export const NAV_CTA = 'Request access';
+export const NAV_CTA = 'Request a consultation';
 
 export const PROBLEM = {
-  eyebrow: 'The human bottleneck',
-  titleA: "Most traders don't fail for lack of a strategy.",
-  titleB: 'They fail between the signal and the click.',
+  eyebrow: 'The problem',
+  titleA: 'Most trading losses are behavioral,',
+  titleB: 'not analytical.',
   lede:
-    "You've seen it happen. The setup appears, you hesitate, and it's gone. Or you take it, it works, and you push your target out of greed. Or one loss turns the next three trades into revenge. None of that is a knowledge problem. It's a human one.",
+    'A sound strategy is rarely what fails. What fails is its execution: the entry taken late, the target moved out of greed, the stop widened after a loss. These are not gaps in knowledge. They are the predictable limits of human judgment under pressure.',
   flaws: [
     {
       k: '01 · Fatigue',
@@ -63,20 +63,21 @@ export const PROBLEM = {
       body: "Every pause, every “let me wait for one more candle”, is a decision made by fear rather than by the plan.",
     },
   ],
-  statementA: 'QS1 was built on one idea:',
+  statementA: 'QS1 is built on a single premise:',
   statementB:
-    'if the rules are right, nothing should be allowed to stand between them and the market.',
-  statementC: 'Not fatigue. Not fear. Not you on a bad day.',
+    'if the rules are sound, nothing should stand between them and the market.',
+  statementC: 'Not fatigue, not emotion, not a difficult day.',
 };
 
 export type StageKey = 'ingest' | 'classify' | 'signal' | 'risk' | 'execute' | 'manage';
 
 export const ENGINE = {
-  eyebrow: 'The QS1 engine',
-  titleA: 'Six stages.',
-  titleB: 'Every order, every time.',
+  eyebrow: 'Our approach',
+  exhibit: 'Exhibit 1 · The QS1 execution process',
+  titleA: 'A six-stage process,',
+  titleB: 'applied to every order.',
   lede:
-    "Every trade QS1 takes passes through the same pipeline, in the same order, with no shortcuts. Select a stage to see what happens inside it.",
+    'Every order QS1 places passes through the same sequence of stages, in the same order, without exception. Select a stage to see what it does.',
   stages: [
     {
       key: 'ingest' as StageKey,
@@ -166,11 +167,12 @@ export const ENGINE = {
 };
 
 export const ANATOMY = {
-  eyebrow: 'Anatomy of a trade',
-  titleA: 'What happens in the',
-  titleB: "seconds you'd spend deciding.",
+  eyebrow: 'Execution',
+  exhibit: 'Exhibit 2 · Anatomy of a single trade',
+  titleA: 'Nine decisions.',
+  titleB: 'None of them discretionary.',
   lede:
-    'An illustrative walk-through of a single long trade, from the first data point to the final log entry. Count how many decisions are made, and notice that none of them are left to emotion.',
+    'An illustrative walk-through of one long position, from the first data point to the final record. Each step is taken by rule, in sequence, in less time than it takes to read this sentence.',
   steps: [
     { t: '09:41:06.218', tag: 'DATA',   text: 'Price update received · feed healthy' },
     { t: '09:41:06.219', tag: 'REGIME', text: 'Trending · volatility in range · tradeable' },
@@ -187,11 +189,12 @@ export const ANATOMY = {
 };
 
 export const RISK = {
-  eyebrow: 'Risk architecture',
-  titleA: 'Four layers of protection.',
-  titleB: 'Built in, not bolted on.',
+  eyebrow: 'Risk management',
+  exhibit: 'Exhibit 3 · Risk architecture',
+  titleA: 'Four independent layers',
+  titleB: 'of risk control.',
   lede:
-    "Risk isn't a setting you remember to turn on. In QS1 it's structural: four independent layers, each able to stop trading on its own.",
+    'Risk control in QS1 is structural rather than optional. Four independent layers surround every order, and each one can halt trading on its own.',
   layers: [
     {
       k: 'L1',
@@ -221,11 +224,11 @@ export const RISK = {
 };
 
 export const COMPARE = {
-  eyebrow: 'Discretion vs. system',
-  titleA: 'Same market.',
-  titleB: 'Different operator.',
-  you: 'Trading it yourself',
-  qs: 'Trading with QS1',
+  eyebrow: 'Comparison',
+  titleA: 'Discretionary and',
+  titleB: 'systematic execution.',
+  you: 'Discretionary',
+  qs: 'QS1',
   rows: [
     { k: 'Reaction', you: 'After you notice, think and click', qs: 'The moment conditions are met' },
     { k: 'Hours covered', you: "When you're awake and at the screen", qs: "Every session it's configured to trade" },
@@ -238,8 +241,8 @@ export const COMPARE = {
 
 export const INFRA = {
   eyebrow: 'Infrastructure',
-  titleA: 'Automated.',
-  titleB: 'Never unattended.',
+  titleA: 'Automated,',
+  titleB: 'never unattended.',
   lede:
     'A system is only as good as what keeps it running. QS1 runs on always-on infrastructure and is watched by people who know exactly what normal looks like.',
   cards: [
@@ -267,9 +270,9 @@ export const INFRA = {
 };
 
 export const PROCESS = {
-  eyebrow: 'Getting started',
-  titleA: 'From first call to live',
-  titleB: 'in four steps.',
+  eyebrow: 'Engagement',
+  titleA: 'From consultation',
+  titleB: 'to live execution.',
   steps: [
     {
       k: '01',
@@ -295,11 +298,11 @@ export const PROCESS = {
 };
 
 export const ACCESS = {
-  eyebrow: 'Limited onboarding',
-  title: "We don't take every account.",
+  eyebrow: 'Capacity',
+  title: 'Capacity is deliberately limited.',
   body:
-    "Each new account is configured and monitored individually, so we onboard a limited number each month. The strategy call is where we decide, together, whether QS1 is the right fit.",
-  criteriaTitle: 'QS1 is built for people who:',
+    'Every account is configured and monitored individually. To preserve that standard, we onboard a limited number of new accounts each month. The consultation is where both sides determine whether QS1 is appropriate.',
+  criteriaTitle: 'QS1 is suited to individuals who',
   criteria: [
     'Want market exposure without living at the screen',
     'Understand that every trading system has losing days',
@@ -339,10 +342,10 @@ export const FAQ = [
 ];
 
 export const FINAL = {
-  titleA: 'The market opens again tomorrow.',
-  titleB: "Decide how you'll meet it.",
+  titleA: 'The market reopens tomorrow.',
+  titleB: 'The only question is how you meet it.',
   body:
-    'Keep trading on willpower, or put a system between your plan and the market. It starts with one 45-minute conversation.',
+    'Continue to rely on judgment under pressure, or place a disciplined system between your strategy and the market. It begins with a private, 45-minute consultation.',
   cta: 'Request your consultation',
   fine: ['45-day money-back guarantee', 'No obligation', 'Limited onboarding each month'],
 };
