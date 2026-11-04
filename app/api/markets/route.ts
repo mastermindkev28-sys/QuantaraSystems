@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
 
+// Gold first: it's the market QS1 trades. The rest give context in the market strip.
 const SYMBOLS = [
-  { key: 'MNQ', yahoo: 'MNQ=F',     label: 'Micro Nasdaq-100' },
-  { key: 'MES', yahoo: 'MES=F',     label: 'Micro S&P 500'    },
-  { key: 'SPX', yahoo: '^GSPC',     label: 'S&P 500'          },
+  { key: 'GC',  yahoo: 'GC=F',     label: 'Gold Futures'     },
+  { key: 'MNQ', yahoo: 'MNQ=F',    label: 'Micro Nasdaq-100' },
+  { key: 'MES', yahoo: 'MES=F',    label: 'Micro S&P 500'    },
+  { key: 'SPX', yahoo: '^GSPC',    label: 'S&P 500'          },
   { key: 'DXY', yahoo: 'DX-Y.NYB', label: 'US Dollar Index'  },
-  { key: 'BTC', yahoo: 'BTC-USD',   label: 'Bitcoin'          },
+  { key: 'BTC', yahoo: 'BTC-USD',  label: 'Bitcoin'          },
 ];
 
 async function fetchSymbol(yahoo: string) {
@@ -30,7 +32,7 @@ async function fetchSymbol(yahoo: string) {
   const points = timestamps
     .map((t, i) => ({ t, p: closes[i] }))
     .filter((x): x is { t: number; p: number } => x.p !== null && x.p !== undefined)
-    .slice(-30);
+    .slice(-60);
   return { price, prev, change, changePct, high: meta.regularMarketDayHigh, low: meta.regularMarketDayLow, state: meta.marketState, points };
 }
 
@@ -41,5 +43,9 @@ export async function GET() {
   const data = results.map((r, i) =>
     r.status === 'fulfilled' ? r.value : { key: SYMBOLS[i].key, label: SYMBOLS[i].label, error: true }
   );
-  return NextResponse.json({ data, ts: Date.now() });
+  return NextResponse.json(
+    { data, ts: Date.now() },
+    // Let Vercel's edge cache absorb traffic so every visitor doesn't hit the upstream feed.
+    { headers: { 'Cache-Control': 'public, s-maxage=20, stale-while-revalidate=60' } }
+  );
 }
