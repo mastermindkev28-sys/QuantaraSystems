@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { COMPANY, ENGINE, HERO, PLATFORMS, PROCESS, PROBLEM, RISK } from '../content';
+import { ENGINE, HERO, PLATFORMS, PROCESS, PROBLEM, RISK } from '../content';
 import Logo from '../components/Logo';
 
 // The printable one-page overview. Rendered to public/quantara-qs1-overview.pdf by
