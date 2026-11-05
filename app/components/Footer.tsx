@@ -15,7 +15,6 @@ export default function Footer() {
             <p className="body muted" style={{ maxWidth: 360, fontSize: 15 }}>
               {COMPANY.tagline}
             </p>
-            <p className="muted" style={{ fontSize: 13 }}>{COMPANY.line}</p>
           </div>
           <nav className="footer__cols" aria-label="Footer">
             {FOOTER_NAV.map(col => (

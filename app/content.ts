@@ -59,8 +59,6 @@ export const FOOTER_NAV = [
 
 export const COMPANY = {
   name: 'Quantara Systems',
-  parent: 'Equinox Trades',
-  line: 'Quantara Systems is a product of Equinox Trades.',
   tagline: 'Systematic execution technology for futures markets.',
 };
 

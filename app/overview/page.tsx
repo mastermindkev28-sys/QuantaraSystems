@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { COMPANY, ENGINE, HERO, PLATFORMS, PROCESS, PROBLEM, RISK } from '../content';
+import { ENGINE, HERO, PLATFORMS, PROCESS, PROBLEM, RISK } from '../content';
 import Logo from '../components/Logo';
 
 // The printable one-page overview. Rendered to public/quantara-qs1-overview.pdf by
@@ -76,7 +76,7 @@ export default function OverviewPage() {
             Trading futures involves substantial risk of loss and is not suitable for every investor. Past performance is
             not indicative of future results. Quantara Systems does not guarantee profits or freedom from loss. This
             document is for information only and is not investment advice or an offer to buy or sell any financial
-            instrument. {PLATFORMS.note} {COMPANY.line}
+            instrument. {PLATFORMS.note}
           </p>
         </footer>
       </article>
