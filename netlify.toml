@@ -1,0 +1,6 @@
+# quantarasystems.io is hosted on Vercel. This repository is still connected to an
+# old Netlify site; this setting makes Netlify skip every build so it stops
+# publishing extra copies of the site. Safe to delete once the Netlify site is
+# disconnected from the repository.
+[build]
+  ignore = "exit 0"
